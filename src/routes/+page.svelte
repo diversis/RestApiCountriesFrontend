@@ -19,4 +19,6 @@
 
 <input bind:value={countryName} />
 <button on:click={fetchCountryData}>Search</button>
-<article><h1>{data}</h1></article>
+{#if data}
+	<article><h1>{$data[0]?.altSpellings}</h1></article>
+{/if}
