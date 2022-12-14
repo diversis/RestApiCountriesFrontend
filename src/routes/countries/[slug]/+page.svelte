@@ -1,15 +1,16 @@
 <script lang="ts">
-	import { page } from '$app/stores';
 	import { onMount } from 'svelte/types/runtime/internal/lifecycle';
 	import { apiData } from './store';
-
+	import { PageData } from './$types';
 	$: countryStoreIndex = 0;
+	export let data;
+	const slug = data.slug;
 	onMount(async () => {
-		fetch(`https://restcountries.com/v3.1/name/${$page.params.slug}`)
+		fetch(`https://restcountries.com/v3.1/name/${slug}`)
 			.then((response) => response.json())
 			.then((data) => {
 				console.log(data);
-				const newData = { name: $page.params.slug, countryData: data[0] };
+				const newData = { name: slug, countryData: data[0] };
 				let name = $apiData.find((entry) => entry.name === data.name);
 				countryStoreIndex = $apiData.indexOf(name);
 				if (!name) {
@@ -25,7 +26,7 @@
 	console.log('\n--------------------\n+page apidata: ', $apiData, '\n--------------------\n');
 	console.log('\n--------------------\n+page apidata: ', $apiData, '\n--------------------\n');
 
-	$: flag = '' + $page.params.slug + ' flag';
+	$: flag = '' + slug + ' flag';
 	$: country = $apiData[countryStoreIndex]?.countryData;
 </script>
 
