@@ -1,15 +1,18 @@
 <script lang="ts">
+	import { get } from 'svelte/store';
 	import { onDestroy } from 'svelte';
-	import { apiData } from './store';
+	import { countriesData, theme } from '../../store';
 	import type { PageData } from './$types';
 	import { onMount, tick } from 'svelte';
 
 	export let data;
 
+	$: themeS = $theme;
 	const slug = data.slug;
 	// console.log('slug:', slug);
-	$: countryStoreIndex = $apiData.findIndex((entry) => entry.slug === slug);
-	$: country = $apiData[countryStoreIndex]?.countryData;
+	$: dataCheck = $countriesData;
+	$: countryStoreIndex = $countriesData.findIndex((entry) => entry.slug === slug);
+	$: country = $countriesData[countryStoreIndex]?.countryData;
 
 	// const getIndex = async () => {
 	// 	countryStoreIndex = $apiData.findIndex((entry) => entry.name === data.name);
@@ -23,6 +26,7 @@
 	const getMo = async () => {
 		// await getIndex();
 		if (countryStoreIndex === -1) {
+			console.log('fetching...');
 			await tick();
 			fetch(`https://restcountries.com/v3.1/name/${slug}`)
 				.then((response) => response.json())
@@ -31,7 +35,8 @@
 					const newData = { slug, countryData: data[0] };
 
 					// console.log('\n--------------------\nnewData: ', newData, '\n--------------------\n');
-					$apiData.push(newData);
+					$countriesData.push(newData);
+					$countriesData = $countriesData;
 					// console.log(
 					// 	'\n--------------------\napi data add: ',
 					// 	$apiData,
@@ -43,12 +48,16 @@
 					return [];
 				});
 			await tick();
-			console.log('\n--------------------\napi data add: ', $apiData, '\n--------------------\n');
-			console.log(
-				'\n--------------------\n $apiData.length: ',
-				$apiData.length,
-				'\n--------------------\n'
-			);
+			// console.log(
+			// 	'\n--------------------\napi data add: ',
+			// 	$countriesData,
+			// 	'\n--------------------\n'
+			// );
+			// console.log(
+			// 	'\n--------------------\n $apiData.length: ',
+			// 	$countriesData.length,
+			// 	'\n--------------------\n'
+			// );
 
 			// console.log(
 			// 	'\n--------------------\ncountryStoreIndex: ',
@@ -64,11 +73,15 @@
 	// $: country = $apiData[countryStoreIndex]?.countryData;
 
 	// $: console.log('\n--------------------\ncountry: ', country, '\n--------------------\n');
+	const switchTheme = () => {
+		theme.set(themeS === 'dark' ? 'light' : 'dark');
+	};
 </script>
 
 <article>
 	<div class="container grid">
 		<button on:click={getMo}>CLICK</button>
+		<button on:click={switchTheme}>{themeS}</button>
 		{#await country}
 			<p>Loading...</p>
 		{:then}
@@ -121,15 +134,22 @@
 							</p>
 							<p>
 								<span>Languages: </span>
+								<!-- {#if Object.values(country?.languages).length > 1} -->
 								{#each Object.values(country?.languages) as lang}
 									{lang + ' '}
 								{/each}
+								<!-- {:else if Object.values(country?.languages)}
+									{Object.values(country?.languages)}
+								{/if} -->
 							</p>
 						</div>
 						<div class="flex">
-							{#each country?.borders as border}
-								<a class="btn" href={'https://restcountries.com/v3.1/alpha/' + border}>{border}</a>
-							{/each}
+							{#if country?.borders}
+								{#each country?.borders as border}
+									<a class="btn" href={'https://restcountries.com/v3.1/alpha/' + border}>{border}</a
+									>
+								{/each}
+							{/if}
 						</div>
 					</div>
 				</div>
