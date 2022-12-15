@@ -12,9 +12,11 @@
 	const slug = data.slug;
 	// console.log('slug:', slug);
 	$: dataCheck = $countriesData;
-	$: countryStoreIndex = $countriesData.findIndex((entry) => entry.slug === slug);
+	$: countryStoreIndex = $countriesData.findIndex(
+		(entry) => entry.countryData?.name.common === slug
+	);
 	$: country = $countriesData[countryStoreIndex]?.countryData;
-
+$: if(country.)
 	// const getIndex = async () => {
 	// 	countryStoreIndex = $apiData.findIndex((entry) => entry.name === data.name);
 	// 	console.log(
@@ -27,28 +29,9 @@
 	const getMo = async () => {
 		// await getIndex();
 		if (countryStoreIndex === -1) {
-			console.log(`fetching... https://restcountries.com/v3.1/name/${slug}`);
 			await tick();
-			fetch(`https://restcountries.com/v3.1/name/${slug}`)
-				.then((response) => response.json())
-				.then((data) => {
-					// console.log('\n--------------------\nData: ', data, '\n--------------------\n');
-					const newData = { slug, countryData: data[0] };
-
-					// console.log('\n--------------------\nnewData: ', newData, '\n--------------------\n');
-					$countriesData.push(newData);
-					$countriesData = $countriesData;
-					// console.log(
-					// 	'\n--------------------\napi data add: ',
-					// 	$apiData,
-					// 	'\n--------------------\n'
-					// );
-				})
-				.catch((error) => {
-					console.log(error);
-					return [];
-				});
-			await tick();
+			return fetchCountry(slug)
+			
 			// console.log(
 			// 	'\n--------------------\napi data add: ',
 			// 	$countriesData,
@@ -69,6 +52,32 @@
 			// await getIndex();
 		}
 	};
+
+	async function fetchCountry(countryName:string) {
+		console.log(`fetching... https://restcountries.com/v3.1/name/${countryName}`);
+			await tick();
+			fetch(`https://restcountries.com/v3.1/name/${countryName}`)
+				.then((response) => response.json())
+				.then((data) => {
+					let now = new Date();
+					// console.log('\n--------------------\nData: ', data, '\n--------------------\n');
+					const newData = { now, countryData: data[0] };
+
+					// console.log('\n--------------------\nnewData: ', newData, '\n--------------------\n');
+					$countriesData.push(newData);
+					$countriesData = $countriesData;
+					// console.log(
+					// 	'\n--------------------\napi data add: ',
+					// 	$apiData,
+					// 	'\n--------------------\n'
+					// );
+					return
+				})
+				.catch((error) => {
+					console.log(error);
+					return [];
+				});
+	}
 	// console.log('\n--------------------\n+page apidata: ', $apiData, '\n--------------------\n');
 
 	// $: country = $apiData[countryStoreIndex]?.countryData;
