@@ -26,7 +26,7 @@
 	const getMo = async () => {
 		// await getIndex();
 		if (countryStoreIndex === -1) {
-			console.log('fetching...');
+			console.log(`fetching... https://restcountries.com/v3.1/name/${slug}`);
 			await tick();
 			fetch(`https://restcountries.com/v3.1/name/${slug}`)
 				.then((response) => response.json())
@@ -122,39 +122,44 @@
 						<div class="flex">
 							<p>
 								<span>Top Level Domain: </span>
-								{country?.tld}
+								{country?.tld[0]}
 							</p>
 							<p>
 								<span>Currencies: </span>
-								{country?.name?.nativeName[
-									Object.keys(country.name.nativeName)[
-										Object.keys(country.name.nativeName).length - 1
-									]
-								].common}
+								{country?.currencies[Object.keys(country.currencies)[0]].name} ({country
+									?.currencies[Object.keys(country.currencies)[0]].symbol})
 							</p>
 							<p>
 								<span>Languages: </span>
 								<!-- {#if Object.values(country?.languages).length > 1} -->
-								{#each Object.values(country?.languages) as lang}
-									{lang + ' '}
-								{/each}
+								{#if Object.values(country?.languages)}
+									{#each Object.values(country?.languages) as lang, i}
+										{lang}{#if i < Object.values(country?.languages).length - 1}{', '}{/if}
+									{/each}
+								{/if}
 								<!-- {:else if Object.values(country?.languages)}
 									{Object.values(country?.languages)}
 								{/if} -->
 							</p>
 						</div>
 						<div class="flex">
-							{#if country?.borders}
-								{#each country?.borders as border}
-									<a class="btn" href={'https://restcountries.com/v3.1/alpha/' + border}>{border}</a
-									>
-								{/each}
-							{/if}
+							<p>
+								<span>Border countries:</span>
+								{#if country?.borders}
+									{#each country?.borders as border}
+										<a class="btn" href={'https://restcountries.com/v3.1/alpha/' + border}
+											>{border}</a
+										>
+									{/each}
+								{:else}
+									None
+								{/if}
+							</p>
 						</div>
 					</div>
 				</div>
 			{:else}
-				<p>No data :(</p>
+				<p>Loading...</p>
 			{/if}
 		{:catch error}
 			<p>{error}</p>
