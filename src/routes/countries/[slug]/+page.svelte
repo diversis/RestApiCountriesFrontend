@@ -1,13 +1,14 @@
 <script lang="ts">
+	import '../../../index.css';
 	import { get } from 'svelte/store';
 	import { onDestroy } from 'svelte';
 	import { countriesData, theme } from '../../store';
 	import type { PageData } from './$types';
 	import { onMount, tick } from 'svelte';
+	import ThemeSwitch from '$lib/ThemeSwitch.svelte';
 
 	export let data;
 
-	$: themeS = $theme;
 	const slug = data.slug;
 	// console.log('slug:', slug);
 	$: dataCheck = $countriesData;
@@ -73,15 +74,12 @@
 	// $: country = $apiData[countryStoreIndex]?.countryData;
 
 	// $: console.log('\n--------------------\ncountry: ', country, '\n--------------------\n');
-	const switchTheme = () => {
-		theme.set(themeS === 'dark' ? 'light' : 'dark');
-	};
 </script>
 
+<ThemeSwitch />
 <article>
 	<div class="container grid">
 		<button on:click={getMo}>CLICK</button>
-		<button on:click={switchTheme}>{themeS}</button>
 		{#await country}
 			<p>Loading...</p>
 		{:then}
