@@ -77,20 +77,26 @@
 </script>
 
 <ThemeSwitch />
-<article>
-	<div class="container grid">
-		<button on:click={getMo}>CLICK</button>
+<button on:click={getMo}>CLICK</button>
+<main class="">
+	<article
+		class="container mx-auto flex flex-col lg:grid lg:grid-cols-2 items-center mt-12 px-2 lg:px-10 gap-10 text-left relative"
+	>
 		{#await country}
 			<p>Loading...</p>
 		{:then}
 			{#if country}
-				<img src={country?.flags.png} alt={'' + country?.name.common + ' flag'} />
-				<div>
+				<img
+					src={country?.flags.png}
+					alt={'' + country?.name.common + ' flag'}
+					class="shadow-img-light dark:shadow-img-dark transition-colors duration-700"
+				/>
+				<div class="grid grid-cols-1 gap-y-6 w-full">
 					<h1 id="country-name">{country?.name.common}</h1>
 					<!-- Info -->
-					<div class="grid">
+					<div class="flex flex-col lg:grid lg:grid-cols-2 gap-y-8">
 						<!-- Column 1 -->
-						<div class="flex">
+						<div class="flex flex-col">
 							<p>
 								<span>Native Name: </span>
 								{country?.name?.nativeName[
@@ -117,7 +123,7 @@
 							</p>
 						</div>
 						<!--  Column 2  -->
-						<div class="flex">
+						<div class="flex flex-col">
 							<p>
 								<span>Top Level Domain: </span>
 								{country?.tld[0]}
@@ -140,20 +146,21 @@
 								{/if} -->
 							</p>
 						</div>
-						<div class="flex">
-							<p>
-								<span>Border countries:</span>
-								{#if country?.borders}
-									{#each country?.borders as border}
-										<a class="btn" href={'https://restcountries.com/v3.1/alpha/' + border}
-											>{border}</a
-										>
-									{/each}
-								{:else}
-									None
-								{/if}
-							</p>
-						</div>
+					</div>
+					<div class="flex">
+						<p>
+							<span>Border countries:</span>
+							{#if country?.borders}
+								{#each country?.borders as border}
+									<a
+										class="rounded-md bg-light-mode-very-light-gray dark:bg-dark-mode-dark-blue px-3 py-1 mx-2"
+										href={'https://restcountries.com/v3.1/alpha/' + border}>{border}</a
+									>
+								{/each}
+							{:else}
+								None
+							{/if}
+						</p>
 					</div>
 				</div>
 			{:else}
@@ -162,5 +169,21 @@
 		{:catch error}
 			<p>{error}</p>
 		{/await}
-	</div>
-</article>
+	</article>
+</main>
+
+<style>
+	span {
+		font-weight: 600;
+	}
+	h1 {
+		font-weight: 800;
+		font-size: 200%;
+	}
+	img {
+		transition: box-shadow 700ms ease-in-out;
+	}
+	a {
+		transition: background-color 700ms ease-in-out;
+	}
+</style>
