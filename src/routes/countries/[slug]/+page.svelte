@@ -12,11 +12,11 @@
 	const slug = data.slug;
 	// console.log('slug:', slug);
 	$: dataCheck = $countriesData;
-	$: countryStoreIndex = $countriesData.findIndex(
-		(entry) => entry.countryData?.name.common === slug
-	);
+	$: countryStoreIndex = $countriesData.findIndex((entry) => entry.countryData?.cca2 === slug);
 	$: country = $countriesData[countryStoreIndex]?.countryData;
-$: if(country.)
+	$: if (country && +Date.now() - +country.createdAt > 10000) {
+		console.log('10 sec passed');
+	}
 	// const getIndex = async () => {
 	// 	countryStoreIndex = $apiData.findIndex((entry) => entry.name === data.name);
 	// 	console.log(
@@ -30,8 +30,8 @@ $: if(country.)
 		// await getIndex();
 		if (countryStoreIndex === -1) {
 			await tick();
-			return fetchCountry(slug)
-			
+			return fetchCountry(slug);
+
 			// console.log(
 			// 	'\n--------------------\napi data add: ',
 			// 	$countriesData,
@@ -53,30 +53,34 @@ $: if(country.)
 		}
 	};
 
-	async function fetchCountry(countryName:string) {
-		console.log(`fetching... https://restcountries.com/v3.1/name/${countryName}`);
-			await tick();
-			fetch(`https://restcountries.com/v3.1/name/${countryName}`)
-				.then((response) => response.json())
-				.then((data) => {
-					let now = new Date();
-					// console.log('\n--------------------\nData: ', data, '\n--------------------\n');
-					const newData = { now, countryData: data[0] };
+	async function fetchCountry(countryCode: string) {
+		if (countryCode.length > 3) {
+			console.log('wrong code, too long: ', countryCode.length);
+			return [];
+		}
+		console.log(`fetching... https://restcountries.com/v3.1/alpha/${countryCode}`);
+		await tick();
+		fetch(`https://restcountries.com/v3.1/alpha/${countryCode}`)
+			.then((response) => response.json())
+			.then((data) => {
+				let now = Date.now();
+				// console.log('\n--------------------\nData: ', data, '\n--------------------\n');
+				const newData = { now, countryData: data[0] };
 
-					// console.log('\n--------------------\nnewData: ', newData, '\n--------------------\n');
-					$countriesData.push(newData);
-					$countriesData = $countriesData;
-					// console.log(
-					// 	'\n--------------------\napi data add: ',
-					// 	$apiData,
-					// 	'\n--------------------\n'
-					// );
-					return
-				})
-				.catch((error) => {
-					console.log(error);
-					return [];
-				});
+				// console.log('\n--------------------\nnewData: ', newData, '\n--------------------\n');
+				$countriesData.push(newData);
+				$countriesData = $countriesData;
+				// console.log(
+				// 	'\n--------------------\napi data add: ',
+				// 	$apiData,
+				// 	'\n--------------------\n'
+				// );
+				return data[0];
+			})
+			.catch((error) => {
+				console.log(error);
+				return [];
+			});
 	}
 	// console.log('\n--------------------\n+page apidata: ', $apiData, '\n--------------------\n');
 
