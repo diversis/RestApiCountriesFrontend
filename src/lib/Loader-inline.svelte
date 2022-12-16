@@ -3,7 +3,7 @@
 	import { quintOut } from 'svelte/easing';
 	import { theme } from '../routes/store';
 
-	$: lightness = $theme === 'dark' ? 40 : 20;
+	$: lightness = $theme === 'dark' ? 60 : 20;
 
 	const pieces: number[] = [];
 	const duration: number = 2;
@@ -30,9 +30,6 @@
 		width: 100%;
 		height: 100%;
 		position: relative;
-		transform: translateZ(0) scale(1);
-		backface-visibility: hidden;
-		transform-origin: 0 0; /* see note above */
 	}
 
 	.inline-spinner {
@@ -42,10 +39,11 @@
 		overflow: hidden;
 		background: none;
 		position: relative;
-		padding-inline: 1em;
+		margin-inline: 1em;
+		border-radius: 5px;
 	}
 
-	.inline-spinner div {
+	.spinner div {
 		left: var(--left);
 		position: absolute;
 		width: 1ch;

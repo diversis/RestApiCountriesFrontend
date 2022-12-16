@@ -7,7 +7,7 @@
 
 	export let data;
 
-	const slug = data.slug;
+	$: slug = data?.slug;
 	// console.log('slug:', slug);
 	// $: dataCheck = $countriesData;
 	// $: countryStoreIndex = $countriesData.findIndex((entry) => entry.countryData?.cca2 === slug);
@@ -51,7 +51,8 @@
 	// 	}
 	// };
 
-	async function fetchCountry(countryCode: string) {
+	async function getCountry(countryCode: string) {
+		await tick;
 		const regexp = /\W/gi;
 		// Codes are 2 or 3 letters
 		if (countryCode.length < 2 || countryCode.length > 3 || regexp.test(countryCode)) {
@@ -75,36 +76,23 @@
 		}
 		if (countryStoreIndex > -1) {
 			const data = $countriesData[countryStoreIndex];
-			console.log(
-				'\n--------------------\n createdAt-: ',
-				+Date.now() - +data.createdAt,
-				'\n--------------------\n'
-			);
+			// console.log(
+			// 	'\n--------------------\n createdAt-: ',
+			// 	+Date.now() - +data.createdAt,
+			// 	'\n--------------------\n'
+			// );
 			if (+Date.now() - +data.createdAt < 86400000) {
 				return data;
 			}
 			$countriesData.splice(countryStoreIndex);
 		}
 		if (countryStoreIndex === -1) {
-			// fetch from api and save to local storage otherwise
-			console.log(`fetching... https://restcountries.com/v3.1/alpha/${countryCode}`);
-			fetch(`https://restcountries.com/v3.1/alpha/${countryCode}`)
-				.then((response) => response.json())
-				.then((data) => {
-					let now = Date.now();
-					console.log('\n--------------------\nData: ', data, '\n--------------------\n');
-					const newData = data[0];
-					newData.createdAt = now;
-
-					console.log('\n--------------------\nnewData: ', newData, '\n--------------------\n');
-					$countriesData.push(newData);
-					$countriesData = $countriesData;
-					return data[0];
-				})
-				.catch((error) => {
-					console.log(error);
-					return [];
-				});
+			console.log(
+				'\n--------------------\n countryCode: ',
+				countryCode,
+				'\n--------------------\n'
+			);
+			return await fetchCountry(countryCode);
 		}
 	}
 
@@ -112,23 +100,47 @@
 		const borders: [] = [];
 		await Promise.all(
 			bordersCodes.map(async (border) => {
-				const data = await fetchCountry(border);
-				borders.push(data);
-				console.log('\n--------------------\n border data: ', data, '\n--------------------\n');
+				const data = await getCountry(border);
+				if (data) {
+					borders.push(data);
+				}
+				// console.log('\n--------------------\n border data: ', data, '\n--------------------\n');
 			})
 		);
 		console.log('\n--------------------\n borders: ', borders, '\n--------------------\n');
 		return borders;
 	}
+
+	async function fetchCountry(countryCode: string) {
+		// fetch from api and save to local storage otherwise
+		console.log(`fetching... https://restcountries.com/v3.1/alpha/${countryCode}`);
+		fetch(`https://restcountries.com/v3.1/alpha/${countryCode}`)
+			.then((response) => response.json())
+			.then((data) => {
+				let now = Date.now();
+				// console.log('\n--------------------\nData: ', data, '\n--------------------\n');
+				const newData = data[0];
+				newData.createdAt = now;
+
+				// console.log('\n--------------------\nnewData: ', newData, '\n--------------------\n');
+				$countriesData.push(newData);
+				$countriesData = $countriesData;
+				return data[0];
+			})
+			.catch((error) => {
+				console.log(error);
+				return [];
+			});
+	}
 </script>
 
 <ThemeSwitch />
-<LoaderInline />
 <main class="">
 	<article
 		class="container mx-auto flex flex-col lg:grid lg:grid-cols-2 items-center mt-12 px-2 lg:px-10 gap-10 text-left relative"
 	>
-		{#await fetchCountry(slug)}
+		{#await tick()}{/await}
+		{#await getCountry(slug)}
 			<LoaderInline />
 		{:then country}
 			<img
@@ -194,24 +206,28 @@
 					</div>
 				</div>
 				<div class="flex">
-					<p>
+					<div class="inline-flex flex-wrap gap-y-1">
 						<span>Border countries:</span>
+
 						{#if country?.borders?.length > 0}
 							{#await getBorders(country?.borders)}
 								<LoaderInline />
 							{:then data}
-								{#each data as { border }}
-									<a
-										class="rounded-md bg-light-mode-very-light-gray dark:bg-dark-mode-dark-blue px-3 py-1 mx-2"
-										href={'https://restcountries.com/v3.1/alpha/' + border.cca3}
-										>{border.name.common}</a
-									>
+								{#each data as border}
+									<div>
+										<a
+											class="rounded-md bg-light-mode-very-light-gray dark:bg-dark-mode-dark-blue px-3 py-0.5 mx-2"
+											href={'/countries/' + border?.cca3}>{border?.name?.common}</a
+										>
+									</div>
 								{/each}
+							{:catch error}
+								<p>{error}</p>
 							{/await}
 						{:else}
 							None
 						{/if}
-					</p>
+					</div>
 				</div>
 			</div>
 		{:catch error}
