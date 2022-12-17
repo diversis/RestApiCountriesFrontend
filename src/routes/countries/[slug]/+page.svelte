@@ -10,22 +10,22 @@
 	export let data;
 
 	$: slug = data?.slug;
-	// $: borders = [];
 	// console.log('slug:', slug);
-
 	async function getCountry(countryCode: string, withBorders = false) {
 		let dataFromLocalStorage = await getCountryFromLocalStorage(countryCode);
 		if (dataFromLocalStorage) {
-			return dataFromLocalStorage;
+			country = dataFromLocalStorage;
 		}
 		console.log(
 			`\n--------------------\n fetching... https://restcountries.com/v3.1/alpha/${countryCode} \n--------------------\n`
 		);
 
-		return await fetchCountry(countryCode);
+		const countryData = await fetchCountry(countryCode);
+		country = countryData;
 	}
 
 	async function getBorders(bordersCodes: []) {
+		await tick();
 		const borders = [];
 		await Promise.all(
 			bordersCodes.map(async (border) => {
@@ -102,20 +102,20 @@
 		{:then country}
 			<div class="relative w-full">
 				<img
-					src={country.flags.png}
-					alt={'' + country.name.common + ' flag'}
+					src={country?.flags?.png}
+					alt={'' + country?.name?.common + ' flag'}
 					class="mx-auto shadow-img-light dark:shadow-img-dark transition-colors duration-700 w-[90%]"
 				/>
 			</div>
 			<div class="grid grid-cols-1 gap-y-6 w-full">
-				<h1 id="country-name">{country.name.common}</h1>
+				<h1 id="country-name">{country?.name?.common}</h1>
 				<!-- Info -->
 				<div class="flex flex-col lg:grid lg:grid-cols-2 gap-y-8">
 					<!-- Column 1 -->
 					<div class="flex flex-col">
 						<p>
 							<span>Native Name: </span>
-							{country.name?.nativeName[
+							{country?.name?.nativeName[
 								Object.keys(country.name.nativeName)[
 									Object.keys(country.name.nativeName).length - 1
 								]
@@ -123,37 +123,37 @@
 						</p>
 						<p>
 							<span>Population: </span>
-							{country.population}
+							{country?.population}
 						</p>
 						<p>
 							<span>Region: </span>
-							{country.region}
+							{country?.region}
 						</p>
 						<p>
 							<span>Sub Region: </span>
-							{country.subregion}
+							{country?.subregion}
 						</p>
 						<p>
 							<span>Capital: </span>
-							{country.capital}
+							{country?.capital}
 						</p>
 					</div>
 					<!--  Column 2  -->
 					<div class="flex flex-col">
 						<p>
 							<span>Top Level Domain: </span>
-							{country.tld[0]}
+							{country?.tld[0]}
 						</p>
 						<p>
 							<span>Currencies: </span>
-							{country.currencies[Object.keys(country.currencies)[0]].name} ({country.currencies[
+							{country?.currencies[Object.keys(country.currencies)[0]].name} ({country?.currencies[
 								Object.keys(country.currencies)[0]
 							].symbol})
 						</p>
 						<p>
 							<span>Languages: </span>
 							<!-- {#if Object.values(country.languages).length > 1} -->
-							{#if country && Object.values(country.languages).length > 0}
+							{#if country && Object.values(country?.languages).length > 0}
 								{#each Object.values(country.languages) as lang, i}
 									{lang}{#if i < Object.values(country.languages).length - 1}{', '}{/if}
 								{/each}
