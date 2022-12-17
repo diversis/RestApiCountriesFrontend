@@ -4,10 +4,13 @@
 	import { tick } from 'svelte';
 	import ThemeSwitch from '$lib/ThemeSwitch.svelte';
 	import LoaderInline from '$lib/Loader-inline.svelte';
+	import Header from '$lib/Header.svelte';
+	import BackButton from '$lib/BackButton.svelte';
 
 	export let data;
 
 	$: slug = data?.slug;
+	$: borders = [];
 	// console.log('slug:', slug);
 	// $: dataCheck = $countriesData;
 	// $: countryStoreIndex = $countriesData.findIndex((entry) => entry.countryData?.cca2 === slug);
@@ -52,7 +55,11 @@
 	// };
 
 	async function getCountry(countryCode: string) {
-		await tick;
+		console.log(
+			'\n--------------------\n $countriesData: ',
+			$countriesData,
+			'\n--------------------\n'
+		);
 		const regexp = /\W/gi;
 		// Codes are 2 or 3 letters
 		if (countryCode.length < 2 || countryCode.length > 3 || regexp.test(countryCode)) {
@@ -92,17 +99,34 @@
 				countryCode,
 				'\n--------------------\n'
 			);
-			return await fetchCountry(countryCode);
+			console.log(`fetching... https://restcountries.com/v3.1/alpha/${countryCode}`);
+			fetch(`https://restcountries.com/v3.1/alpha/${countryCode}`)
+				.then((response) => response.json())
+				.then((data) => {
+					let now = Date.now();
+					// console.log('\n--------------------\nData: ', data, '\n--------------------\n');
+					const newData = data[0];
+					newData.createdAt = now;
+
+					// console.log('\n--------------------\nnewData: ', newData, '\n--------------------\n');
+					$countriesData.push(newData);
+					$countriesData = $countriesData;
+					return data[0];
+				})
+				.catch((error) => {
+					console.log(error);
+					return [];
+				});
 		}
 	}
 
 	async function getBorders(bordersCodes: []) {
-		const borders: [] = [];
+		borders = [];
 		await Promise.all(
 			bordersCodes.map(async (border) => {
 				const data = await getCountry(border);
 				if (data) {
-					borders.push(data);
+					borders.push({ cca3: border, name: data.name.common });
 				}
 				// console.log('\n--------------------\n border data: ', data, '\n--------------------\n');
 			})
@@ -111,43 +135,29 @@
 		return borders;
 	}
 
-	async function fetchCountry(countryCode: string) {
-		// fetch from api and save to local storage otherwise
-		console.log(`fetching... https://restcountries.com/v3.1/alpha/${countryCode}`);
-		fetch(`https://restcountries.com/v3.1/alpha/${countryCode}`)
-			.then((response) => response.json())
-			.then((data) => {
-				let now = Date.now();
-				// console.log('\n--------------------\nData: ', data, '\n--------------------\n');
-				const newData = data[0];
-				newData.createdAt = now;
+	// async function fetchCountry(countryCode: string) {
+	// 	// fetch from api and save to local storage otherwise
 
-				// console.log('\n--------------------\nnewData: ', newData, '\n--------------------\n');
-				$countriesData.push(newData);
-				$countriesData = $countriesData;
-				return data[0];
-			})
-			.catch((error) => {
-				console.log(error);
-				return [];
-			});
-	}
+	// }
 </script>
 
-<ThemeSwitch />
-<main class="">
+<Header />
+
+<main class="relative">
 	<article
-		class="container mx-auto flex flex-col lg:grid lg:grid-cols-2 items-center mt-12 px-2 lg:px-10 gap-10 text-left relative"
+		class="container mx-auto flex flex-col lg:grid lg:grid-cols-2 items-center mt-12 px-4 lg:px-10 gap-10 lg:gap-x-16 text-left relative"
 	>
-		{#await tick()}{/await}
+		<div class="col-span-2 flex items-start self-start"><BackButton /></div>
 		{#await getCountry(slug)}
 			<LoaderInline />
 		{:then country}
-			<img
-				src={country?.flags.png}
-				alt={'' + country?.name.common + ' flag'}
-				class="shadow-img-light dark:shadow-img-dark transition-colors duration-700"
-			/>
+			<div class="relative w-full">
+				<img
+					src={country?.flags.png}
+					alt={'' + country?.name.common + ' flag'}
+					class="mx-auto shadow-img-light dark:shadow-img-dark transition-colors duration-700 w-[90%]"
+				/>
+			</div>
 			<div class="grid grid-cols-1 gap-y-6 w-full">
 				<h1 id="country-name">{country?.name.common}</h1>
 				<!-- Info -->
@@ -206,18 +216,18 @@
 					</div>
 				</div>
 				<div class="flex">
-					<div class="inline-flex flex-wrap gap-y-1">
+					<div class="inline-flex flex-wrap gap-y-2 ">
 						<span>Border countries:</span>
 
 						{#if country?.borders?.length > 0}
 							{#await getBorders(country?.borders)}
 								<LoaderInline />
 							{:then data}
-								{#each data as border}
+								{#each borders as border}
 									<div>
 										<a
-											class="rounded-md bg-light-mode-very-light-gray dark:bg-dark-mode-dark-blue px-3 py-0.5 mx-2"
-											href={'/countries/' + border?.cca3}>{border?.name?.common}</a
+											class="transition-colors ease-theme duration-500 rounded-md bg-light-mode-very-light-gray dark:bg-dark-mode-dark-blue px-3 py-0.5 mx-2 shadow-around shadow-light-mode-dark-gray dark:shadow-any-white"
+											href={'/countries/' + border?.cca3}>{border?.name}</a
 										>
 									</div>
 								{/each}

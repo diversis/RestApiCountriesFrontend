@@ -20,7 +20,12 @@ module.exports = {
 				'img-light':
 					'0 0 7.5px 3px hsla(200, 15%, 8%, 0.549),0 0 11px 5px hsla(0, 0%, 52%, 0.362),0 0 17px 9px hsla(0, 0%, 98%, 0.18)',
 				'img-dark':
-					'0 0 7.5px 3px hsla(209, 23%, 22%, 0.549),0 0 11px 5px hsla(0, 0%, 100%, 0.362),0 0 17px 9px hsla(0, 0%, 100%, 0.18)'
+					'0 0 7.5px 3px hsla(209, 23%, 22%, 0.549),0 0 11px 5px hsla(0, 0%, 100%, 0.362),0 0 17px 9px hsla(0, 0%, 100%, 0.18)',
+				around: '0 0 5px 2px hsla(209, 23%, 22%, 0.549)'
+			},
+			transitionTimingFunction: {
+				theme: 'cubic-bezier(0.005, 0.05, 0.95, 0.005)',
+				switch: 'cubic-bezier(0.23, 0.13, 0.42, 0.23)'
 			}
 		}
 	},
