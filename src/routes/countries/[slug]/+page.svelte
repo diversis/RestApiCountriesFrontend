@@ -10,23 +10,24 @@
 	export let data;
 
 	$: slug = data?.slug;
+
+	let promise = Promise.resolve([]);
 	// console.log('slug:', slug);
-	async function getCountry(countryCode: string, withBorders = false) {
-		let dataFromLocalStorage = await getCountryFromLocalStorage(countryCode);
+	async function getCountry(countryCode: string) {
+		let dataFromLocalStorage = getCountryFromLocalStorage(countryCode);
 		if (dataFromLocalStorage) {
-			country = dataFromLocalStorage;
+			return dataFromLocalStorage;
 		}
 		console.log(
 			`\n--------------------\n fetching... https://restcountries.com/v3.1/alpha/${countryCode} \n--------------------\n`
 		);
 
 		const countryData = await fetchCountry(countryCode);
-		country = countryData;
+		return countryData;
 	}
 
 	async function getBorders(bordersCodes: []) {
-		await tick();
-		const borders = [];
+		const borders: {}[] = [];
 		await Promise.all(
 			bordersCodes.map(async (border) => {
 				const borderData = await getCountry(border);
@@ -42,7 +43,7 @@
 
 	async function fetchCountry(countryCode: string) {
 		// fetch from api and save to local storage otherwise
-		fetch(`https://restcountries.com/v3.1/alpha/${countryCode}`)
+		return await fetch(`https://restcountries.com/v3.1/alpha/${countryCode}`)
 			.then((response) => response.json())
 			.then((data) => {
 				let now = Date.now();
@@ -61,11 +62,11 @@
 			});
 	}
 
-	async function getCountryFromLocalStorage(countryCode: string) {
+	function getCountryFromLocalStorage(countryCode: string) {
 		const regexp = /\W/gi;
 		// Codes are 2 or 3 letters
 		if (countryCode.length < 2 || countryCode.length > 3 || regexp.test(countryCode)) {
-			console.log('wrong code, too long: ', countryCode.length);
+			console.log('wrong code: ', countryCode.length);
 			return [];
 		}
 
@@ -97,7 +98,7 @@
 		class="container mx-auto flex flex-col lg:grid lg:grid-cols-2 items-center mt-12 px-4 lg:px-10 gap-10 lg:gap-x-16 text-left relative"
 	>
 		<div class="col-span-2 flex items-start self-start"><BackButton /></div>
-		{#await getCountry(slug, true)}
+		{#await getCountry(slug)}
 			<LoaderInline />
 		{:then country}
 			<div class="relative w-full">
