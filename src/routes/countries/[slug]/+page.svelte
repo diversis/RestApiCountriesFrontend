@@ -16,7 +16,7 @@
 	<article
 		class="container mx-auto flex flex-col lg:grid lg:grid-cols-2 items-center mt-12 px-4 lg:px-10 gap-10 lg:gap-x-16 text-left relative"
 	>
-		<div class="col-span-2 flex items-start self-start"><BackButton /></div>
+		<div class="lg:col-span-2 flex items-start self-start"><BackButton /></div>
 		{#await getCountry(slug)}
 			<LoaderInline />
 		{:then country}
@@ -24,7 +24,7 @@
 				<img
 					src={country?.flags?.png}
 					alt={'' + country?.name?.common + ' flag'}
-					class="mx-auto shadow-img-light dark:shadow-img-dark transition-colors duration-700 w-[90%]"
+					class="mx-auto shadow-img-light dark:shadow-img-dark transition-colors duration-700 w-full"
 				/>
 			</div>
 			<div class="grid grid-cols-1 gap-y-6 w-full">
@@ -114,10 +114,10 @@
 </main>
 
 <style>
-	span {
-		font-weight: 600;
+	article span {
+		font-weight: 800;
 	}
-	h1 {
+	article h1 {
 		font-weight: 800;
 		font-size: 200%;
 	}

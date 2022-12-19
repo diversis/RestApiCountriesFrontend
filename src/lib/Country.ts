@@ -53,7 +53,7 @@ function getCountryFromLocalStorage(countryCode: string) {
 	);
 
 	if (countryIndex > -1) {
-		country = localStorage[countryIndex];
+		const country = localStorage[countryIndex];
 		if (+Date.now() - +country.createdAt < 86400000) {
 			return country;
 		}
@@ -92,11 +92,6 @@ export async function searchCountires(
 			.then((response: Response) => response.json())
 			.then((data) => {
 				for (let country of data) {
-					console.log(
-						'\n--------------------\n search data: ',
-						country.cca3,
-						'\n--------------------\n'
-					);
 					addToLocalStorage(country);
 				}
 				return data;
@@ -124,7 +119,7 @@ export async function searchCountires(
 		});
 }
 
-function addToLocalStorage(country: {}) {
+function addToLocalStorage(country) {
 	const countryCode: string = country.cca3 || country.cca2;
 
 	if (getCountryFromLocalStorage(countryCode)) {
@@ -133,7 +128,7 @@ function addToLocalStorage(country: {}) {
 	country.createdAt = Date.now();
 
 	countriesData.update((data) => {
-		console.log('\n--------------------\n country: ', country, '\n--------------------\n');
+		// console.log('\n--------------------\n country: ', country, '\n--------------------\n');
 		data.push(country);
 		return data;
 	});
