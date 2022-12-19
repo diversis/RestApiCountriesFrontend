@@ -1,94 +1,13 @@
 <script lang="ts">
 	import '../../../index.css';
-	import { countriesData } from '../../store';
-	import { tick } from 'svelte';
-	import ThemeSwitch from '$lib/ThemeSwitch.svelte';
 	import LoaderInline from '$lib/Loader-inline.svelte';
 	import Header from '$lib/Header.svelte';
 	import BackButton from '$lib/BackButton.svelte';
+	import { getBorders, getCountry } from '$lib/Country';
 
 	export let data;
 
 	$: slug = data?.slug;
-
-	let promise = Promise.resolve([]);
-	// console.log('slug:', slug);
-	async function getCountry(countryCode: string) {
-		let dataFromLocalStorage = getCountryFromLocalStorage(countryCode);
-		if (dataFromLocalStorage) {
-			return dataFromLocalStorage;
-		}
-		console.log(
-			`\n--------------------\n fetching... https://restcountries.com/v3.1/alpha/${countryCode} \n--------------------\n`
-		);
-
-		const countryData = await fetchCountry(countryCode);
-		return countryData;
-	}
-
-	async function getBorders(bordersCodes: []) {
-		const borders: {}[] = [];
-		await Promise.all(
-			bordersCodes.map(async (border) => {
-				const borderData = await getCountry(border);
-				if (borderData) {
-					borders.push({ cca3: border, name: borderData.name.common });
-				}
-				// console.log('\n--------------------\n border data: ', borderData, '\n--------------------\n');
-			})
-		);
-		console.log('\n--------------------\n borders: ', borders, '\n--------------------\n');
-		return borders;
-	}
-
-	async function fetchCountry(countryCode: string) {
-		// fetch from api and save to local storage otherwise
-		return await fetch(`https://restcountries.com/v3.1/alpha/${countryCode}`)
-			.then((response) => response.json())
-			.then((data) => {
-				let now = Date.now();
-
-				const newData = data[0];
-				newData.createdAt = now;
-
-				$countriesData.push(newData);
-				$countriesData = $countriesData;
-
-				return data[0];
-			})
-			.catch((error) => {
-				console.log(error);
-				return [];
-			});
-	}
-
-	function getCountryFromLocalStorage(countryCode: string) {
-		const regexp = /\W/gi;
-		// Codes are 2 or 3 letters
-		if (countryCode.length < 2 || countryCode.length > 3 || regexp.test(countryCode)) {
-			console.log('wrong code: ', countryCode.length);
-			return [];
-		}
-
-		// check if country data is already stored in local storage and return it if it was created <24 hrs ago
-		let countryStoreIndex = $countriesData.findIndex(
-			(entry) => entry.cca2 === countryCode.toUpperCase()
-		);
-		if (countryStoreIndex === -1) {
-			countryStoreIndex = $countriesData.findIndex(
-				(entry) => entry.cca3 === countryCode.toUpperCase()
-			);
-		}
-		if (countryStoreIndex > -1) {
-			const data = $countriesData[countryStoreIndex];
-
-			if (+Date.now() - +data.createdAt < 86400000) {
-				return data;
-			}
-			$countriesData.splice(countryStoreIndex);
-		}
-		return null;
-	}
 </script>
 
 <Header />
@@ -176,7 +95,7 @@
 								{#each borders as border}
 									<div>
 										<a
-											class="transition-colors ease-theme duration-500 rounded-md bg-light-mode-very-light-gray dark:bg-dark-mode-dark-blue px-3 py-0.5 mx-2 shadow-around shadow-light-mode-dark-gray dark:shadow-any-white"
+											class="hover:bg-dark-mode-dark-blue hover:text-any-white dark:hover:bg-any-white dark:hover:text-dark-mode-very-dark-blue transition-colors ease-switch duration-200 rounded-md bg-light-mode-very-light-gray dark:bg-dark-mode-dark-blue px-3 py-0.5 mx-2 shadow-around shadow-light-mode-dark-gray dark:shadow-any-white"
 											href={'/countries/' + border?.cca3}>{border?.name}</a
 										>
 									</div>
@@ -205,7 +124,7 @@
 	img {
 		transition: box-shadow 700ms ease-in-out;
 	}
-	a {
-		transition: background-color 700ms ease-in-out;
-	}
+	/* a {
+		transition: background-color 200ms ease-in-out;
+	} */
 </style>
