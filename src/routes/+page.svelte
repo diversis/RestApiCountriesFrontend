@@ -4,8 +4,7 @@
 	import { searchCountires } from '$lib/Country';
 	import Header from '$lib/Header.svelte';
 	import LoaderCog from '$lib/Loader-cog.svelte';
-	import LoaderInline from '$lib/Loader-inline.svelte';
-	import '../../../index.css';
+	import '../index.css';
 
 	export let data;
 
@@ -19,8 +18,7 @@
 	<article
 		class="container mx-auto flex flex-col lg:grid lg:grid-cols-4 items-center mt-12 px-4 lg:px-10 gap-10 lg:gap-x-16 text-left relative"
 	>
-		<div class="lg:col-span-4 flex items-start self-start"><BackButton /></div>
-		{#await searchCountires(searchString, slug)}
+		{#await searchCountires(searchString)}
 			<div class="lg:col-span-4 flex items-start self-start"><LoaderCog /></div>
 		{:then countries}
 			{#each countries as country}

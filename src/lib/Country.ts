@@ -1,6 +1,9 @@
 import { countriesData } from '../routes/store';
 import { get } from 'svelte/store';
 
+const fields =
+	'?fields=name,capital,currencies,population,region,subregion,tld,languages,borders,flags,cca2,cca3';
+
 export async function getCountry(countryCode: string) {
 	const dataFromLocalStorage = getCountryFromLocalStorage(countryCode);
 	if (dataFromLocalStorage) {
@@ -13,10 +16,10 @@ export async function getCountry(countryCode: string) {
 
 async function fetchCountry(countryCode: string) {
 	console.log(
-		`\n--------------------\n fetching... https://restcountries.com/v3.1/alpha/${countryCode} \n--------------------\n`
+		`\n--------------------\n fetching... https://restcountries.com/v3.1/alpha/${countryCode}${fields} \n--------------------\n`
 	);
 	// fetch from api and save to local storage
-	return await fetch(`https://restcountries.com/v3.1/alpha/${countryCode}`)
+	return await fetch(`https://restcountries.com/v3.1/alpha/${countryCode}${fields}`)
 		.then((response: Response) => response.json())
 		.then((data) => {
 			const now: number = Date.now();
@@ -86,9 +89,9 @@ export async function searchCountires(
 ) {
 	if (region) {
 		console.log(
-			`\n--------------------\n fetching... https://restcountries.com/v3.1/region/${region} \n--------------------\n`
+			`\n--------------------\n fetching... https://restcountries.com/v3.1/region/${region}${fields} \n--------------------\n`
 		);
-		return await fetch(`https://restcountries.com/v3.1/region/${region}`)
+		return await fetch(`https://restcountries.com/v3.1/region/${region}${fields}`)
 			.then((response: Response) => response.json())
 			.then((data) => {
 				for (let country of data) {
@@ -102,9 +105,9 @@ export async function searchCountires(
 			});
 	}
 	console.log(
-		`\n--------------------\n fetching... https://restcountries.com/v3.1/all \n--------------------\n`
+		`\n--------------------\n fetching... https://restcountries.com/v3.1/all${fields} \n--------------------\n`
 	);
-	return await fetch(`https://restcountries.com/v3.1/all`)
+	return await fetch(`https://restcountries.com/v3.1/all${fields}`)
 		.then((response: Response) => response.json())
 		.then((data) => {
 			for (let country of data) {

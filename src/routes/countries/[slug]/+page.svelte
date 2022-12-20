@@ -29,34 +29,40 @@
 				/>
 			</div>
 			<div class="grid grid-cols-1 gap-y-6 w-full">
-				<h1 id="country-name">{country?.name?.common}</h1>
+				<h1 id="country-name">
+					{#if typeof country?.name?.common === 'string'}{country?.name?.common}{:else}None{/if}
+				</h1>
 				<!-- Info -->
 				<div class="flex flex-col lg:grid lg:grid-cols-2 gap-y-8">
 					<!-- Column 1 -->
 					<div class="flex flex-col">
 						<p>
 							<span>Native Name: </span>
-							{country?.name?.nativeName[
-								Object.keys(country.name.nativeName)[
-									Object.keys(country.name.nativeName).length - 1
-								]
-							].common}
+							{#if country?.name?.nativeName && Object.keys(country.name.nativeName).length > 0}
+								{country?.name?.nativeName[
+									Object.keys(country.name.nativeName)[
+										Object.keys(country.name.nativeName).length - 1
+									]
+								].common}
+							{:else}
+								None
+							{/if}
 						</p>
 						<p>
 							<span>Population: </span>
-							{country?.population}
+							{country?.population || 'None'}
 						</p>
 						<p>
 							<span>Region: </span>
-							{country?.region}
+							{country?.region || 'None'}
 						</p>
 						<p>
 							<span>Sub Region: </span>
-							{country?.subregion}
+							{country?.subregion || 'None'}
 						</p>
 						<p>
 							<span>Capital: </span>
-							{country?.capital}
+							{country?.capital || 'None'}
 						</p>
 					</div>
 					<!--  Column 2  -->
@@ -67,17 +73,22 @@
 						</p>
 						<p>
 							<span>Currencies: </span>
-							{country?.currencies[Object.keys(country.currencies)[0]].name} ({country?.currencies[
-								Object.keys(country.currencies)[0]
-							].symbol})
+							{#if country?.currencies && Object.keys(country.currencies).length > 0}{country
+									?.currencies[Object.keys(country.currencies)[0]].name}
+								{country?.currencies[Object.keys(country.currencies)[0]].symbol}
+							{:else}
+								None
+							{/if}
 						</p>
 						<p>
 							<span>Languages: </span>
 							<!-- {#if Object.values(country.languages).length > 1} -->
-							{#if country && Object.values(country?.languages).length > 0}
+							{#if country?.languages && Object.keys(country.languages).length > 0}
 								{#each Object.values(country.languages) as lang, i}
 									{lang}{#if i < Object.values(country.languages).length - 1}{', '}{/if}
 								{/each}
+							{:else}
+								None
 							{/if}
 							<!-- {:else if Object.values(country.languages)}
 									{Object.values(country.languages)}
@@ -103,7 +114,7 @@
 								{/each}
 							{/await}
 						{:else}
-							None
+							<none class="pl-2">None</none>
 						{/if}
 					</div>
 				</div>

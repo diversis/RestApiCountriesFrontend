@@ -4,7 +4,6 @@
 	import { searchCountires } from '$lib/Country';
 	import Header from '$lib/Header.svelte';
 	import LoaderCog from '$lib/Loader-cog.svelte';
-	import LoaderInline from '$lib/Loader-inline.svelte';
 	import '../../../index.css';
 
 	export let data;
