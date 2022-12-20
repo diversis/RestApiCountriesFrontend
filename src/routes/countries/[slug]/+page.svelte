@@ -4,6 +4,7 @@
 	import Header from '$lib/Header.svelte';
 	import BackButton from '$lib/BackButton.svelte';
 	import { getBorders, getCountry } from '$lib/Country';
+	import LoaderCog from '$lib/Loader-cog.svelte';
 
 	export let data;
 
@@ -18,7 +19,7 @@
 	>
 		<div class="lg:col-span-2 flex items-start self-start"><BackButton /></div>
 		{#await getCountry(slug)}
-			<LoaderInline />
+			<div class="lg:col-span-2 flex items-start self-start"><LoaderCog /></div>
 		{:then country}
 			<div class="relative w-full">
 				<img

@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { fade, blur, fly, slide, scale } from 'svelte/transition';
-	import { quintOut } from 'svelte/easing';
 	import { theme } from '../routes/store';
 
 	$: lightness = $theme === 'dark' ? 60 : 20;

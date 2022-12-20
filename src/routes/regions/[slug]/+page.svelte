@@ -3,6 +3,7 @@
 	import CardSmall from '$lib/CardSmall.svelte';
 	import { searchCountires } from '$lib/Country';
 	import Header from '$lib/Header.svelte';
+	import LoaderCog from '$lib/Loader-cog.svelte';
 	import LoaderInline from '$lib/Loader-inline.svelte';
 	import '../../../index.css';
 
@@ -20,7 +21,7 @@
 	>
 		<div class="lg:col-span-4 flex items-start self-start"><BackButton /></div>
 		{#await searchCountires(searchString, slug)}
-			<LoaderInline />
+			<div class="lg:col-span-4 flex items-start self-start"><LoaderCog /></div>
 		{:then countries}
 			{#each countries as country}
 				<CardSmall {country} />
