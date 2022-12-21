@@ -15,15 +15,17 @@
 
 <main class="relative">
 	<article
-		class="container mx-auto flex flex-col lg:grid lg:grid-cols-2 items-center mt-12 px-4 lg:px-10 gap-10 lg:gap-x-16 text-left relative"
+		class="container mx-auto flex flex-col lg:grid lg:grid-cols-2 items-center mt-12 px-4 lg:px-10 gap-10 lg:gap-x-16 text-left relative pb-6"
 	>
 		<div class="lg:col-span-2 flex items-start self-start"><BackButton /></div>
 		{#await getCountry(slug)}
-			<div class="lg:col-span-2 flex items-start self-start"><LoaderCog /></div>
+			<div id="LoaderCog" class="lg:col-span-2 grid items-center mx-auto lg:row-span-2">
+				<LoaderCog />
+			</div>
 		{:then country}
 			<div class="relative w-full">
 				<img
-					src={country?.flags?.png}
+					src={country?.flags?.svg}
 					alt={'' + country?.name?.common + ' flag'}
 					class="mx-auto shadow-img-light dark:shadow-img-dark transition-colors duration-700 w-full"
 				/>
@@ -74,8 +76,9 @@
 						<p>
 							<span>Currencies: </span>
 							{#if country?.currencies && Object.keys(country.currencies).length > 0}{country
-									?.currencies[Object.keys(country.currencies)[0]].name}
-								{country?.currencies[Object.keys(country.currencies)[0]].symbol}
+									?.currencies[Object.keys(country.currencies)[0]].name} ( {country?.currencies[
+									Object.keys(country.currencies)[0]
+								].symbol} )
 							{:else}
 								None
 							{/if}
@@ -136,7 +139,8 @@
 	img {
 		transition: box-shadow 700ms ease-in-out;
 	}
-	/* a {
-		transition: background-color 200ms ease-in-out;
-	} */
+
+	#LoaderCog {
+		height: calc(100vh - 9rem - 5em);
+	}
 </style>

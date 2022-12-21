@@ -62,7 +62,7 @@ function getCountryFromLocalStorage(countryCode: string) {
 		}
 		countriesData.update((data) => {
 			data.splice(countryIndex, 1);
-			return dataUpdate;
+			return data;
 		});
 	}
 	return null;
@@ -95,8 +95,9 @@ export async function searchCountires(
 			.then((response: Response) => response.json())
 			.then((data) => {
 				for (let country of data) {
-					addToLocalStorage(country);
+					country.createdAt = Date.now();
 				}
+				countriesData.set(data);
 				return data;
 			})
 			.catch((error) => {
@@ -111,9 +112,9 @@ export async function searchCountires(
 		.then((response: Response) => response.json())
 		.then((data) => {
 			for (let country of data) {
-				addToLocalStorage(country);
+				country.createdAt = Date.now();
 			}
-
+			countriesData.set(data);
 			return data;
 		})
 		.catch((error) => {

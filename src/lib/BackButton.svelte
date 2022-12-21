@@ -5,7 +5,7 @@
 </script>
 
 <button
-	class="group hover:bg-dark-mode-dark-blue hover:text-any-white dark:hover:bg-any-white dark:hover:text-dark-mode-very-dark-blue inline-flex items-center shadow-around shadow-light-mode-dark-gray dark:shadow-any-white text-light-mode-very-dark-blue  dark:text-any-white transition-colors ease-theme duration-200 rounded-md bg-light-mode-very-light-gray dark:bg-dark-mode-dark-blue px-6 py-1"
+	class="h-min group hover:bg-dark-mode-dark-blue hover:text-any-white dark:hover:bg-any-white dark:hover:text-dark-mode-very-dark-blue inline-flex items-center shadow-around shadow-light-mode-dark-gray dark:shadow-any-white text-light-mode-very-dark-blue  dark:text-any-white transition-colors ease-theme duration-200 rounded-md bg-light-mode-very-light-gray dark:bg-dark-mode-dark-blue px-6 py-1"
 	title="Go back"
 	on:click={goBack}
 >

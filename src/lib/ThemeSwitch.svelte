@@ -5,11 +5,11 @@
 	$: themeS = $theme;
 
 	function toggle() {
-		theme.set(themeS === 'dark' ? 'light' : 'dark');
+		theme.set(themeS === 'dark' ? '' : 'dark');
 		window.document.documentElement.className = ('', $theme);
 	}
 	beforeUpdate(async () => {
-		await tick();
+		// await tick();
 
 		if (themeS === 'dark') {
 			window.document.documentElement.className = ('', $theme);

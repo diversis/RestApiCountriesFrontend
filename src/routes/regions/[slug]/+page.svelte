@@ -16,11 +16,11 @@
 <Header />
 <main class="relative">
 	<article
-		class="container mx-auto flex flex-col lg:grid lg:grid-cols-4 items-center mt-12 px-4 lg:px-10 gap-10 lg:gap-x-16 text-left relative"
+		class="container mx-auto flex flex-col lg:grid lg:grid-cols-4 items-center mt-12 px-4 lg:px-10 gap-10 lg:gap-x-16 text-left relative pb-6"
 	>
 		<div class="lg:col-span-4 flex items-start self-start"><BackButton /></div>
 		{#await searchCountires(searchString, slug)}
-			<div class="lg:col-span-4 flex items-start self-start"><LoaderCog /></div>
+			<div id="LoaderCog" class="lg:col-span-4 grid items-center m-auto"><LoaderCog /></div>
 		{:then countries}
 			{#each countries as country}
 				<CardSmall {country} />
@@ -30,3 +30,9 @@
 		{/await}
 	</article>
 </main>
+
+<style>
+	#LoaderCog {
+		height: calc(100vh - 9rem - 5em);
+	}
+</style>
