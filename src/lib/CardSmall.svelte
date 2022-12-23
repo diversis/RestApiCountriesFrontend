@@ -2,13 +2,7 @@
 	import { onMount } from 'svelte';
 
 	export let country;
-	onMount(() => {
-		console.log(
-			'\n--------------------\n small card country: ',
-			country,
-			'\n--------------------\n'
-		);
-	});
+	onMount(() => {});
 </script>
 
 <a

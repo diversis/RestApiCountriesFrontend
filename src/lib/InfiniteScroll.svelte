@@ -3,7 +3,9 @@
 	import { browser } from '$app/environment';
 
 	function handleView() {
-		alert('Intersection Observer view event triggered');
+		console.log(
+			'\n--------------------\n Intersection Observer view event triggered \n--------------------\n '
+		);
 	}
 
 	let container;
@@ -19,7 +21,7 @@
 					}
 				});
 			};
-			const options = { threshold: 1, rootMargin: '100% 0% -100%' };
+			const options = { threshold: 0.8, rootMargin: '100% 0% -100%' };
 			observer = new IntersectionObserver(handleIntersect, options);
 			observer.observe(container);
 		}
@@ -32,6 +34,6 @@
 	});
 </script>
 
-<div bind:this={container}>
+<div id="scrollWrapper" bind:this={container}>
 	<slot />
 </div>

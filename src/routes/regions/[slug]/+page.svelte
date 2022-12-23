@@ -10,6 +10,8 @@
 
 	$: slug = data?.slug;
 
+	let arrayStart = 0;
+	let arrayEnd = 12;
 	$: searchString = '';
 </script>
 
@@ -19,7 +21,7 @@
 		class="container mx-auto flex flex-col lg:grid lg:grid-cols-4 items-center mt-12 px-4 lg:px-10 gap-10 lg:gap-x-16 text-left relative pb-6"
 	>
 		<div class="lg:col-span-4 flex items-start self-start"><BackButton /></div>
-		{#await searchCountires(searchString, slug)}
+		{#await searchCountires(searchString, slug, arrayStart, arrayEnd)}
 			<div id="LoaderCog" class="lg:col-span-4 grid items-center m-auto"><LoaderCog /></div>
 		{:then countries}
 			{#each countries as country}
