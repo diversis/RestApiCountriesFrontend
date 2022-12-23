@@ -1,4 +1,4 @@
-import { countriesData, storedAllAt } from '../routes/store';
+import { countriesData, currentPage, hasMore, storedAllAt } from '../routes/store';
 import { get } from 'svelte/store';
 
 const fields =
@@ -68,8 +68,8 @@ function getCountryFromLocalStorage(countryCode: string) {
 	return null;
 }
 
-function isFresh(date: string | number, limit: number | undefined) {
-	const numLimit = limit || 86400000;
+function isFresh(date: string | number, limit = 86400000) {
+	const numLimit = limit;
 	return +Date.now() - +date < numLimit;
 }
 
@@ -90,10 +90,12 @@ export async function getBorders(bordersCodes: []) {
 
 export async function searchCountires(
 	searchString: string | undefined,
-	region: string | undefined,
-	start: number,
-	end: number
+	region: string | undefined
 ) {
+	console.log(
+		`\n--------------------\n isFresh: ${isFresh(+get(storedAllAt))} \n--------------------\n`
+	);
+
 	if (region) {
 		console.log(
 			`\n--------------------\n fetching... https://restcountries.com/v3.1/region/${region}${fields} \n--------------------\n`
@@ -104,18 +106,23 @@ export async function searchCountires(
 				for (let country of data) {
 					country.createdAt = Date.now();
 				}
-				return arrayPick(data, start, end);
+				return arrayPick(data);
 			})
 			.catch((error) => {
 				console.log(error);
 				return [];
 			});
 	} else if (!searchString && isFresh(+get(storedAllAt))) {
-		return arrayPick(get(countriesData), start, end);
+		const pageArray = arrayPick(get(countriesData));
+
+		console.log(`\n--------------------\n pageArray ${pageArray} \n--------------------\n`);
+		return pageArray;
 	}
+
 	console.log(
 		`\n--------------------\n fetching... https://restcountries.com/v3.1/all${fields} \n--------------------\n`
 	);
+
 	return await fetch(`https://restcountries.com/v3.1/all${fields}`)
 		.then((response: Response) => response.json())
 		.then((data) => {
@@ -124,7 +131,7 @@ export async function searchCountires(
 			}
 			countriesData.set(data);
 			storedAllAt.set(Date.now());
-			return arrayPick(data, start, end);
+			return arrayPick(data);
 		})
 		.catch((error) => {
 			console.log(error);
@@ -147,12 +154,19 @@ function addToLocalStorage(country) {
 	});
 }
 
-function arrayPick(array: [], start: number, end: number) {
+function arrayPick(array: []) {
 	const newArray: object[] = [];
-
-	for (let i = start; i < end; i++) {
-		newArray.push(array[i]);
+	const page = get(currentPage);
+	if (page === 0) {
+		hasMore.set(true);
 	}
 
+	for (let i = 0; i < (page + 1) * 12; i++) {
+		if (i >= array.length) {
+			hasMore.set(false);
+			return newArray;
+		}
+		newArray.push(array[i]);
+	}
 	return newArray;
 }

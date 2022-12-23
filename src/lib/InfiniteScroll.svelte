@@ -1,11 +1,14 @@
 <script>
-	import { onMount, onDestroy } from 'svelte';
+	import { onMount, onDestroy, createEventDispatcher } from 'svelte';
 	import { browser } from '$app/environment';
+
+	const dispatch = createEventDispatcher();
 
 	function handleView() {
 		console.log(
 			'\n--------------------\n Intersection Observer view event triggered \n--------------------\n '
 		);
+		dispatch('event', { text: 'triggered' });
 	}
 
 	let container;
@@ -21,7 +24,7 @@
 					}
 				});
 			};
-			const options = { threshold: 0.8, rootMargin: '100% 0% -100%' };
+			const options = { threshold: 1, rootMargin: '0px' };
 			observer = new IntersectionObserver(handleIntersect, options);
 			observer.observe(container);
 		}
