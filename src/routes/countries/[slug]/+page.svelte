@@ -30,7 +30,9 @@
 					class="mx-auto shadow-img-light dark:shadow-img-dark transition-colors duration-700 w-full"
 				/>
 			</div>
-			<div class="grid grid-cols-1 gap-y-6 w-full">
+			<div
+				class="grid grid-cols-1 gap-y-6 w-full bg-any-white dark:bg-dark-mode-dark-blue  bg-opacity-50 dark:bg-opacity-50 p-2 rounded-md backdrop-blur-[3px]"
+			>
 				<h1 id="country-name">
 					{#if typeof country?.name?.common === 'string'}{country?.name?.common}{:else}None{/if}
 				</h1>

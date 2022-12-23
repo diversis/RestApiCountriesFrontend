@@ -38,10 +38,10 @@
 		</div>
 	</div>
 	{#await countriesDisplay}
-		<div id="LoaderCog" class="lg:col-span-4 grid items-center m-auto"><LoaderCog /></div>
+		<div id="LoaderCog" class=" grid items-center m-auto"><LoaderCog /></div>
 	{:then countries}
 		<article
-			class="container mx-auto flex flex-col lg:grid lg:grid-cols-4 items-center mt-12 px-4 lg:px-10 gap-10 lg:gap-x-16 text-left relative mb-6"
+			class="container mx-auto grid-cols-1 grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 items-center mt-12 px-4 lg:px-10 gap-10 lg:gap-x-16 text-left relative mb-6"
 		>
 			{#each countries as country}
 				<CardSmall {country} />

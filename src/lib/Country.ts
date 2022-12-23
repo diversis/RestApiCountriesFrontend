@@ -92,10 +92,6 @@ export async function searchCountires(
 	searchString: string | undefined,
 	region: string | undefined
 ) {
-	console.log(
-		`\n--------------------\n isFresh: ${isFresh(+get(storedAllAt))} \n--------------------\n`
-	);
-
 	if (region) {
 		console.log(
 			`\n--------------------\n fetching... https://restcountries.com/v3.1/region/${region}${fields} \n--------------------\n`
@@ -114,8 +110,6 @@ export async function searchCountires(
 			});
 	} else if (!searchString && isFresh(+get(storedAllAt))) {
 		const pageArray = arrayPick(get(countriesData));
-
-		console.log(`\n--------------------\n pageArray ${pageArray} \n--------------------\n`);
 		return pageArray;
 	}
 

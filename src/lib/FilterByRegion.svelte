@@ -23,7 +23,7 @@
 		>
 			<div
 				id="dropdown"
-				class="rounded-lg pl-2 relative z-50 bg-any-white dark:bg-dark-mode-dark-blue w-[20ch] pb-3 bg-opacity-70 dark:bg-opacity-70  backdrop-blur-sm leading-[2em]"
+				class="rounded-b-lg pl-2 relative z-50 bg-any-white dark:bg-dark-mode-dark-blue w-[20ch] pb-3 bg-opacity-70 dark:bg-opacity-70  backdrop-blur-sm leading-[2em]"
 				transition:fly={{ delay: 0, duration: 1000, easing: quintInOut, y: -150 }}
 			>
 				{#each menuItems as item}

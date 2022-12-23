@@ -6,36 +6,37 @@
 </script>
 
 <a
-	class="grid grid-cols-1 gap-y-3 shadow-img-light dark:shadow-img-dark rounded-lg w-full lg:h-[20em]  xl:h-[26em] overflow-hidden text-sm"
+	class="bg-any-white dark:bg-dark-mode-dark-blue transition-all duration-300 bg-opacity-50 dark:bg-opacity-30 active:scale-[99%] backdrop-blur-[3px] hover:mt-[-0.5em] hover:h-[26.5em] focus:mt-[-0.5em] focus:h-[26.5em] text-left pb-[1em] xl:pb-[2em] grid grid-cols-1 gap-y-3 shadow-img-light dark:shadow-img-dark rounded-lg w-full lg:h-[20em]  xl:h-[26em] overflow-hidden text-sm justify-between"
 	href="/countries/{country.cca3}"
 >
-	<div class="relative w-full xl:h-[11.425em]">
+	<div class="relative w-full h-min">
 		<img
 			src={country?.flags?.png}
 			alt={'' + country?.name?.common + ' flag'}
-			class="mx-auto  transition-colors duration-700 border-b-[1px] border-b-light-mode-dark-gray dark:border-b-any-white object-top object-fit max-w-full h-auto xl:max-h-[12em] aspect-[2/1]"
+			class="mx-auto  transition-colors duration-700 border-b-[1px] border-b-light-mode-dark-gray dark:border-b-any-white object-top object-fit max-w-full h-auto lg:max-h-[8em] xl:max-h-[12em] aspect-[2/1]"
 		/>
 	</div>
 	<!-- Info -->
-	<div class="flex flex-col gap-y-2 px-4 text-left pb-[2em] justify-between">
-		<h1 id="country-name" class="text-left text-xl max-h-[2.5em] align-bottom">
-			{country?.name?.common || 'None'}
-		</h1>
-		<!-- Column 1 -->
-		<div class="grid grid-col-1">
-			<p>
-				<span>Population: </span>
-				{country?.population || 'None'}
-			</p>
-			<p>
-				<span>Region: </span>
-				{country?.region || 'None'}
-			</p>
-			<p>
-				<span>Capital: </span>
-				{country?.capital || 'None'}
-			</p>
-		</div>
+	<h1
+		id="country-name"
+		class=" px-4 text-left text-lg max-h-[2.5em] align-bottom md:leading-[1.125] xl:leading-normal"
+	>
+		{country?.name?.common || 'None'}
+	</h1>
+	<!-- Column 1 -->
+	<div class="grid grid-col-1 px-4">
+		<p>
+			<span>Population: </span>
+			{country?.population || 'None'}
+		</p>
+		<p>
+			<span>Region: </span>
+			{country?.region || 'None'}
+		</p>
+		<p>
+			<span>Capital: </span>
+			{country?.capital || 'None'}
+		</p>
 	</div>
 </a>
 
