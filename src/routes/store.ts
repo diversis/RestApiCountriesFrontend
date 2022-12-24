@@ -14,3 +14,4 @@ export const nextPage = localWritable('nextPage', ['/']);
  **/
 export const currentPage = writable(0);
 export const hasMore = writable(true);
+export const currentSearchArray = writable([]);

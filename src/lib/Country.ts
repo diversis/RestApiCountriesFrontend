@@ -123,6 +123,7 @@ export async function searchCountires(
 			for (let country of data) {
 				country.createdAt = Date.now();
 			}
+			data.sort(compareCountriesByName);
 			countriesData.set(data);
 			storedAllAt.set(Date.now());
 			return arrayPick(data);
@@ -163,4 +164,10 @@ function arrayPick(array: []) {
 		newArray.push(array[i]);
 	}
 	return newArray;
+}
+
+function compareCountriesByName(a, b) {
+	if (a.name.common > b.name.common) return 1;
+	if (a.name.common === b.name.common) return 0;
+	if (a.name.common < b.name.common) return -1;
 }

@@ -1,5 +1,6 @@
-<script>
-	import BackButton from '$lib/BackButton.svelte';
+<script lang="ts">
+	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
 	import CardSmall from '$lib/CardSmall.svelte';
 	import { searchCountires } from '$lib/Country';
 	import FilterByRegion from '$lib/FilterByRegion.svelte';
@@ -12,11 +13,20 @@
 	import { currentPage, hasMore } from './store';
 
 	export let data;
-	let arrayStart = 0;
-	let arrayEnd = 12;
+
+	const search = $page.url;
+	// search.searchParams.set('search', 'ddd');
+	onMount(() => {
+		// goto(`?${$page.url.searchParams.toString()}`);
+		console.log(
+			`\n--------------------\n search1:  ${search.searchParams.get('search')} || page.url ${
+				$page.url
+			} \n--------------------\n`
+		);
+	});
 	$: slug = data?.slug;
 	$: searchString = '';
-	$: page = $currentPage;
+	$: thisPage = $currentPage;
 
 	$: countriesDisplay = searchCountires(searchString);
 
@@ -33,15 +43,17 @@
 	<div
 		class="container mx-auto grid grid-cols-1 items-center mt-12 px-4 lg:px-10 gap-10 text-left relative mb-6"
 	>
-		<div class="relative flex flex-row justify-between mx-auto pb-6 w-full">
+		<div
+			class="relative flex flex-col md:flex-row justify-between mx-auto pb-6 w-full item gap-y-6"
+		>
 			<Search /><FilterByRegion />
 		</div>
 	</div>
 	{#await countriesDisplay}
-		<div id="LoaderCog" class=" grid items-center m-auto"><LoaderCog /></div>
+		<div id="LoaderCog" class=" grid items-center m-auto w-min"><LoaderCog /></div>
 	{:then countries}
 		<article
-			class="container mx-auto grid-cols-1 grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 items-center mt-12 px-4 lg:px-10 gap-10 lg:gap-x-16 text-left relative mb-6"
+			class="container mx-auto grid-cols-1 grid xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 items-center mt-12 px-4 lg:px-10 gap-10 lg:gap-x-16 text-left relative mb-6"
 		>
 			{#each countries as country}
 				<CardSmall {country} />

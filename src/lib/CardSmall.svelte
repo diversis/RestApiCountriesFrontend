@@ -6,14 +6,21 @@
 </script>
 
 <a
-	class="bg-any-white dark:bg-dark-mode-dark-blue transition-all duration-300 bg-opacity-50 dark:bg-opacity-30 active:scale-[99%] backdrop-blur-[3px] hover:mt-[-0.5em] hover:h-[26.5em] focus:mt-[-0.5em] focus:h-[26.5em] text-left pb-[1em] xl:pb-[2em] grid grid-cols-1 gap-y-3 shadow-img-light dark:shadow-img-dark rounded-lg w-full lg:h-[20em]  xl:h-[26em] overflow-hidden text-sm justify-between"
+	class="bg-any-white dark:bg-dark-mode-dark-blue transition-all duration-300 
+	bg-opacity-50 dark:bg-opacity-30 active:scale-[99%] backdrop-blur-[3px] 
+	hover:mt-[-0.5em] xl:hover:h-[26.5em] lg:hover:h-[20.5em] focus:mt-[-0.5em] 
+	focus:h-[26.5em] text-left pb-[1em] xl:pb-[2em] grid grid-cols-1 gap-y-3
+	 shadow-card-light dark:shadow-card-dark rounded-lg
+	 w-full h-[40vh] lg:h-[26em] overflow-hidden text-sm justify-between"
 	href="/countries/{country.cca3}"
 >
 	<div class="relative w-full h-min">
 		<img
 			src={country?.flags?.png}
 			alt={'' + country?.name?.common + ' flag'}
-			class="mx-auto  transition-colors duration-700 border-b-[1px] border-b-light-mode-dark-gray dark:border-b-any-white object-top object-fit max-w-full h-auto lg:max-h-[8em] xl:max-h-[12em] aspect-[2/1]"
+			class="mx-auto  transition-colors duration-700 border-b-[1px]
+			 border-b-light-mode-dark-gray border-opacity-20 dark:border-opacity-20 dark:border-b-any-white 
+			 object-top object-fit w-full h-auto max-h-[20vh] lg:max-h-[8em] xl:max-h-[12em] aspect-[2/1]"
 		/>
 	</div>
 	<!-- Info -->

@@ -31,13 +31,15 @@
 				/>
 			</div>
 			<div
-				class="grid grid-cols-1 gap-y-6 w-full bg-any-white dark:bg-dark-mode-dark-blue  bg-opacity-50 dark:bg-opacity-50 p-2 rounded-md backdrop-blur-[3px]"
+				class="shadow-card-light dark:shadow-card-dark 
+				grid grid-cols-1 gap-y-6 w-full
+				 bg-any-white dark:bg-dark-mode-dark-blue  bg-opacity-50 dark:bg-opacity-50 p-4 rounded-md backdrop-blur-[3px]"
 			>
 				<h1 id="country-name">
 					{#if typeof country?.name?.common === 'string'}{country?.name?.common}{:else}None{/if}
 				</h1>
 				<!-- Info -->
-				<div class="flex flex-col lg:grid lg:grid-cols-2 gap-y-8">
+				<div class="flex flex-col lg:grid lg:grid-cols-2 gap-y-8 ">
 					<!-- Column 1 -->
 					<div class="flex flex-col">
 						<p>
@@ -112,7 +114,10 @@
 								{#each borders as border}
 									<div>
 										<a
-											class="hover:bg-dark-mode-dark-blue hover:text-any-white dark:hover:bg-any-white dark:hover:text-dark-mode-very-dark-blue transition-colors ease-switch duration-200 rounded-md bg-light-mode-very-light-gray dark:bg-dark-mode-dark-blue px-3 py-0.5 mx-2 shadow-around shadow-light-mode-dark-gray dark:shadow-any-white"
+											class="hover:bg-dark-mode-dark-blue hover:text-any-white dark:hover:bg-any-white dark:hover:text-dark-mode-very-dark-blue 
+											focus:bg-dark-mode-dark-blue focus:text-any-white dark:focus:bg-any-white dark:focus:text-dark-mode-very-dark-blue 
+											transition-colors ease-switch duration-200 rounded-md bg-light-mode-very-light-gray dark:bg-dark-mode-dark-blue
+											 px-3 py-0.5 mx-2 shadow-around shadow-light-mode-dark-gray dark:shadow-any-white"
 											href={'/countries/' + border?.cca3}>{border?.name}</a
 										>
 									</div>
