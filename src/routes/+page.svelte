@@ -14,26 +14,17 @@
 
 	export let data;
 
-	const search = $page.url;
-	// search.searchParams.set('search', 'ddd');
-	onMount(() => {
-		// goto(`?${$page.url.searchParams.toString()}`);
-		console.log(
-			`\n--------------------\n search1:  ${search.searchParams.get('search')} || page.url ${
-				$page.url
-			} \n--------------------\n`
-		);
-	});
 	$: slug = data?.slug;
-	$: searchString = '';
+	$: searchString = $page.url.searchParams.get('search') || null;
 	$: thisPage = $currentPage;
+	$: region = $page.url.searchParams.get('region') || null;
 
-	$: countriesDisplay = searchCountires(searchString);
+	$: countriesDisplay = searchCountires(searchString, region);
 
 	function handleScrollDown(e) {
 		if ($hasMore) {
 			$currentPage += 1;
-			countriesDisplay = searchCountires(searchString);
+			countriesDisplay = searchCountires(searchString, region, false);
 		}
 	}
 </script>

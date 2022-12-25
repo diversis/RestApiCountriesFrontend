@@ -1,4 +1,10 @@
-import { countriesData, currentPage, hasMore, storedAllAt } from '../routes/store';
+import {
+	countriesData,
+	currentPage,
+	currentSearchArray,
+	hasMore,
+	storedAllAt
+} from '../routes/store';
 import { get } from 'svelte/store';
 
 const fields =
@@ -90,9 +96,10 @@ export async function getBorders(bordersCodes: []) {
 
 export async function searchCountires(
 	searchString: string | undefined,
-	region: string | undefined
+	region: string | undefined,
+	init = true
 ) {
-	if (region) {
+	if (region && init) {
 		console.log(
 			`\n--------------------\n fetching... https://restcountries.com/v3.1/region/${region}${fields} \n--------------------\n`
 		);
@@ -102,17 +109,23 @@ export async function searchCountires(
 				for (let country of data) {
 					country.createdAt = Date.now();
 				}
-				return arrayPick(data);
+				currentSearchArray.set(data);
+				return arrayPick(get(currentSearchArray));
 			})
 			.catch((error) => {
 				console.log(error);
 				return [];
 			});
+	} else if (region || searchString) {
+		return arrayPick(get(currentSearchArray));
 	} else if (!searchString && isFresh(+get(storedAllAt))) {
 		const pageArray = arrayPick(get(countriesData));
 		return pageArray;
+	} else if (searchString && isFresh(+get(storedAllAt))) {
+		const searchData = searchCountryByName(get(countriesData), searchString);
+		currentSearchArray.set(searchData);
+		return arrayPick(get(currentSearchArray));
 	}
-
 	console.log(
 		`\n--------------------\n fetching... https://restcountries.com/v3.1/all${fields} \n--------------------\n`
 	);
@@ -126,6 +139,11 @@ export async function searchCountires(
 			data.sort(compareCountriesByName);
 			countriesData.set(data);
 			storedAllAt.set(Date.now());
+			if (searchString) {
+				const searchData = searchCountryByName(data, searchString);
+				currentSearchArray.set(searchData);
+				return arrayPick(get(currentSearchArray));
+			}
 			return arrayPick(data);
 		})
 		.catch((error) => {
@@ -149,7 +167,7 @@ function addToLocalStorage(country) {
 	});
 }
 
-function arrayPick(array: []) {
+function arrayPick(array: object[]) {
 	const newArray: object[] = [];
 	const page = get(currentPage);
 	if (page === 0) {
@@ -170,4 +188,14 @@ function compareCountriesByName(a, b) {
 	if (a.name.common > b.name.common) return 1;
 	if (a.name.common === b.name.common) return 0;
 	if (a.name.common < b.name.common) return -1;
+}
+
+function searchCountryByName(countries: object[], searchString: string) {
+	const searchResult = [];
+	for (let country of countries) {
+		if (country.name?.common?.toLowerCase().includes(searchString.toLowerCase())) {
+			searchResult.push(country);
+		}
+	}
+	return searchResult;
 }

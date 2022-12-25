@@ -1,8 +1,15 @@
-<script>
+<script lang="ts">
 	import { onMount } from 'svelte';
+	import LoaderInline from './Loader-inline.svelte';
 
 	export let country;
+
 	onMount(() => {});
+
+	const fetchFlag = async (url: string) => {
+		const response = await fetch(url);
+		return await response;
+	};
 </script>
 
 <a
@@ -15,13 +22,19 @@
 	href="/countries/{country.cca3}"
 >
 	<div class="relative w-full h-min">
-		<img
-			src={country?.flags?.png}
-			alt={'' + country?.name?.common + ' flag'}
-			class="mx-auto  transition-colors duration-700 border-b-[1px]
+		{#await fetchFlag(country?.flags?.png)}
+			<div class=" grid items-center m-auto w-min h-[20vh] lg:h-[8em] xl:h-[12em]">
+				<LoaderInline />
+			</div>
+		{:then data}
+			<img
+				src={country?.flags?.png}
+				alt={'' + country?.name?.common + ' flag'}
+				class="mx-auto  transition-colors duration-700 border-b-[1px]
 			 border-b-light-mode-dark-gray border-opacity-20 dark:border-opacity-20 dark:border-b-any-white 
 			 object-top object-fit w-full h-auto max-h-[20vh] lg:max-h-[8em] xl:max-h-[12em] aspect-[2/1]"
-		/>
+			/>
+		{/await}
 	</div>
 	<!-- Info -->
 	<h1
@@ -34,15 +47,15 @@
 	<div class="grid grid-col-1 px-4">
 		<p>
 			<span>Population: </span>
-			{country?.population || 'None'}
+			{'' + country?.population || 'None'}
 		</p>
 		<p>
 			<span>Region: </span>
-			{country?.region || 'None'}
+			{'' + country?.region || 'None'}
 		</p>
 		<p>
 			<span>Capital: </span>
-			{country?.capital || 'None'}
+			{'' + country?.capital || 'None'}
 		</p>
 	</div>
 </a>

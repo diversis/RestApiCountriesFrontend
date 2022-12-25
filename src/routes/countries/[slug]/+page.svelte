@@ -9,6 +9,10 @@
 	export let data;
 
 	$: slug = data?.slug;
+	const fetchFlag = async (url: string) => {
+		const response = await fetch(url);
+		return await response;
+	};
 </script>
 
 <Header />
@@ -24,11 +28,17 @@
 			</div>
 		{:then country}
 			<div class="relative w-full">
-				<img
-					src={country?.flags?.svg}
-					alt={'' + country?.name?.common + ' flag'}
-					class="mx-auto shadow-img-light dark:shadow-img-dark transition-colors duration-700 w-full"
-				/>
+				{#await fetchFlag(country?.flags?.svg)}
+					<div class="grid items-center mx-auto w-[20em]">
+						<LoaderCog />
+					</div>
+				{:then data}
+					<img
+						src={country?.flags?.svg}
+						alt={'' + country?.name?.common + ' flag'}
+						class="mx-auto shadow-img-light dark:shadow-img-dark transition-colors duration-700 w-full"
+					/>
+				{/await}
 			</div>
 			<div
 				class="shadow-card-light dark:shadow-card-dark 
@@ -56,19 +66,19 @@
 						</p>
 						<p>
 							<span>Population: </span>
-							{country?.population || 'None'}
+							{'' + country?.population || 'None'}
 						</p>
 						<p>
 							<span>Region: </span>
-							{country?.region || 'None'}
+							{'' + country?.region || 'None'}
 						</p>
 						<p>
 							<span>Sub Region: </span>
-							{country?.subregion || 'None'}
+							{'' + country?.subregion || 'None'}
 						</p>
 						<p>
 							<span>Capital: </span>
-							{country?.capital || 'None'}
+							{'' + country?.capital || 'None'}
 						</p>
 					</div>
 					<!--  Column 2  -->

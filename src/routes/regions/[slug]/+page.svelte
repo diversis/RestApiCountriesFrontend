@@ -3,8 +3,10 @@
 	import CardSmall from '$lib/CardSmall.svelte';
 	import { searchCountires } from '$lib/Country';
 	import Header from '$lib/Header.svelte';
+	import InfiniteScroll from '$lib/InfiniteScroll.svelte';
 	import LoaderCog from '$lib/Loader-cog.svelte';
 	import '../../../index.css';
+	import { currentPage, hasMore } from '../../store';
 
 	export let data;
 
@@ -13,6 +15,15 @@
 	let arrayStart = 0;
 	let arrayEnd = 12;
 	$: searchString = '';
+
+	$: countriesDisplay = searchCountires(searchString, slug);
+
+	function handleScrollDown(e) {
+		if ($hasMore) {
+			$currentPage += 1;
+			countriesDisplay = searchCountires(searchString, slug, false);
+		}
+	}
 </script>
 
 <Header />
@@ -21,12 +32,13 @@
 		class="container mx-auto flex flex-col lg:grid lg:grid-cols-4 items-center mt-12 px-4 lg:px-10 gap-10 lg:gap-x-16 text-left relative pb-6"
 	>
 		<div class="lg:col-span-4 flex items-start self-start"><BackButton /></div>
-		{#await searchCountires(searchString, slug, arrayStart, arrayEnd)}
+		{#await countriesDisplay}
 			<div id="LoaderCog" class="lg:col-span-4 grid items-center m-auto"><LoaderCog /></div>
 		{:then countries}
 			{#each countries as country}
 				<CardSmall {country} />
 			{/each}
+			<InfiniteScroll on:event={handleScrollDown} />
 		{:catch error}
 			<p>{error}</p>
 		{/await}

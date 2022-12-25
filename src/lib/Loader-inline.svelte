@@ -11,7 +11,7 @@
 	}
 </script>
 
-<div class="inline-spinner" style="--width:{width}ch">
+<div class="inline-spinner" style="--width:{width}ch ">
 	<div class="spinner">
 		{#each pieces as piece}
 			<div
