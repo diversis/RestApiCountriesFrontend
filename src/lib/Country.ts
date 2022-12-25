@@ -116,7 +116,7 @@ export async function searchCountires(
 				console.log(error);
 				return [];
 			});
-	} else if (region || searchString) {
+	} else if (region) {
 		return arrayPick(get(currentSearchArray));
 	} else if (!searchString && isFresh(+get(storedAllAt))) {
 		const pageArray = arrayPick(get(countriesData));

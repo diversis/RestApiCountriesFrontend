@@ -8,7 +8,7 @@
 	import InfiniteScroll from '$lib/InfiniteScroll.svelte';
 	import LoaderCog from '$lib/Loader-cog.svelte';
 	import Search from '$lib/Search.svelte';
-	import { onMount } from 'svelte';
+	import { beforeUpdate, onMount } from 'svelte';
 	import '../index.css';
 	import { currentPage, hasMore } from './store';
 
@@ -27,6 +27,11 @@
 			countriesDisplay = searchCountires(searchString, region, false);
 		}
 	}
+
+	beforeUpdate(() => {
+		searchString = $page.url.searchParams.get('search') || null;
+		region = $page.url.searchParams.get('region') || null;
+	});
 </script>
 
 <Header />

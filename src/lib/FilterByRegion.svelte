@@ -1,11 +1,13 @@
 <script>
-	let menuOpen = false;
-	const menuItems = ['Europe', 'Asia', 'Americas', 'Africa', 'Oceania', 'Antarctic'];
 	import { fly } from 'svelte/transition';
 	import { quintInOut } from 'svelte/easing';
+	import { clickOutside } from './clickOutside';
+
+	let menuOpen = false;
+	const menuItems = ['Europe', 'Asia', 'Americas', 'Africa', 'Oceania', 'Antarctic'];
 </script>
 
-<section class="flex flex-col ">
+<section use:clickOutside on:outsideClick={() => (menuOpen = false)} class="flex flex-col ">
 	<button
 		on:click={() => (menuOpen = !menuOpen)}
 		{menuOpen}
@@ -30,7 +32,7 @@
 				transition:fly={{ delay: 0, duration: 1000, easing: quintInOut, y: -150 }}
 			>
 				{#each menuItems as item}
-					<a href="/regions/{item}">
+					<a href="/?region={item}">
 						<p
 							class="w-full px-3 rounded-md
 							 hover:bg-dark-mode-dark-blue hover:text-any-white
