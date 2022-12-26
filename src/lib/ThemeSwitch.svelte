@@ -1,5 +1,5 @@
 <script>
-	import { beforeUpdate, tick } from 'svelte';
+	import { beforeUpdate } from 'svelte';
 	import { theme } from '../routes/store';
 
 	$: themeS = $theme;
@@ -9,16 +9,10 @@
 		window.document.documentElement.className = ('', $theme);
 	}
 	beforeUpdate(async () => {
-		// await tick();
-
 		if (themeS === 'dark') {
 			window.document.documentElement.className = ('', $theme);
 		}
 	});
-	// $: () => {
-	// 	window.document.documentElement.className = ('', themeS);
-	// 	themeS = $theme;
-	// };
 </script>
 
 <button

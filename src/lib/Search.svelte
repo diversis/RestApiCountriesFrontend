@@ -1,9 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-	import { onMount } from 'svelte';
-	import { quintOut } from 'svelte/easing';
-	import { fade, draw, fly } from 'svelte/transition';
+	import { fade, draw } from 'svelte/transition';
 
 	const search = $page.url;
 	let searchString = '';
