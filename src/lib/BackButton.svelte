@@ -12,6 +12,7 @@
 	rounded-md bg-light-mode-very-light-gray dark:bg-dark-mode-dark-blue px-6 py-1 h-min group"
 	title="Go back"
 	on:click={goBack}
+	type="button"
 >
 	<div class="w-[2em] h-[1em] pr-3 flex items-center">
 		<svg

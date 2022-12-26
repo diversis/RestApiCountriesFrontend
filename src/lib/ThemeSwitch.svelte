@@ -16,6 +16,7 @@
 </script>
 
 <button
+	type="button"
 	class="relative text-light-mode-very-dark-blue  dark:text-any-white transition-colors ease-theme duration-500 w-[2em] h-[2em]"
 	on:click={toggle}
 	><span class="sr-only">{`Switch theme to ${themeS === 'dark' ? 'light' : 'dark'}`}</span>

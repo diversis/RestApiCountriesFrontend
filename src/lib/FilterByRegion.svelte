@@ -9,8 +9,8 @@
 
 <section use:clickOutside on:outsideClick={() => (menuOpen = false)} class="flex flex-col w-min">
 	<button
+		type="button"
 		on:click={() => (menuOpen = !menuOpen)}
-		{menuOpen}
 		class="py-4 px-6 inline-flex justify-between w-[20ch] bg-any-white dark:bg-dark-mode-dark-blue
 		 rounded{menuOpen ? '-t' : ''}-lg transition-all duration-700 ease-theme"
 		>Filter by Region <svg
