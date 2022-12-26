@@ -39,9 +39,7 @@
 
 <svelte:head><title>Rest Countries</title></svelte:head>
 <Header />
-<div id="LoaderCog" class="lg:col-span-2 grid items-center mx-auto lg:row-span-2">
-	<LoaderCog />
-</div>
+
 <main class="relative">
 	{#if countryName}
 		{#await getCountry(countryName)}
