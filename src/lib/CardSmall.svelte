@@ -25,7 +25,7 @@
 		</div>
 		<!-- Info -->
 		<h1
-			id="country-name"
+			role="country-name"
 			class=" px-4 text-left text-lg max-h-[2.5em] align-bottom md:leading-[1.125] xl:leading-normal"
 		>
 			{country?.name?.common || 'None'}
