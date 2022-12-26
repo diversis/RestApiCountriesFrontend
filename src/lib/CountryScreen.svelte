@@ -3,7 +3,7 @@
 	import BackButton from '$lib/BackButton.svelte';
 	import { getBorders } from '$lib/Country';
 	import LoaderCog from '$lib/Loader-cog.svelte';
-	import { fetchImg } from '$lib/FetchImg';
+	import { fetchImg } from '$lib/fetchImg';
 
 	export let country;
 </script>
