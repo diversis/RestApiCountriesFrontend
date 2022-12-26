@@ -33,6 +33,7 @@
 	<div
 		class="shadow-card-light dark:shadow-card-dark 
 				grid grid-cols-1 gap-y-6 w-full
+                transition-colors duration-700 ease-theme
 				 bg-any-white dark:bg-dark-mode-dark-blue  bg-opacity-50 dark:bg-opacity-50 p-4 rounded-md backdrop-blur-[3px]"
 	>
 		<h1 id="country-name">
