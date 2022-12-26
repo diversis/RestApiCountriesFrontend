@@ -11,6 +11,7 @@
 	import { beforeUpdate, tick } from 'svelte';
 	import { currentPage, hasMore } from './store';
 	import CountryScreen from '$lib/CountryScreen.svelte';
+	import ToTopButton from '$lib/ToTopButton.svelte';
 
 	const baseTitle = 'Rest Countries';
 
@@ -21,7 +22,7 @@
 	$: countriesDisplay = searchCountires(searchString, region);
 
 	$: title = baseTitle;
-
+	let y: number;
 	async function handleScrollDown(e) {
 		if ($hasMore) {
 			$currentPage += 1;
@@ -39,7 +40,7 @@
 
 <svelte:head><title>Rest Countries</title></svelte:head>
 <Header />
-
+<svelte:window bind:scrollY={y} />
 <main class="relative">
 	{#if countryName}
 		{#await getCountry(countryName)}
@@ -75,6 +76,9 @@
 		{:catch error}
 			<p>{error}</p>
 		{/await}
+	{/if}
+	{#if y > 50}
+		<ToTopButton />
 	{/if}
 </main>
 
