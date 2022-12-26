@@ -2,16 +2,17 @@
 	export let country;
 </script>
 
-<div class="relative w-full h-[40vh] sm:h-[26em]">
+<div class="relative w-full h-[26em]">
 	<a
 		class="absolute bg-any-white dark:bg-dark-mode-dark-blue transition-all duration-300 
 	bg-opacity-50 dark:bg-opacity-30 active:scale-[97%] backdrop-blur-[3px] 
-	focus:mt-[-1vh]  hover:h-[42vh] hover:mt-[-1vh]
-	sm:hover:mt-[-1em] sm:hover:h-[26.5em] sm:focus:h-[26.5em]
+	
+	sm:hover:mt-[-1em] sm:hover:h-[26.5em] sm:focus:h-[26.5em] sm:focus:mt-[-1em]
+	hover:mt-[-0.5em] hover:h-[27em] focus:h-[27em] focus:mt-[-0.5em]
 	 
 	 text-left pb-[1em] xl:pb-[2em] grid grid-cols-1 gap-y-3
 	 shadow-card-light dark:shadow-card-dark rounded-lg
-	 w-full h-[40vh] sm:h-[26em] overflow-hidden text-sm justify-between"
+	 w-full h-[26em] overflow-hidden text-sm justify-between"
 		href="/?country={country.cca3}"
 	>
 		<div class="relative w-full h-min">
