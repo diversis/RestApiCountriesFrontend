@@ -5,9 +5,6 @@
 	const dispatch = createEventDispatcher();
 
 	function handleView() {
-		console.log(
-			'\n--------------------\n Intersection Observer view event triggered \n--------------------\n '
-		);
 		dispatch('event', { text: 'triggered' });
 	}
 
@@ -37,6 +34,6 @@
 	});
 </script>
 
-<div id="scrollWrapper" bind:this={container}>
+<div id="scrollWrapper" bind:this={container} class="absolute -mt-20">
 	<slot />
 </div>

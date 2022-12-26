@@ -18,7 +18,7 @@
 			id="back"
 			viewBox="0 0 48 48"
 			class="dark:group-hover:fill-dark-mode-dark-blue group-hover:fill-any-white
-			dark:group-focus:fill-dark-mode-dark-blue group-focus	:fill-any-white
+			dark:group-focus:fill-dark-mode-dark-blue group-focus:fill-any-white
 			 fill-light-mode-very-dark-blue dark:fill-any-white rotate-180 transition-colors ease-theme duration-400"
 			><path
 				id="back"

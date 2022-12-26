@@ -7,7 +7,7 @@
 	const menuItems = ['Europe', 'Asia', 'Americas', 'Africa', 'Oceania', 'Antarctic'];
 </script>
 
-<section use:clickOutside on:outsideClick={() => (menuOpen = false)} class="flex flex-col ">
+<section use:clickOutside on:outsideClick={() => (menuOpen = false)} class="flex flex-col w-min">
 	<button
 		on:click={() => (menuOpen = !menuOpen)}
 		{menuOpen}

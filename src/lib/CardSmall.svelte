@@ -2,47 +2,51 @@
 	export let country;
 </script>
 
-<a
-	class="bg-any-white dark:bg-dark-mode-dark-blue transition-all duration-300 
-	bg-opacity-50 dark:bg-opacity-30 active:scale-[99%] backdrop-blur-[3px] 
-	hover:mt-[-0.5em] xl:hover:h-[26.5em] lg:hover:h-[20.5em] focus:mt-[-0.5em] 
-	focus:h-[26.5em] text-left pb-[1em] xl:pb-[2em] grid grid-cols-1 gap-y-3
+<div class="relative w-full h-[40vh] sm:h-[26em]">
+	<a
+		class="absolute bg-any-white dark:bg-dark-mode-dark-blue transition-all duration-300 
+	bg-opacity-50 dark:bg-opacity-30 active:scale-[97%] backdrop-blur-[3px] 
+	focus:mt-[-1vh]  hover:h-[42vh] hover:mt-[-1vh]
+	sm:hover:mt-[-1em] sm:hover:h-[26.5em] sm:focus:h-[26.5em]
+	 
+	 text-left pb-[1em] xl:pb-[2em] grid grid-cols-1 gap-y-3
 	 shadow-card-light dark:shadow-card-dark rounded-lg
-	 w-full h-[40vh] lg:h-[26em] overflow-hidden text-sm justify-between"
-	href="/?country={country.cca3}"
->
-	<div class="relative w-full h-min">
-		<img
-			src={country?.flags?.png}
-			alt={'' + country?.name?.common + ' flag'}
-			class="mx-auto  transition-colors duration-700 border-b-[1px]
+	 w-full h-[40vh] sm:h-[26em] overflow-hidden text-sm justify-between"
+		href="/?country={country.cca3}"
+	>
+		<div class="relative w-full h-min">
+			<img
+				src={country?.flags?.png}
+				alt={'' + country?.name?.common + ' flag'}
+				class="mx-auto  transition-colors duration-700 border-b-[1px]
 			 border-b-light-mode-dark-gray border-opacity-20 dark:border-opacity-20 dark:border-b-any-white 
 			 object-top object-fit w-full h-auto max-h-[20vh] lg:max-h-[8em] xl:max-h-[12em] aspect-[2/1]"
-		/>
-	</div>
-	<!-- Info -->
-	<h1
-		id="country-name"
-		class=" px-4 text-left text-lg max-h-[2.5em] align-bottom md:leading-[1.125] xl:leading-normal"
-	>
-		{country?.name?.common || 'None'}
-	</h1>
-	<!-- Column 1 -->
-	<div class="grid grid-col-1 px-4">
-		<p>
-			<span>Population: </span>
-			{'' + country?.population || 'None'}
-		</p>
-		<p>
-			<span>Region: </span>
-			{'' + country?.region || 'None'}
-		</p>
-		<p>
-			<span>Capital: </span>
-			{'' + country?.capital || 'None'}
-		</p>
-	</div>
-</a>
+			/>
+		</div>
+		<!-- Info -->
+		<h1
+			id="country-name"
+			class=" px-4 text-left text-lg max-h-[2.5em] align-bottom md:leading-[1.125] xl:leading-normal"
+		>
+			{country?.name?.common || 'None'}
+		</h1>
+		<!-- Column 1 -->
+		<div class="grid grid-col-1 px-4">
+			<p>
+				<span>Population: </span>
+				{'' + country?.population || 'None'}
+			</p>
+			<p>
+				<span>Region: </span>
+				{'' + country?.region || 'None'}
+			</p>
+			<p>
+				<span>Capital: </span>
+				{'' + country?.capital || 'None'}
+			</p>
+		</div>
+	</a>
+</div>
 
 <style>
 	span {

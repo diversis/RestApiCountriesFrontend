@@ -33,7 +33,9 @@ async function fetchCountry(countryCode: string) {
 			const now: number = Date.now();
 
 			const newData: {} = data[0];
-			newData.createdAt = now;
+			if (newData) {
+				newData.createdAt = now;
+			}
 
 			countriesData.update((data) => {
 				data.push(newData);
@@ -57,7 +59,7 @@ function getCountryFromLocalStorage(countryCode: string) {
 		return [];
 	}
 
-	// check if country data is already stored in local storage and return it if it was created <24 hrs ago
+	// check if country data is already stored in local storage and return it if it was created <{refreshLimit} ago
 
 	let countryIndex = localStorage.findIndex(
 		(country) => countryCode === country.cca3 || countryCode === country.cca2
@@ -65,7 +67,7 @@ function getCountryFromLocalStorage(countryCode: string) {
 
 	if (countryIndex > -1) {
 		const country = localStorage[countryIndex];
-		if (isFresh(+country.createdAt)) {
+		if (country.createdAt && isFresh(+country.createdAt)) {
 			return country;
 		}
 		countriesData.update((data) => {
@@ -89,10 +91,8 @@ export async function getBorders(bordersCodes: []) {
 			if (borderData) {
 				borders.push({ cca3: border, name: borderData.name.common });
 			}
-			// console.log('\n--------------------\n border data: ', borderData, '\n--------------------\n');
 		})
 	);
-	// console.log('\n--------------------\n borders: ', borders, '\n--------------------\n');
 	return borders;
 }
 
@@ -102,6 +102,17 @@ export async function searchCountires(
 	init = true
 ) {
 	if (region && init) {
+		if (isFresh(+get(storedAllAt))) {
+			const regionArray = [];
+			for (let country of get(countriesData)) {
+				if ('' + country.region === region) {
+					regionArray.push(country);
+				}
+			}
+			currentSearchArray.set(regionArray);
+			return arrayPick(get(currentSearchArray));
+		}
+
 		console.log(
 			`\n--------------------\n fetching... https://restcountries.com/v3.1/region/${region}${fields} \n--------------------\n`
 		);
@@ -163,7 +174,6 @@ function addToLocalStorage(country) {
 	country.createdAt = Date.now();
 
 	countriesData.update((data) => {
-		// console.log('\n--------------------\n country: ', country, '\n--------------------\n');
 		data.push(country);
 		return data;
 	});

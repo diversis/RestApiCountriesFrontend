@@ -20,7 +20,7 @@
 >
 	<button type="submit"
 		><svg
-			class="group   fill-light-mode-very-dark-blue dark:fill-any-white w-[1.5em] h-[1.5em] hover:scale-150 transition-transform duration:200"
+			class="group  active:scale-[120%] fill-light-mode-very-dark-blue dark:fill-any-white w-[1.5em] h-[1.5em] hover:scale-150 transition-transform duration:200"
 			xmlns="http://www.w3.org/2000/svg"
 			viewBox="0 0 48 48"
 			on:mouseenter={() => (focusSearch = true)}

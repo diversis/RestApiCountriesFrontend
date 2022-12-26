@@ -8,7 +8,7 @@
 	import InfiniteScroll from '$lib/InfiniteScroll.svelte';
 	import LoaderCog from '$lib/Loader-cog.svelte';
 	import Search from '$lib/Search.svelte';
-	import { beforeUpdate } from 'svelte';
+	import { beforeUpdate, tick } from 'svelte';
 	import { currentPage, hasMore } from './store';
 	import CountryScreen from '$lib/CountryScreen.svelte';
 
@@ -18,10 +18,11 @@
 
 	$: countriesDisplay = searchCountires(searchString, region);
 
-	function handleScrollDown(e) {
+	async function handleScrollDown(e) {
 		if ($hasMore) {
 			$currentPage += 1;
 			countriesDisplay = searchCountires(searchString, region, false);
+			await tick();
 		}
 	}
 
@@ -49,7 +50,7 @@
 			class="container mx-auto grid grid-cols-1 items-center mt-12 px-4 lg:px-10 gap-10 text-left relative mb-6"
 		>
 			<div
-				class="relative flex flex-col md:flex-row justify-between mx-auto pb-6 w-full item gap-y-6"
+				class="relative flex flex-col md:flex-row justify-between mx-auto pb-6 w-full item gap-y-12"
 			>
 				<Search /><FilterByRegion />
 			</div>
@@ -58,7 +59,7 @@
 			<div id="LoaderCog" class=" grid items-center m-auto w-min"><LoaderCog /></div>
 		{:then countries}
 			<article
-				class="container mx-auto grid-cols-1 grid xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 items-center mt-[4em] px-4 lg:px-10 gap-10 lg:gap-x-16 text-left relative mb-6"
+				class="container mx-auto grid-cols-1 grid xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 items-center mt-[2em] px-4 lg:px-10 gap-10 lg:gap-x-16 text-left relative mb-6"
 			>
 				{#each countries as country}
 					<CardSmall {country} />

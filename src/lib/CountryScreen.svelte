@@ -9,9 +9,9 @@
 </script>
 
 <article
-	class="container mx-auto flex flex-col lg:grid lg:grid-cols-2 items-center mt-[4em] px-4 lg:px-10 gap-[6em] lg:gap-x-16 text-left relative pb-6"
+	class="container mx-auto flex flex-col lg:grid lg:grid-cols-2 items-center mt-[4em] gap-y-[1em] px-4 lg:px-10 lg:gap-x-16 text-left relative pb-6"
 >
-	<div class="lg:col-span-2 flex items-start self-start"><BackButton /></div>
+	<div class="lg:col-span-2 flex items-start self-start mb-[3em]"><BackButton /></div>
 	<!-- {#await getCountry(slug)} -->
 	<!-- <div id="LoaderCog" class="lg:col-span-2 grid items-center mx-auto lg:row-span-2">
 		<LoaderCog />
