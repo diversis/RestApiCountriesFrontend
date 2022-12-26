@@ -10,7 +10,7 @@ const config = {
 
 	kit: {
 		// adapter: adapter({ strict: false })
-		adapter: adapter({ fallback: '200.html' })
+		adapter: adapter({ fallback: 'index.html' })
 	}
 };
 
