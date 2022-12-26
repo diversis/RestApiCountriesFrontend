@@ -1,9 +1,9 @@
 <script lang="ts">
 	import LoaderInline from '$lib/Loader-inline.svelte';
 	import BackButton from '$lib/BackButton.svelte';
-	import { getBorders } from '$lib/country';
+	import { getBorders } from '$lib/Country';
 	import LoaderCog from '$lib/Loader-cog.svelte';
-	import { fetchImg } from '$lib/fetchImg';
+	import { fetchImg } from '$lib/FetchImg';
 
 	export let country;
 </script>

@@ -2,7 +2,7 @@
 	import '../index.css';
 	import { page } from '$app/stores';
 	import CardSmall from '$lib/CardSmall.svelte';
-	import { getCountry, searchCountires } from '$lib/country.ts';
+	import { getCountry, searchCountires } from '$lib/Country';
 	import FilterByRegion from '$lib/FilterByRegion.svelte';
 	import Header from '$lib/Header.svelte';
 	import InfiniteScroll from '$lib/InfiniteScroll.svelte';
