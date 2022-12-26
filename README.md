@@ -51,6 +51,7 @@ Users should be able to:
 - Mobile-first workflow
 - [Svelte](https://svelte.dev/) - JS Framework
 - [Tailwind CSS](https://tailwindcss.com/) - CSS framework
+- [Vite](https://vitejs.dev/) - Frontend Tooling
 
 ### What I learned
 
