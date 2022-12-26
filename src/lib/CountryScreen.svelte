@@ -113,7 +113,8 @@
 						{#each borders as border}
 							<div>
 								<a
-									class="hover:bg-dark-mode-dark-blue hover:text-any-white dark:hover:bg-any-white dark:hover:text-dark-mode-very-dark-blue 
+									class="active:scale-[97%] hover:bg-dark-mode-dark-blue hover:text-any-white
+									 dark:hover:bg-any-white dark:hover:text-dark-mode-very-dark-blue 
 											focus:bg-dark-mode-dark-blue focus:text-any-white dark:focus:bg-any-white dark:focus:text-dark-mode-very-dark-blue 
 											transition-colors ease-switch duration-200 rounded-md bg-light-mode-very-light-gray dark:bg-dark-mode-dark-blue
 											 px-3 py-0.5 mx-2 shadow-around shadow-light-mode-dark-gray dark:shadow-any-white"
