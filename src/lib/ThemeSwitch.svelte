@@ -23,6 +23,7 @@
 		class="group absolute w-[8em] h-[8em] top-0 left-[-3em] dark:rotate-180 transition-transform duration-1000 ease-switch"
 	>
 		<svg
+			aria-label="moon"
 			id="moon"
 			xmlns="http://www.w3.org/2000/svg"
 			viewBox="0 0 48 48"
@@ -34,6 +35,7 @@
 			/>
 		</svg>
 		<svg
+			aria-label="sun"
 			id="sun"
 			xmlns="http://www.w3.org/2000/svg"
 			viewBox="0 0 48 48"

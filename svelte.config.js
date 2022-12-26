@@ -9,7 +9,8 @@ const config = {
 	preprocess: vitePreprocess(),
 
 	kit: {
-		adapter: adapter({ strict: false })
+		// adapter: adapter({ strict: false })
+		adapter: adapter({ fallback: '200.html' })
 	}
 };
 

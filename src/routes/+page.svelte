@@ -12,11 +12,15 @@
 	import { currentPage, hasMore } from './store';
 	import CountryScreen from '$lib/CountryScreen.svelte';
 
+	const baseTitle = 'Rest Countries';
+
 	$: searchString = $page.url.searchParams.get('search') || null;
 	$: region = $page.url.searchParams.get('region') || null;
 	$: countryName = $page.url.searchParams.get('country') || null;
 
 	$: countriesDisplay = searchCountires(searchString, region);
+
+	$: title = baseTitle;
 
 	async function handleScrollDown(e) {
 		if ($hasMore) {
@@ -33,6 +37,7 @@
 	});
 </script>
 
+<svelte:head><title>Rest Countries</title></svelte:head>
 <Header />
 <main class="relative">
 	{#if countryName}

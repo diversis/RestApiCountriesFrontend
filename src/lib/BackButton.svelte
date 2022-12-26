@@ -5,7 +5,7 @@
 </script>
 
 <button
-	class=" hover:bg-dark-mode-dark-blue hover:text-any-white dark:hover:bg-any-white dark:hover:text-dark-mode-very-dark-blue
+	class="active:scale-[97%] hover:bg-dark-mode-dark-blue hover:text-any-white dark:hover:bg-any-white dark:hover:text-dark-mode-very-dark-blue
 	focus:bg-dark-mode-dark-blue focus:text-any-white dark:focus:bg-any-white dark:focus:text-dark-mode-very-dark-blue
 	inline-flex items-center shadow-around shadow-light-mode-dark-gray dark:shadow-any-white 
 	text-light-mode-very-dark-blue  dark:text-any-white transition-colors ease-theme duration-200 
