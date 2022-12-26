@@ -21,7 +21,7 @@
 				alt={'' + country?.name?.common + ' flag'}
 				class="mx-auto  transition-colors duration-700 border-b-[1px]
 			 border-b-light-mode-dark-gray border-opacity-20 dark:border-opacity-20 dark:border-b-any-white 
-			 object-top object-fit w-full h-auto max-h-[20vh] lg:max-h-[8em] xl:max-h-[12em] aspect-[2/1]"
+			 object-top object-fit w-full h-auto max-h-[12em] aspect-[2/1]"
 			/>
 		</div>
 		<!-- Info -->
