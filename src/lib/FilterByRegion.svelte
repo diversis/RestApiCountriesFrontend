@@ -1,7 +1,7 @@
 <script>
 	import { fly } from 'svelte/transition';
 	import { quintInOut } from 'svelte/easing';
-	import { clickOutside } from './ClickOutside.ts';
+	import { clickOutside } from './clickOutside';
 
 	let menuOpen = false;
 	const menuItems = ['Europe', 'Asia', 'Americas', 'Africa', 'Oceania', 'Antarctic'];
