@@ -11,7 +11,7 @@
 	}
 </script>
 
-<div class="relative w-[20em] h-[20em] flex items-center mx-auto">
+<div class="relative w-[20em] h-[20em] flex items-center mx-auto overflow-hidden">
 	<svg
 		id="cog"
 		viewBox="38 38 820 820"
