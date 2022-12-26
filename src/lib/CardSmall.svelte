@@ -10,7 +10,7 @@
 	sm:hover:mt-[-1em] sm:hover:h-[26.5em] sm:focus:h-[26.5em] sm:focus:mt-[-1em]
 	hover:mt-[-0.5em] hover:h-[27em] focus:h-[27em] focus:mt-[-0.5em]
 	 
-	 text-left pb-[1em] xl:pb-[2em] grid grid-cols-1 gap-y-3
+	 text-left pb-[1em] grid grid-cols-1 gap-y-3
 	 shadow-card-light dark:shadow-card-dark rounded-lg
 	 w-full h-[26em] overflow-hidden text-sm justify-between"
 		href="/?country={country.cca3}"
