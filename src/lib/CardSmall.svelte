@@ -1,15 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import LoaderInline from './Loader-inline.svelte';
-
 	export let country;
-
-	onMount(() => {});
-
-	const fetchFlag = async (url: string) => {
-		const response = await fetch(url);
-		return await response;
-	};
 </script>
 
 <a
@@ -19,22 +9,16 @@
 	focus:h-[26.5em] text-left pb-[1em] xl:pb-[2em] grid grid-cols-1 gap-y-3
 	 shadow-card-light dark:shadow-card-dark rounded-lg
 	 w-full h-[40vh] lg:h-[26em] overflow-hidden text-sm justify-between"
-	href="/countries/{country.cca3}"
+	href="/?country={country.cca3}"
 >
 	<div class="relative w-full h-min">
-		{#await fetchFlag(country?.flags?.png)}
-			<div class=" grid items-center m-auto w-min h-[20vh] lg:h-[8em] xl:h-[12em]">
-				<LoaderInline />
-			</div>
-		{:then data}
-			<img
-				src={country?.flags?.png}
-				alt={'' + country?.name?.common + ' flag'}
-				class="mx-auto  transition-colors duration-700 border-b-[1px]
+		<img
+			src={country?.flags?.png}
+			alt={'' + country?.name?.common + ' flag'}
+			class="mx-auto  transition-colors duration-700 border-b-[1px]
 			 border-b-light-mode-dark-gray border-opacity-20 dark:border-opacity-20 dark:border-b-any-white 
 			 object-top object-fit w-full h-auto max-h-[20vh] lg:max-h-[8em] xl:max-h-[12em] aspect-[2/1]"
-			/>
-		{/await}
+		/>
 	</div>
 	<!-- Info -->
 	<h1
