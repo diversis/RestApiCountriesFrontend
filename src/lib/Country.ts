@@ -3,6 +3,7 @@ import {
 	currentPage,
 	currentSearchArray,
 	hasMore,
+	regionSearchArray,
 	storedAllAt
 } from '../routes/store';
 import { get } from 'svelte/store';
@@ -101,44 +102,66 @@ export async function searchCountires(
 	region: string | undefined,
 	init = true
 ) {
-	if (region && init) {
-		if (notExpired(+get(storedAllAt))) {
-			const regionArray = [];
-			for (let country of get(countriesData)) {
-				if ('' + country.region === region) {
-					regionArray.push(country);
+	if (region) {
+		if (
+			init ||
+			(get(regionSearchArray).length > 0 && get(regionSearchArray)[0].region !== region)
+		) {
+			console.log('region 1');
+			if (notExpired(+get(storedAllAt))) {
+				const regionArray = [];
+				for (let country of get(countriesData)) {
+					if ('' + country.region === region) {
+						regionArray.push(country);
+					}
 				}
+				regionSearchArray.set(regionArray);
+				if (searchString) {
+					console.log('region 1 searchString');
+					const searchData = searchCountryByName(get(regionSearchArray), searchString);
+					return arrayPick(searchData);
+				}
+				return arrayPick(get(regionSearchArray));
 			}
-			currentSearchArray.set(regionArray);
-			return arrayPick(get(currentSearchArray));
-		}
 
-		console.log(
-			`\n--------------------\n fetching... https://restcountries.com/v3.1/region/${region}${fields} \n--------------------\n`
-		);
-		return await fetch(`https://restcountries.com/v3.1/region/${region}${fields}`)
-			.then((response: Response) => response.json())
-			.then((data) => {
-				for (let country of data) {
-					country.createdAt = Date.now();
-				}
-				currentSearchArray.set(data);
-				return arrayPick(get(currentSearchArray));
-			})
-			.catch((error) => {
-				console.log(error);
-				return [];
-			});
-	} else if (region) {
-		return arrayPick(get(currentSearchArray));
+			console.log(
+				`\n--------------------\n fetching... https://restcountries.com/v3.1/region/${region}${fields} \n--------------------\n`
+			);
+			return await fetch(`https://restcountries.com/v3.1/region/${region}${fields}`)
+				.then((response: Response) => response.json())
+				.then((data) => {
+					for (let country of data) {
+						country.createdAt = Date.now();
+					}
+					regionSearchArray.set(data);
+					if (searchString) {
+						const searchData = searchCountryByName(get(regionSearchArray), searchString);
+						return arrayPick(searchData);
+					}
+					return arrayPick(get(regionSearchArray));
+				})
+				.catch((error) => {
+					console.log(error);
+					return [];
+				});
+		}
+		if (searchString && notExpired(+get(storedAllAt))) {
+			console.log('region 2');
+			const searchData = searchCountryByName(get(regionSearchArray), searchString);
+			return arrayPick(searchData);
+		}
+		return arrayPick(get(regionSearchArray));
 	} else if (!searchString && notExpired(+get(storedAllAt))) {
+		console.log('!searchString && notExpired(+get(storedAllAt))');
 		const pageArray = arrayPick(get(countriesData));
 		return pageArray;
 	} else if (searchString && notExpired(+get(storedAllAt))) {
+		console.log('searchString && notExpired(+get(storedAllAt))');
 		const searchData = searchCountryByName(get(countriesData), searchString);
 		currentSearchArray.set(searchData);
 		return arrayPick(get(currentSearchArray));
 	}
+
 	console.log(
 		`\n--------------------\n fetching... https://restcountries.com/v3.1/all${fields} \n--------------------\n`
 	);

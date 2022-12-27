@@ -1,13 +1,47 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { page } from '$app/stores';
+	import { afterUpdate, beforeUpdate, createEventDispatcher, onDestroy, onMount } from 'svelte';
 	import { fade, draw } from 'svelte/transition';
+	import { searchInputString } from '../routes/store';
 
-	const search = $page.url;
-	let searchString = '';
+	let searchString: string = $searchInputString;
+	let searchInput;
 	const searchPlaceHolder = 'Search a country';
 
+	let selectionStart = 0;
+	let selectionEnd = 0;
+
 	let focusSearch = false;
+
+	beforeUpdate(() => {
+		if (searchInput) {
+			({ selectionStart, selectionEnd } = searchInput);
+		}
+	});
+
+	afterUpdate(() => {
+		inputFocus();
+	});
+	onMount(() => {
+		inputFocus();
+	});
+	function inputFocus() {
+		searchInput.setSelectionRange(
+			selectionStart ? selectionStart : searchString?.length || 0,
+			selectionEnd ? selectionEnd : searchString?.length || 0
+		);
+		searchInput.focus();
+	}
+
+	const dispatch = createEventDispatcher();
+
+	function handleSearchInput() {
+		dispatch('searchInput', { text: searchString });
+	}
+
+	onDestroy(() => {
+		searchInputString.set(searchString);
+	});
 </script>
 
 <form
@@ -51,7 +85,9 @@
 		</svg><span class="sr-only">Search button</span></button
 	>
 	<input
+		bind:this={searchInput}
 		bind:value={searchString}
+		on:input={handleSearchInput}
 		placeholder={searchPlaceHolder}
 		class="px-2 w-full bg-any-white dark:bg-dark-mode-dark-blue rounded-lg transition-colors duration-700 ease-theme "
 	/>

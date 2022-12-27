@@ -9,19 +9,22 @@
 	import LoaderCog from '$lib/Loader-cog.svelte';
 	import Search from '$lib/Search.svelte';
 	import { beforeUpdate, tick } from 'svelte';
-	import { currentPage, hasMore, scrollPosition } from './store';
+	import { currentPage, hasMore } from './store';
 	import CountryScreen from '$lib/CountryScreen.svelte';
 	import ToTopButton from '$lib/ToTopButton.svelte';
-	import { get } from 'svelte/store';
 	import ScrollPosition from '$lib/ScrollPosition.svelte';
 
 	const baseTitle = 'Rest Countries';
 
-	$: searchString = $page.url.searchParams.get('search') || null;
-	$: region = $page.url.searchParams.get('region') || null;
-	$: countryName = $page.url.searchParams.get('country') || null;
+	let searchString = '';
+	$: region = $page.url.searchParams.get('region') || '';
+	$: countryName = $page.url.searchParams.get('country') || '';
 
-	$: countriesDisplay = searchCountires(searchString, region);
+	$: countriesDisplay = searchCountires(
+		searchString,
+		region,
+		+$currentPage === 0 && searchString.length === 0
+	);
 
 	let scrollPositionY: number = 0;
 
@@ -30,15 +33,19 @@
 			$currentPage += 1;
 			countriesDisplay = searchCountires(searchString, region, false);
 			await countriesDisplay;
-			await tick();
+			// await tick();
 		}
 	}
 
 	beforeUpdate(() => {
-		searchString = $page.url.searchParams.get('search') || null;
-		region = $page.url.searchParams.get('region') || null;
-		countryName = $page.url.searchParams.get('country') || null;
+		region = $page.url.searchParams.get('region') || '';
+		countryName = $page.url.searchParams.get('country') || '';
 	});
+
+	async function handleSearchInput(searchInput) {
+		searchString = searchInput.detail.text;
+		// countriesDisplay = searchCountires(searchString, region, false);
+	}
 </script>
 
 <svelte:head><title>Rest Countries{region ? `| ${region}` : ''}</title></svelte:head>
@@ -62,7 +69,7 @@
 			<div
 				class="relative flex flex-col md:flex-row justify-between mx-auto pb-6 w-full item gap-y-12"
 			>
-				<Search /><FilterByRegion />
+				<Search on:searchInput={handleSearchInput} /><FilterByRegion />
 			</div>
 		</div>
 		{#await countriesDisplay}
@@ -76,7 +83,7 @@
 					<CardSmall {country} />
 				{/each}
 			</article>
-			<InfiniteScroll on:event={handleScrollDown} />
+			<InfiniteScroll on:scrollDown={handleScrollDown} />
 		{:catch error}
 			<p>{error}</p>
 		{/await}

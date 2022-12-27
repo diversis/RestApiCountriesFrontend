@@ -5,7 +5,7 @@
 	const dispatch = createEventDispatcher();
 
 	function handleView() {
-		dispatch('event', { text: 'triggered' });
+		dispatch('scrollDown', { text: 'triggered' });
 	}
 
 	let container;
