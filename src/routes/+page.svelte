@@ -29,7 +29,6 @@
 		if ($hasMore) {
 			$currentPage += 1;
 			countriesDisplay = searchCountires(searchString, region, false);
-			scrollPosition.set(scrollPositionY);
 			await countriesDisplay;
 			await tick();
 		}
@@ -69,7 +68,7 @@
 		{#await countriesDisplay}
 			<div id="LoaderCog" class=" grid items-center m-auto w-min"><LoaderCog /></div>
 		{:then countries}
-			<ScrollPosition />
+			<ScrollPosition {scrollPositionY} />
 			<article
 				class="container mx-auto grid-cols-1 grid xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 items-center mt-[2em] px-4 lg:px-10 gap-10 lg:gap-x-16 text-left relative mb-6"
 			>
