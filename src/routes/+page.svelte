@@ -9,9 +9,11 @@
 	import LoaderCog from '$lib/Loader-cog.svelte';
 	import Search from '$lib/Search.svelte';
 	import { beforeUpdate, tick } from 'svelte';
-	import { currentPage, hasMore } from './store';
+	import { currentPage, hasMore, scrollPosition } from './store';
 	import CountryScreen from '$lib/CountryScreen.svelte';
 	import ToTopButton from '$lib/ToTopButton.svelte';
+	import { get } from 'svelte/store';
+	import ScrollPosition from '$lib/ScrollPosition.svelte';
 
 	const baseTitle = 'Rest Countries';
 
@@ -21,12 +23,13 @@
 
 	$: countriesDisplay = searchCountires(searchString, region);
 
-	$: title = baseTitle;
-	let y: number;
+	let scrollPositionY: number = 0;
+
 	async function handleScrollDown(e) {
 		if ($hasMore) {
 			$currentPage += 1;
 			countriesDisplay = searchCountires(searchString, region, false);
+			scrollPosition.set(scrollPositionY);
 			await countriesDisplay;
 			await tick();
 		}
@@ -39,9 +42,9 @@
 	});
 </script>
 
-<svelte:head><title>Rest Countries</title></svelte:head>
+<svelte:head><title>Rest Countries{region ? `| ${region}` : ''}</title></svelte:head>
 <Header />
-<svelte:window bind:scrollY={y} />
+<svelte:window bind:scrollY={scrollPositionY} />
 <main class="relative">
 	{#if countryName}
 		{#await getCountry(countryName)}
@@ -66,6 +69,7 @@
 		{#await countriesDisplay}
 			<div id="LoaderCog" class=" grid items-center m-auto w-min"><LoaderCog /></div>
 		{:then countries}
+			<ScrollPosition />
 			<article
 				class="container mx-auto grid-cols-1 grid xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 items-center mt-[2em] px-4 lg:px-10 gap-10 lg:gap-x-16 text-left relative mb-6"
 			>
@@ -78,7 +82,7 @@
 			<p>{error}</p>
 		{/await}
 	{/if}
-	{#if y > 50}
+	{#if scrollPositionY > 50}
 		<ToTopButton />
 	{/if}
 </main>
