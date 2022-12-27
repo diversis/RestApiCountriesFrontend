@@ -103,10 +103,6 @@ export async function searchCountires(
 	init = true,
 	countryCode = ''
 ) {
-	console.log(
-		`\n--------------------\n searchString ${!!searchString} \n--------------------\n countryCode ${countryCode} \n--------------------\n`
-	);
-
 	if (countryCode) {
 		return [];
 	}
@@ -210,7 +206,7 @@ function arrayPick(array: object[]) {
 	const newArray: object[] = [];
 	const page = get(currentPage);
 
-	console.log(`\n--------------------\n page ${page} \n--------------------\n `);
+	// console.log(`\n--------------------\n page ${page} \n--------------------\n `);
 
 	if (page === 0) {
 		hasMore.set(true);
