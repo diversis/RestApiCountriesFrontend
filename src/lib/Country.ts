@@ -67,7 +67,7 @@ function getCountryFromLocalStorage(countryCode: string) {
 
 	if (countryIndex > -1) {
 		const country = localStorage[countryIndex];
-		if (country.createdAt && isFresh(+country.createdAt)) {
+		if (country.createdAt && notExpired(+country.createdAt)) {
 			return country;
 		}
 		countriesData.update((data) => {
@@ -78,7 +78,7 @@ function getCountryFromLocalStorage(countryCode: string) {
 	return null;
 }
 
-function isFresh(date: string | number, limit = expirationLimit) {
+function notExpired(date: string | number, limit = expirationLimit) {
 	const numLimit = limit;
 	return +Date.now() - +date < numLimit;
 }
@@ -102,7 +102,7 @@ export async function searchCountires(
 	init = true
 ) {
 	if (region && init) {
-		if (isFresh(+get(storedAllAt))) {
+		if (notExpired(+get(storedAllAt))) {
 			const regionArray = [];
 			for (let country of get(countriesData)) {
 				if ('' + country.region === region) {
@@ -131,10 +131,10 @@ export async function searchCountires(
 			});
 	} else if (region) {
 		return arrayPick(get(currentSearchArray));
-	} else if (!searchString && isFresh(+get(storedAllAt))) {
+	} else if (!searchString && notExpired(+get(storedAllAt))) {
 		const pageArray = arrayPick(get(countriesData));
 		return pageArray;
-	} else if (searchString && isFresh(+get(storedAllAt))) {
+	} else if (searchString && notExpired(+get(storedAllAt))) {
 		const searchData = searchCountryByName(get(countriesData), searchString);
 		currentSearchArray.set(searchData);
 		return arrayPick(get(currentSearchArray));
