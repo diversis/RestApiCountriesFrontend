@@ -2,7 +2,7 @@
 	export let country;
 </script>
 
-<div class="relative w-full h-[26em]">
+<div class="relative w-full h-[22.75rem]">
 	<a
 		class="absolute bg-any-white dark:bg-dark-mode-dark-blue transition-all duration-300 
 	bg-opacity-50 dark:bg-opacity-30 active:scale-[97%] backdrop-blur-[3px] 
