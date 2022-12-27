@@ -9,16 +9,16 @@
 	import LoaderCog from '$lib/Loader-cog.svelte';
 	import Search from '$lib/Search.svelte';
 	import { beforeUpdate } from 'svelte';
-	import { currentPage, hasMore, countryCanRender } from './store';
+	import { currentPage, hasMore } from './store';
 	import CountryScreen from '$lib/CountryScreen.svelte';
 	import ToTopButton from '$lib/ToTopButton.svelte';
 	import ScrollPosition from '$lib/ScrollPosition.svelte';
+	import { fade } from 'svelte/transition';
 
 	const baseTitle = 'Rest Countries';
 
 	let searchString = '';
 
-	$: canRender = $countryCanRender;
 	$: region = $page.url.searchParams.get('region') || '';
 	$: countryCode = $page.url.searchParams.get('country') || '';
 
@@ -60,7 +60,9 @@
 				<LoaderCog />
 			</div>
 		{:then country}
-			<CountryScreen {country} />
+			<div class="mx-auto relative container">
+				<CountryScreen {country} />
+			</div>
 		{:catch error}
 			<p>{error}</p>
 		{/await}
@@ -79,6 +81,7 @@
 		{:then countries}
 			<ScrollPosition {scrollPositionY} />
 			<article
+				in:fade={{ delay: 0, duration: 150 }}
 				class="container mx-auto grid-cols-1 grid xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 items-center mt-[2em] px-4 lg:px-10 gap-10 lg:gap-x-16 text-left relative mb-6"
 			>
 				{#each countries as country}

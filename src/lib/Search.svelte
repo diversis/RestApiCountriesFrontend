@@ -1,14 +1,7 @@
 <script lang="ts">
-	import {
-		afterUpdate,
-		beforeUpdate,
-		createEventDispatcher,
-		onDestroy,
-		onMount,
-		tick
-	} from 'svelte';
+	import { afterUpdate, beforeUpdate, createEventDispatcher, onDestroy, onMount } from 'svelte';
 	import { fade, draw } from 'svelte/transition';
-	import { searchInputString, countryCanRender } from '../routes/store';
+	import { searchInputString } from '../routes/store';
 
 	$: searchString = $searchInputString;
 	let searchInput;
@@ -30,8 +23,6 @@
 	});
 	onMount(() => {
 		inputFocus();
-		$countryCanRender = false;
-		console.log($countryCanRender);
 	});
 	function inputFocus() {
 		searchInput.setSelectionRange(
@@ -49,8 +40,6 @@
 
 	onDestroy(() => {
 		searchInputString.set(searchString);
-		$countryCanRender = true;
-		console.log($countryCanRender);
 	});
 </script>
 

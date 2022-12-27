@@ -4,12 +4,14 @@
 	import { getBorders } from '$lib/Country';
 	import LoaderCog from '$lib/Loader-cog.svelte';
 	import { fetchImg } from '$lib/fetchImg';
+	import { fade } from 'svelte/transition';
 
 	export let country;
 </script>
 
 <article
-	class="container mx-auto flex flex-col lg:grid lg:grid-cols-2 items-center mt-[4em] gap-y-[1em] px-4 lg:px-10 lg:gap-x-16 text-left relative pb-6"
+	in:fade={{ delay: 250, duration: 300 }}
+	class="container absolute flex flex-col lg:grid lg:grid-cols-2 items-center mt-[4em] gap-y-[1em] px-4 lg:px-10 lg:gap-x-16 text-left  pb-6"
 >
 	<div class="lg:col-span-2 flex items-start self-start mb-[3em]"><BackButton /></div>
 	<div class="relative w-full">
