@@ -31,20 +31,20 @@
 			{country?.name?.common || 'None'}
 		</h1>
 		<!-- Column 1 -->
-		<div class="grid grid-col-1 px-4">
-			<p>
+		<ul class="grid grid-col-1 px-4">
+			<li>
 				<span>Population: </span>
 				{'' + country?.population || 'None'}
-			</p>
-			<p>
+			</li>
+			<li>
 				<span>Region: </span>
 				{'' + country?.region || 'None'}
-			</p>
-			<p>
+			</li>
+			<li>
 				<span>Capital: </span>
 				{'' + country?.capital || 'None'}
-			</p>
-		</div>
+			</li>
+		</ul>
 	</a>
 </div>
 

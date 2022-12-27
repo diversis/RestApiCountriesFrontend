@@ -42,8 +42,8 @@
 		<!-- Info -->
 		<div class="flex flex-col lg:grid lg:grid-cols-2 gap-y-8 ">
 			<!-- Column 1 -->
-			<div class="flex flex-col">
-				<p>
+			<ul class="flex flex-col">
+				<li>
 					<span>Native Name: </span>
 					{#if country?.name?.nativeName && Object.keys(country.name.nativeName).length > 0}
 						{country?.name?.nativeName[
@@ -52,31 +52,31 @@
 					{:else}
 						None
 					{/if}
-				</p>
-				<p>
+				</li>
+				<li>
 					<span>Population: </span>
 					{'' + country?.population || 'None'}
-				</p>
-				<p>
+				</li>
+				<li>
 					<span>Region: </span>
 					{'' + country?.region || 'None'}
-				</p>
-				<p>
+				</li>
+				<li>
 					<span>Sub Region: </span>
 					{'' + country?.subregion || 'None'}
-				</p>
-				<p>
+				</li>
+				<li>
 					<span>Capital: </span>
 					{'' + country?.capital || 'None'}
-				</p>
-			</div>
+				</li>
+			</ul>
 			<!--  Column 2  -->
-			<div class="flex flex-col">
-				<p>
+			<ul class="flex flex-col">
+				<li>
 					<span>Top Level Domain: </span>
 					{country?.tld[0]}
-				</p>
-				<p>
+				</li>
+				<li>
 					<span>Currencies: </span>
 					{#if country?.currencies && Object.keys(country.currencies).length > 0}{country
 							?.currencies[Object.keys(country.currencies)[0]].name} ( {country?.currencies[
@@ -85,8 +85,8 @@
 					{:else}
 						None
 					{/if}
-				</p>
-				<p>
+				</li>
+				<li>
 					<span>Languages: </span>
 					<!-- {#if Object.values(country.languages).length > 1} -->
 					{#if country?.languages && Object.keys(country.languages).length > 0}
@@ -99,8 +99,8 @@
 					<!-- {:else if Object.values(country.languages)}
 									{Object.values(country.languages)}
 								{/if} -->
-				</p>
-			</div>
+				</li>
+			</ul>
 		</div>
 		<div class="flex">
 			<div class="inline-flex flex-wrap gap-y-2 ">
