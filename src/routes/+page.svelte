@@ -27,6 +27,7 @@
 		if ($hasMore) {
 			$currentPage += 1;
 			countriesDisplay = searchCountires(searchString, region, false);
+			await countriesDisplay;
 			await tick();
 		}
 	}
@@ -71,8 +72,8 @@
 				{#each countries as country}
 					<CardSmall {country} />
 				{/each}
-				<InfiniteScroll on:event={handleScrollDown} />
 			</article>
+			<InfiniteScroll on:event={handleScrollDown} />
 		{:catch error}
 			<p>{error}</p>
 		{/await}
