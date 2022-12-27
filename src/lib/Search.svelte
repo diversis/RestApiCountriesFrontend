@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { afterUpdate, beforeUpdate, createEventDispatcher, onDestroy, onMount } from 'svelte';
 	import { fade, draw } from 'svelte/transition';
-	import { searchInputString } from '../routes/store';
+	import { currentPage, searchInputString } from '../routes/store';
 
 	$: searchString = $searchInputString;
 	let searchInput;
@@ -35,6 +35,7 @@
 	const dispatch = createEventDispatcher();
 
 	function handleSearchInput() {
+		$currentPage = 0;
 		dispatch('searchInput', { text: searchString });
 	}
 

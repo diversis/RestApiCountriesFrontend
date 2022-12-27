@@ -101,8 +101,12 @@ export async function searchCountires(
 	searchString: string | undefined,
 	region: string | undefined,
 	init = true,
-	countryCode: string
+	countryCode = ''
 ) {
+	console.log(
+		`\n--------------------\n searchString ${!!searchString} \n--------------------\n countryCode ${countryCode} \n--------------------\n`
+	);
+
 	if (countryCode) {
 		return [];
 	}
@@ -205,6 +209,9 @@ function addToLocalStorage(country) {
 function arrayPick(array: object[]) {
 	const newArray: object[] = [];
 	const page = get(currentPage);
+
+	console.log(`\n--------------------\n page ${page} \n--------------------\n `);
+
 	if (page === 0) {
 		hasMore.set(true);
 	}

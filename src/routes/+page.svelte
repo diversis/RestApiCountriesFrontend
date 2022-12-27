@@ -34,7 +34,6 @@
 	async function handleScrollDown(e) {
 		if ($hasMore) {
 			$currentPage += 1;
-			countriesDisplay = searchCountires(searchString, region, false);
 			await countriesDisplay;
 		}
 	}
