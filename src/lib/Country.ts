@@ -107,7 +107,6 @@ export async function searchCountires(
 			init ||
 			(get(regionSearchArray).length > 0 && get(regionSearchArray)[0].region !== region)
 		) {
-			console.log('region 1');
 			if (notExpired(+get(storedAllAt))) {
 				const regionArray = [];
 				for (let country of get(countriesData)) {
@@ -117,7 +116,6 @@ export async function searchCountires(
 				}
 				regionSearchArray.set(regionArray);
 				if (searchString) {
-					console.log('region 1 searchString');
 					const searchData = searchCountryByName(get(regionSearchArray), searchString);
 					return arrayPick(searchData);
 				}
@@ -146,17 +144,14 @@ export async function searchCountires(
 				});
 		}
 		if (searchString && notExpired(+get(storedAllAt))) {
-			console.log('region 2');
 			const searchData = searchCountryByName(get(regionSearchArray), searchString);
 			return arrayPick(searchData);
 		}
 		return arrayPick(get(regionSearchArray));
 	} else if (!searchString && notExpired(+get(storedAllAt))) {
-		console.log('!searchString && notExpired(+get(storedAllAt))');
 		const pageArray = arrayPick(get(countriesData));
 		return pageArray;
 	} else if (searchString && notExpired(+get(storedAllAt))) {
-		console.log('searchString && notExpired(+get(storedAllAt))');
 		const searchData = searchCountryByName(get(countriesData), searchString);
 		currentSearchArray.set(searchData);
 		return arrayPick(get(currentSearchArray));
