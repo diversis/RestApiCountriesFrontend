@@ -109,6 +109,7 @@ export async function searchCountires(
 	if (region) {
 		if (
 			init ||
+			get(regionSearchArray).length === 0 ||
 			(get(regionSearchArray).length > 0 && get(regionSearchArray)[0].region !== region)
 		) {
 			if (notExpired(+get(storedAllAt))) {
