@@ -18,3 +18,4 @@ export const currentSearchArray = writable([]);
 export const scrollPosition = writable(0);
 export const searchInputString = writable('');
 export const regionSearchArray = writable([]);
+export const countryCanRender = writable(false);

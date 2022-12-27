@@ -100,8 +100,12 @@ export async function getBorders(bordersCodes: []) {
 export async function searchCountires(
 	searchString: string | undefined,
 	region: string | undefined,
-	init = true
+	init = true,
+	countryCode: string
 ) {
+	if (countryCode) {
+		return [];
+	}
 	if (region) {
 		if (
 			init ||

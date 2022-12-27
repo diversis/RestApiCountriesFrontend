@@ -1,10 +1,16 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
-	import { afterUpdate, beforeUpdate, createEventDispatcher, onDestroy, onMount } from 'svelte';
+	import {
+		afterUpdate,
+		beforeUpdate,
+		createEventDispatcher,
+		onDestroy,
+		onMount,
+		tick
+	} from 'svelte';
 	import { fade, draw } from 'svelte/transition';
-	import { searchInputString } from '../routes/store';
+	import { searchInputString, countryCanRender } from '../routes/store';
 
-	let searchString: string = $searchInputString;
+	$: searchString = $searchInputString;
 	let searchInput;
 	const searchPlaceHolder = 'Search a country';
 
@@ -24,6 +30,8 @@
 	});
 	onMount(() => {
 		inputFocus();
+		$countryCanRender = false;
+		console.log($countryCanRender);
 	});
 	function inputFocus() {
 		searchInput.setSelectionRange(
@@ -41,6 +49,8 @@
 
 	onDestroy(() => {
 		searchInputString.set(searchString);
+		$countryCanRender = true;
+		console.log($countryCanRender);
 	});
 </script>
 

@@ -8,8 +8,8 @@
 	import InfiniteScroll from '$lib/InfiniteScroll.svelte';
 	import LoaderCog from '$lib/Loader-cog.svelte';
 	import Search from '$lib/Search.svelte';
-	import { beforeUpdate, tick } from 'svelte';
-	import { currentPage, hasMore } from './store';
+	import { beforeUpdate } from 'svelte';
+	import { currentPage, hasMore, countryCanRender } from './store';
 	import CountryScreen from '$lib/CountryScreen.svelte';
 	import ToTopButton from '$lib/ToTopButton.svelte';
 	import ScrollPosition from '$lib/ScrollPosition.svelte';
@@ -17,13 +17,16 @@
 	const baseTitle = 'Rest Countries';
 
 	let searchString = '';
+
+	$: canRender = $countryCanRender;
 	$: region = $page.url.searchParams.get('region') || '';
-	$: countryName = $page.url.searchParams.get('country') || '';
+	$: countryCode = $page.url.searchParams.get('country') || '';
 
 	$: countriesDisplay = searchCountires(
 		searchString,
 		region,
-		+$currentPage === 0 && searchString.length === 0
+		+$currentPage === 0 && searchString.length === 0,
+		countryCode
 	);
 
 	let scrollPositionY: number = 0;
@@ -33,13 +36,12 @@
 			$currentPage += 1;
 			countriesDisplay = searchCountires(searchString, region, false);
 			await countriesDisplay;
-			// await tick();
 		}
 	}
 
 	beforeUpdate(() => {
 		region = $page.url.searchParams.get('region') || '';
-		countryName = $page.url.searchParams.get('country') || '';
+		countryCode = $page.url.searchParams.get('country') || '';
 	});
 
 	async function handleSearchInput(searchInput) {
@@ -52,8 +54,8 @@
 <Header />
 <svelte:window bind:scrollY={scrollPositionY} />
 <main class="relative">
-	{#if countryName}
-		{#await getCountry(countryName)}
+	{#if countryCode}
+		{#await getCountry(countryCode)}
 			<div id="LoaderCog" class="lg:col-span-2 grid items-center mx-auto lg:row-span-2">
 				<LoaderCog />
 			</div>
