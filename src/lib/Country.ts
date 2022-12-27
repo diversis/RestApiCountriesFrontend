@@ -10,7 +10,7 @@ import { get } from 'svelte/store';
 const fields =
 	'?fields=name,capital,currencies,population,region,subregion,tld,languages,borders,flags,cca2,cca3';
 
-const refreshLimit: number = 60 ** 3 * 1000;
+const expirationLimit: number = 60 ** 3 * 1000;
 
 export async function getCountry(countryCode: string) {
 	const dataFromLocalStorage = getCountryFromLocalStorage(countryCode);
@@ -78,7 +78,7 @@ function getCountryFromLocalStorage(countryCode: string) {
 	return null;
 }
 
-function isFresh(date: string | number, limit = refreshLimit) {
+function isFresh(date: string | number, limit = expirationLimit) {
 	const numLimit = limit;
 	return +Date.now() - +date < numLimit;
 }
