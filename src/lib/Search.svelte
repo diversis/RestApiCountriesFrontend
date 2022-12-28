@@ -12,6 +12,8 @@
 
 	let focusSearch = false;
 
+	const dispatch = createEventDispatcher();
+
 	beforeUpdate(() => {
 		if (searchInput) {
 			({ selectionStart, selectionEnd } = searchInput);
@@ -35,11 +37,14 @@
 		searchInput.focus();
 	}
 
-	const dispatch = createEventDispatcher();
-
 	function handleSearchInput() {
 		$currentPage = 0;
 		dispatch('searchInput', { text: searchString });
+	}
+
+	function handleBackspace() {
+		searchString = '';
+		dispatch('searchInput', { text: '' });
 	}
 
 	onDestroy(() => {
@@ -93,7 +98,7 @@
 		<button
 			title="Reset"
 			type="button"
-			on:click={() => (searchString = '')}
+			on:click={handleBackspace}
 			class="inline-block group r-0 p-0"
 		>
 			<svg

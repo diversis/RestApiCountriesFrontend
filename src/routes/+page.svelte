@@ -2,7 +2,7 @@
 	import '../index.css';
 	import { page } from '$app/stores';
 	import CardSmall from '$lib/CardSmall.svelte';
-	import { getCountry, searchCountires } from '$lib/Country';
+	import { searchCountires } from '$lib/Country';
 	import FilterByRegion from '$lib/FilterByRegion.svelte';
 	import Header from '$lib/Header.svelte';
 	import InfiniteScroll from '$lib/InfiniteScroll.svelte';
@@ -10,10 +10,10 @@
 	import Search from '$lib/Search.svelte';
 	import { beforeUpdate } from 'svelte';
 	import { currentPage, hasMore } from './store';
-	import CountryScreen from '$lib/CountryScreen.svelte';
 	import ToTopButton from '$lib/ToTopButton.svelte';
 	import ScrollPosition from '$lib/ScrollPosition.svelte';
 	import { fade } from 'svelte/transition';
+	import { goto } from '$app/navigation';
 
 	const baseTitle = 'Rest Countries';
 
@@ -36,6 +36,12 @@
 		}
 	}
 
+	function removeRegionFilter() {
+		$page.url.searchParams.delete('region');
+		region = '';
+		goto($page.url);
+	}
+
 	beforeUpdate(() => {
 		region = $page.url.searchParams.get('region') || '';
 	});
@@ -56,7 +62,10 @@
 		<div
 			class="relative flex flex-col md:flex-row justify-between mx-auto pb-6 w-full item gap-y-12"
 		>
-			<Search on:searchInput={handleSearchInput} /><FilterByRegion />
+			<Search on:searchInput={handleSearchInput} /><FilterByRegion
+				{region}
+				on:removeRegionFilter={removeRegionFilter}
+			/>
 		</div>
 	</div>
 	{#await countriesDisplay}
@@ -67,8 +76,8 @@
 			in:fade={{ delay: 0, duration: 150 }}
 			class="container mx-auto grid-cols-1 grid xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 items-center mt-[2em] px-4 lg:px-10 gap-10 lg:gap-x-16 text-left relative mb-6"
 		>
-			{#each countries as country}
-				<CardSmall {country} />
+			{#each countries as country, cardId}
+				<CardSmall {country} {cardId} />
 			{/each}
 		</article>
 		<InfiniteScroll on:scrollDown={handleScrollDown} />
