@@ -9,7 +9,7 @@
 	import LoaderCog from '$lib/Loader-cog.svelte';
 	import Search from '$lib/Search.svelte';
 	import { beforeUpdate } from 'svelte';
-	import { currentPage, hasMore } from './store';
+	import { currentPage, hasMore, currentRegion } from './store';
 	import ToTopButton from '$lib/ToTopButton.svelte';
 	import ScrollPosition from '$lib/ScrollPosition.svelte';
 	import { fade } from 'svelte/transition';
@@ -19,9 +19,9 @@
 
 	let searchString = '';
 
-	$: region = $page.url.searchParams.get('region') || '';
+	$: region = $currentRegion;
 
-	$: countriesDisplay = searchCountires(
+	let countriesDisplay = searchCountires(
 		searchString,
 		region,
 		+$currentPage === 0 && searchString.length === 0
@@ -35,11 +35,17 @@
 		}
 	}
 
+	function addRegionFilter() {
+		console.log('region:', region);
+		$currentPage = 0;
+
+		countriesDisplay = searchCountires(searchString, region, true);
+	}
+
 	function removeRegionFilter() {
-		$page.url.searchParams.delete('region');
 		region = '';
 		$currentPage = 0;
-		goto($page.url);
+		countriesDisplay = searchCountires(searchString, region, true);
 	}
 
 	beforeUpdate(() => {
@@ -51,7 +57,7 @@
 	}
 </script>
 
-<svelte:head><title>Rest Countries{region ? `| ${region}` : ''}</title></svelte:head>
+<svelte:head><title>Rest Countries{region ? ` | ${region}` : ''}</title></svelte:head>
 <Header />
 <svelte:window bind:scrollY={scrollPositionY} />
 <ScrollPosition {scrollPositionY} />
@@ -63,8 +69,8 @@
 			class="relative flex flex-col md:flex-row justify-between mx-auto pb-6 w-full item gap-y-12"
 		>
 			<Search on:searchInput={handleSearchInput} /><FilterByRegion
-				{region}
 				on:removeRegionFilter={removeRegionFilter}
+				on:addRegionFilter={addRegionFilter}
 			/>
 		</div>
 	</div>

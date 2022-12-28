@@ -8,6 +8,7 @@ export const storedAllAt = localWritable('storedAllAt', 0);
 export const theme = localWritable('theme', 'dark');
 export const previousPage = localWritable('previousPage', ['/']);
 export const nextPage = localWritable('nextPage', ['/']);
+export const currentRegion = localWritable('currentRegion', '');
 
 /**
  * svelte stores

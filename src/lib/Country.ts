@@ -113,12 +113,9 @@ export async function searchCountires(
 			(get(regionSearchArray).length > 0 && get(regionSearchArray)[0].region !== region)
 		) {
 			if (notExpired(+get(storedAllAt))) {
-				const regionArray = [];
-				for (let country of get(countriesData)) {
-					if ('' + country.region === region) {
-						regionArray.push(country);
-					}
-				}
+				const regionArray = get(countriesData).filter(
+					(country) => country?.region?.toLowerCase() === region.toLowerCase()
+				);
 				regionSearchArray.set(regionArray);
 				if (searchString) {
 					const searchData = searchCountryByName(get(regionSearchArray), searchString);
@@ -188,20 +185,6 @@ export async function searchCountires(
 		});
 }
 
-function addToLocalStorage(country) {
-	const countryCode: string = country.cca3 || country.cca2;
-
-	if (getCountryFromLocalStorage(countryCode)) {
-		return null;
-	}
-	country.createdAt = Date.now();
-
-	countriesData.update((data) => {
-		data.push(country);
-		return data;
-	});
-}
-
 function arrayPick(array: object[]) {
 	const newArray: object[] = [];
 	const page = get(currentPage);
@@ -229,11 +212,10 @@ function compareCountriesByName(a, b) {
 }
 
 function searchCountryByName(countries: object[], searchString: string) {
-	const searchResult = [];
-	for (let country of countries) {
-		if (country.name?.common?.toLowerCase().includes(searchString.toLowerCase())) {
-			searchResult.push(country);
-		}
-	}
+	const searchResult = countries.filter(
+		(country) =>
+			country?.name?.common?.toLowerCase().includes(searchString.toLowerCase()) ||
+			country?.name?.official?.toLowerCase().includes(searchString.toLowerCase())
+	);
 	return searchResult;
 }

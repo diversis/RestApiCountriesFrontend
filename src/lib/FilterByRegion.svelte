@@ -3,16 +3,23 @@
 	import { quintInOut } from 'svelte/easing';
 	import { clickOutside } from './clickOutside';
 	import { createEventDispatcher } from 'svelte';
+	import { currentRegion } from '../routes/store';
 
-	export let region: string;
-
+	$: region = $currentRegion;
 	const menuItems = ['Europe', 'Asia', 'Americas', 'Africa', 'Oceania', 'Antarctic'];
 	const dispatch = createEventDispatcher();
 
 	let menuOpen = false;
 
+	$: console.log(region);
+
+	function handleRegionAdd(item: string) {
+		console.log(item);
+		$currentRegion = item;
+	}
+
 	function handleRegionRemove() {
-		dispatch('removeRegionFilter');
+		$currentRegion = '';
 	}
 </script>
 
@@ -81,16 +88,19 @@
 					transition:fly={{ delay: 0, duration: 1000, easing: quintInOut, y: -150 }}
 				>
 					{#each menuItems as item}
-						<a href="/?region={item}">
-							<p
-								class="w-full px-3 rounded-md
-							 hover:bg-dark-mode-dark-blue hover:text-any-white
-							  dark:hover:bg-any-white dark:hover:text-dark-mode-very-dark-blue
-						focus:bg-dark-mode-dark-blue focus:text-any-white
-						 dark:focus:bg-any-white dark:focus:text-dark-mode-very-dark-blue"
-							>
+						<button
+							id="menu-{item}"
+							type="button"
+							on:click|self|preventDefault={handleRegionAdd(item)}
+							class="w-full text-left rounded-md
+							hover:bg-dark-mode-dark-blue hover:text-any-white
+							 dark:hover:bg-any-white dark:hover:text-dark-mode-very-dark-blue
+					   focus:bg-dark-mode-dark-blue focus:text-any-white
+						dark:focus:bg-any-white dark:focus:text-dark-mode-very-dark-blue"
+						>
+							<span class="w-full pl-4 ">
 								{item}
-							</p></a
+							</span></button
 						>
 					{/each}
 				</div>
