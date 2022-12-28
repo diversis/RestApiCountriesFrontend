@@ -20,13 +20,11 @@
 	let searchString = '';
 
 	$: region = $page.url.searchParams.get('region') || '';
-	$: countryCode = $page.url.searchParams.get('country') || '';
 
 	$: countriesDisplay = searchCountires(
 		searchString,
 		region,
-		+$currentPage === 0 && searchString.length === 0,
-		countryCode
+		+$currentPage === 0 && searchString.length === 0
 	);
 
 	let scrollPositionY: number = 0;
@@ -40,7 +38,6 @@
 
 	beforeUpdate(() => {
 		region = $page.url.searchParams.get('region') || '';
-		countryCode = $page.url.searchParams.get('country') || '';
 	});
 
 	async function handleSearchInput(searchInput) {

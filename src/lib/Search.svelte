@@ -22,6 +22,9 @@
 		inputFocus();
 	});
 	onMount(() => {
+		if (searchString) {
+			handleSearchInput();
+		}
 		inputFocus();
 	});
 	function inputFocus() {
@@ -86,4 +89,38 @@
 		placeholder={searchPlaceHolder}
 		class="px-2 w-full bg-any-white dark:bg-dark-mode-dark-blue rounded-lg transition-colors duration-700 ease-theme "
 	/>
+	{#if searchString}
+		<button
+			title="Reset"
+			type="button"
+			on:click={() => (searchString = '')}
+			class="inline-block group r-0 p-0"
+		>
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				class="fill-light-mode-very-dark-blue dark:fill-any-white
+				dark:group-hover:fill-dark-mode-dark-blue group-hover:fill-any-white
+			dark:group-focus:fill-dark-mode-dark-blue group-focus:fill-any-white
+			   w-[1.6em] h-[1.5em]"
+				viewBox="0 0 500 500"
+			>
+				<title>Backspace</title>
+				<path
+					d="M135.19 390.14a28.79 28.79 0 0021.68 9.86h246.26A29 29 0 00432 371.13V140.87A29 29 0 00403.13 112H156.87a28.84 28.84 0 00-21.67 9.84v0L46.33 256l88.86 134.11z"
+					fill="none"
+					stroke="currentColor"
+					stroke-linejoin="round"
+					stroke-width="32"
+				/>
+				<path
+					fill="none"
+					stroke="currentColor"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					stroke-width="32"
+					d="M336.67 192.33L206.66 322.34M336.67 322.34L206.66 192.33M336.67 192.33L206.66 322.34M336.67 322.34L206.66 192.33"
+				/>
+			</svg>
+		</button>
+	{/if}
 </div>

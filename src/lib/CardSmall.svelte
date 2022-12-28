@@ -13,7 +13,7 @@
 	 text-left pb-[1em] grid grid-cols-1 gap-y-3
 	 shadow-card-light dark:shadow-card-dark rounded-lg
 	 w-full h-[26em] overflow-hidden text-sm justify-between"
-		href="/?country={country.cca3}"
+		href="/countries/{country.cca3}"
 	>
 		<div class="relative w-full h-min">
 			<img
