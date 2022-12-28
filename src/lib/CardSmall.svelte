@@ -2,9 +2,15 @@
 	import { fade } from 'svelte/transition';
 	export let country;
 	export let cardId: number;
+	export let totalCards: number;
 </script>
 
-<div id={`card-${cardId}`} class="relative w-full h-[22.75rem]">
+<div
+	in:fade={{ delay: (500 / totalCards) * cardId, duration: 150 }}
+	out:fade={{ delay: (200 / totalCards) * cardId, duration: 100 }}
+	id={`card-${cardId}`}
+	class="relative w-full h-[22.75rem]"
+>
 	<a
 		class="absolute bg-any-white dark:bg-dark-mode-dark-blue transition-all duration-300 
 	bg-opacity-50 dark:bg-opacity-30 active:scale-[97%] backdrop-blur-[3px] 

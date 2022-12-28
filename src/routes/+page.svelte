@@ -77,7 +77,7 @@
 			class="container mx-auto grid-cols-1 grid xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 items-center mt-[2em] px-4 lg:px-10 gap-10 lg:gap-x-16 text-left relative mb-6"
 		>
 			{#each countries as country, cardId}
-				<CardSmall {country} {cardId} />
+				<CardSmall {country} {cardId} totalCards={countries.length} />
 			{/each}
 		</article>
 		<InfiniteScroll on:scrollDown={handleScrollDown} />
