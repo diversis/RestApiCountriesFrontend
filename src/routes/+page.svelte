@@ -53,45 +53,31 @@
 <Header />
 <svelte:window bind:scrollY={scrollPositionY} />
 <main class="relative">
-	{#if countryCode}
-		{#await getCountry(countryCode)}
-			<div id="LoaderCog" class="lg:col-span-2 grid items-center mx-auto lg:row-span-2">
-				<LoaderCog />
-			</div>
-		{:then country}
-			<div class="mx-auto relative container">
-				<CountryScreen {country} />
-			</div>
-		{:catch error}
-			<p>{error}</p>
-		{/await}
-	{:else}
+	<div
+		class="container mx-auto grid grid-cols-1 items-center mt-12 px-4 lg:px-10 gap-10 text-left relative mb-6"
+	>
 		<div
-			class="container mx-auto grid grid-cols-1 items-center mt-12 px-4 lg:px-10 gap-10 text-left relative mb-6"
+			class="relative flex flex-col md:flex-row justify-between mx-auto pb-6 w-full item gap-y-12"
 		>
-			<div
-				class="relative flex flex-col md:flex-row justify-between mx-auto pb-6 w-full item gap-y-12"
-			>
-				<Search on:searchInput={handleSearchInput} /><FilterByRegion />
-			</div>
+			<Search on:searchInput={handleSearchInput} /><FilterByRegion />
 		</div>
-		{#await countriesDisplay}
-			<div id="LoaderCog" class=" grid items-center m-auto w-min"><LoaderCog /></div>
-		{:then countries}
-			<ScrollPosition {scrollPositionY} />
-			<article
-				in:fade={{ delay: 0, duration: 150 }}
-				class="container mx-auto grid-cols-1 grid xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 items-center mt-[2em] px-4 lg:px-10 gap-10 lg:gap-x-16 text-left relative mb-6"
-			>
-				{#each countries as country}
-					<CardSmall {country} />
-				{/each}
-			</article>
-			<InfiniteScroll on:scrollDown={handleScrollDown} />
-		{:catch error}
-			<p>{error}</p>
-		{/await}
-	{/if}
+	</div>
+	{#await countriesDisplay}
+		<div id="LoaderCog" class=" grid items-center m-auto w-min"><LoaderCog /></div>
+	{:then countries}
+		<ScrollPosition {scrollPositionY} />
+		<article
+			in:fade={{ delay: 0, duration: 150 }}
+			class="container mx-auto grid-cols-1 grid xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 items-center mt-[2em] px-4 lg:px-10 gap-10 lg:gap-x-16 text-left relative mb-6"
+		>
+			{#each countries as country}
+				<CardSmall {country} />
+			{/each}
+		</article>
+		<InfiniteScroll on:scrollDown={handleScrollDown} />
+	{:catch error}
+		<p>{error}</p>
+	{/await}
 	{#if scrollPositionY > 50}
 		<ToTopButton />
 	{/if}
