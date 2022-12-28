@@ -28,7 +28,6 @@
 	);
 
 	let scrollPositionY: number = 0;
-
 	async function handleScrollDown(e) {
 		if ($hasMore) {
 			$currentPage += 1;
@@ -39,6 +38,7 @@
 	function removeRegionFilter() {
 		$page.url.searchParams.delete('region');
 		region = '';
+		$currentPage = 0;
 		goto($page.url);
 	}
 
@@ -48,14 +48,14 @@
 
 	async function handleSearchInput(searchInput) {
 		searchString = searchInput.detail.text;
-		// countriesDisplay = searchCountires(searchString, region, false);
 	}
 </script>
 
 <svelte:head><title>Rest Countries{region ? `| ${region}` : ''}</title></svelte:head>
 <Header />
 <svelte:window bind:scrollY={scrollPositionY} />
-<main class="relative">
+<ScrollPosition {scrollPositionY} />
+<main class="relative overflow-x-hidden">
 	<div
 		class="container mx-auto grid grid-cols-1 items-center mt-12 px-4 lg:px-10 gap-10 text-left relative mb-6"
 	>
@@ -71,7 +71,6 @@
 	{#await countriesDisplay}
 		<div id="LoaderCog" class=" grid items-center m-auto w-min"><LoaderCog /></div>
 	{:then countries}
-		<ScrollPosition {scrollPositionY} />
 		<article
 			in:fade={{ delay: 0, duration: 150 }}
 			class="container mx-auto grid-cols-1 grid xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 items-center mt-[2em] px-4 lg:px-10 gap-10 lg:gap-x-16 text-left relative mb-6"

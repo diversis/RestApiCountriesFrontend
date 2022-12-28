@@ -17,15 +17,17 @@
 </script>
 
 <div
+	id="filters-region"
 	use:clickOutside
 	on:outsideClick={() => (menuOpen = false)}
-	class="flex flex-row items-center gap-x-6"
+	class="grid items-center gap-x-6 md:pl-6 w-min"
 >
 	{#if region}
 		<div
 			transition:fly={{ delay: 0, duration: 1000, easing: quintInOut, x: 150 }}
-			class="py-2 px-3 inline-flex justify-between w-[16ch] bg-any-white dark:bg-dark-mode-dark-blue
-		 rounded-lg transition-all duration-700 ease-theme"
+			class="py-2 px-3 inline-flex justify-between w-[13ch] bg-any-white dark:bg-dark-mode-dark-blue
+		 rounded-lg transition-all duration-700 ease-theme "
+			style="grid-area: filter;"
 		>
 			{region}
 			<button
@@ -36,7 +38,9 @@
 			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
-					class="absolute fill-light-mode-very-dark-blue dark:fill-any-white top-0 transition-all duration-100 ease-theme active:scale-150"
+					class="absolute top-0 
+					fill-light-mode-very-dark-blue dark:fill-any-white 
+					transition-all duration-100 ease-theme active:scale-150"
 					viewBox="0 0 512 512"
 					><title>Close</title><path
 						fill="none"
@@ -50,7 +54,7 @@
 			</button>
 		</div>
 	{/if}
-	<section class="flex flex-col w-min">
+	<section class="flex flex-col w-min" style="grid-area: menu;">
 		<button
 			type="button"
 			title="Select region filter"
@@ -96,4 +100,12 @@
 </div>
 
 <style>
+	#filters-region {
+		grid-template-areas: 'menu filter';
+	}
+	@media screen and (min-width: 768px) {
+		#filters-region {
+			grid-template-areas: 'filter menu';
+		}
+	}
 </style>

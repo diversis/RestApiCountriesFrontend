@@ -19,9 +19,9 @@
 		<LoaderCog />
 	</div>
 {:then country}
-	<main class="container relative mx-auto">
+	<main class="container relative mx-auto overflow-x-hidden">
 		<article
-			class="container absolute flex flex-col lg:grid lg:grid-cols-2 items-center mt-[4em] gap-y-[1em] px-4 lg:px-10 lg:gap-x-16 text-left  pb-6"
+			class="container flex flex-col lg:grid lg:grid-cols-2 items-center mt-[4em] gap-y-[1em] px-4 lg:px-10 lg:gap-x-16 text-left  pb-6"
 		>
 			<div class="lg:col-span-2 flex items-start self-start mb-[3em]"><BackButton /></div>
 			<div class="relative w-full" in:fade={{ delay: 0, duration: 300 }}>
