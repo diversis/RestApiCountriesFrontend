@@ -5,16 +5,22 @@
 	import { createEventDispatcher } from 'svelte';
 
 	export let region: string;
-	let menuOpen = false;
+
 	const menuItems = ['Europe', 'Asia', 'Americas', 'Africa', 'Oceania', 'Antarctic'];
 	const dispatch = createEventDispatcher();
+
+	let menuOpen = false;
 
 	function handleRegionRemove() {
 		dispatch('removeRegionFilter');
 	}
 </script>
 
-<div class="flex flex-row items-center gap-x-6">
+<div
+	use:clickOutside
+	on:outsideClick={() => (menuOpen = false)}
+	class="flex flex-row items-center gap-x-6"
+>
 	{#if region}
 		<div
 			transition:fly={{ delay: 0, duration: 1000, easing: quintInOut, x: 150 }}
@@ -22,10 +28,15 @@
 		 rounded-lg transition-all duration-700 ease-theme"
 		>
 			{region}
-			<button type="button" title="Remove filter" on:click={handleRegionRemove}>
+			<button
+				type="button"
+				title="Remove filter"
+				on:click={handleRegionRemove}
+				class="group relative w-[1.5em] h-[1.5em] "
+			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
-					class="fill-light-mode-very-dark-blue dark:fill-any-white w-[1.5em] h-[1.5em]"
+					class="absolute fill-light-mode-very-dark-blue dark:fill-any-white top-0 transition-all duration-100 ease-theme active:scale-150"
 					viewBox="0 0 512 512"
 					><title>Close</title><path
 						fill="none"
@@ -39,7 +50,7 @@
 			</button>
 		</div>
 	{/if}
-	<section use:clickOutside on:outsideClick={() => (menuOpen = false)} class="flex flex-col w-min">
+	<section class="flex flex-col w-min">
 		<button
 			type="button"
 			title="Select region filter"
