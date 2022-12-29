@@ -1,19 +1,23 @@
 <script lang="ts">
 	import '../index.css';
+
 	import { page } from '$app/stores';
-	import CardSmall from '$lib/CardSmall.svelte';
-	import { searchCountires } from '$lib/scripts/Country';
-	import FilterByRegion from '$lib/FilterByRegion.svelte';
-	import Header from '$lib/Header.svelte';
-	import InfiniteScroll from '$lib/InfiniteScroll.svelte';
-	import LoaderCog from '$lib/Loader-cog.svelte';
-	import Search from '$lib/Search.svelte';
-	import { beforeUpdate } from 'svelte';
 	import { currentPage, hasMore, currentRegion } from './store';
-	import ToTopButton from '$lib/ToTopButton.svelte';
-	import ScrollPosition from '$lib/ScrollPosition.svelte';
+
+	import { beforeUpdate } from 'svelte';
+
+	import { searchCountires } from '$lib/scripts/Country';
+
+	import CardSmall from '$lib/components/CardSmall.svelte';
+	import FilterByRegion from '$lib/components/FilterByRegion.svelte';
+	import Header from '$lib/components/Header.svelte';
+	import InfiniteScroll from '$lib/components/InfiniteScroll.svelte';
+	import LoaderCog from '$lib/components/Loader-cog.svelte';
+	import Search from '$lib/components/Search.svelte';
+	import ToTopButton from '$lib/components/ToTopButton.svelte';
+	import ScrollPosition from '$lib/components/ScrollPosition.svelte';
+
 	import { fade } from 'svelte/transition';
-	import { goto } from '$app/navigation';
 
 	const baseTitle = 'Rest Countries';
 

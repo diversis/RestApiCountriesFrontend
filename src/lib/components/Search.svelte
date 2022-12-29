@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { afterUpdate, beforeUpdate, createEventDispatcher, onDestroy, onMount } from 'svelte';
 	import { fade, draw } from 'svelte/transition';
-	import { currentPage, searchInputString } from '../routes/store';
+	import { currentPage, searchInputString } from '../../routes/store';
 
 	$: searchString = $searchInputString;
 	let searchInput;

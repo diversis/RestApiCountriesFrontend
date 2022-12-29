@@ -44,3 +44,19 @@ export async function fetchRegion(region: string) {
 			return [];
 		});
 }
+
+export async function fetchAll() {
+	return await fetch(`https://restcountries.com/v3.1/all${fields}`)
+		.then((response: Response) => response.json())
+		.then((data) => {
+			for (let country of data) {
+				country.createdAt = Date.now();
+			}
+			data.sort(compareCountriesByName);
+			return data;
+		})
+		.catch((error) => {
+			console.log(error);
+			return [];
+		});
+}

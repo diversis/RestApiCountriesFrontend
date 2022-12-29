@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { fly } from 'svelte/transition';
 	import { quintInOut } from 'svelte/easing';
-	import { clickOutside } from './scripts/clickOutside';
+	import { clickOutside } from '../scripts/clickOutside';
 	import { createEventDispatcher } from 'svelte';
-	import { currentRegion } from '../routes/store';
+	import { currentRegion } from '../../routes/store';
 
 	$: region = $currentRegion;
 	const menuItems = ['Europe', 'Asia', 'Americas', 'Africa', 'Oceania', 'Antarctic'];

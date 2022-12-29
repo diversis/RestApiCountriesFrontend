@@ -1,12 +1,15 @@
 <script lang="ts">
 	import '../../../index.css';
-	import Header from '$lib/Header.svelte';
 	import { page } from '$app/stores';
-	import LoaderInline from '$lib/Loader-inline.svelte';
-	import BackButton from '$lib/BackButton.svelte';
+
 	import { getBorders, getCountry } from '$lib/scripts/Country';
-	import LoaderCog from '$lib/Loader-cog.svelte';
 	import { fetchImg } from '$lib/scripts/fetchImg';
+
+	import Header from '$lib/components/Header.svelte';
+	import LoaderInline from '$lib/components/Loader-inline.svelte';
+	import BackButton from '$lib/components/BackButton.svelte';
+	import LoaderCog from '$lib/components/Loader-cog.svelte';
+
 	import { fade } from 'svelte/transition';
 
 	$: countryCode = $page.params.slug;

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { scrollPosition } from '../routes/store';
+	import { scrollPosition } from '../../routes/store';
 	import { onDestroy, onMount } from 'svelte';
 	import { get } from 'svelte/store';
 

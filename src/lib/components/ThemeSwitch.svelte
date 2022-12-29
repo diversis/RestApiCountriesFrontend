@@ -1,6 +1,6 @@
 <script>
 	import { beforeUpdate } from 'svelte';
-	import { theme } from '../routes/store';
+	import { theme } from '../../routes/store';
 
 	$: themeS = $theme;
 
