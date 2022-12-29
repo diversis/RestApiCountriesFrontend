@@ -1,22 +1,24 @@
+import type { countryType } from '$lib/scripts/countryType';
 import { writable as localWritable } from 'svelte-local-storage-store';
-import { writable } from 'svelte/store';
+import { writable, type Writable } from 'svelte/store';
+
 /**
  * Using local storage library for stores
  **/
-export const countriesData = localWritable('storedCountries', []);
-export const storedAllAt = localWritable('storedAllAt', 0);
-export const theme = localWritable('theme', 'dark');
-export const previousPage = localWritable('previousPage', ['/']);
-export const nextPage = localWritable('nextPage', ['/']);
-export const currentRegion = localWritable('currentRegion', '');
+export const countriesData: Writable<countryType[]> = localWritable('storedCountries', []);
+export const storedAllAt: Writable<number> = localWritable('storedAllAt', 0);
+export const theme: Writable<string> = localWritable('theme', 'dark');
+export const previousPage: Writable<string[]> = localWritable('previousPage', ['/']);
+export const nextPage: Writable<string[]> = localWritable('nextPage', ['/']);
+export const currentRegion: Writable<string> = localWritable('currentRegion', '');
 
 /**
  * svelte stores
  **/
-export const currentPage = writable(0);
-export const hasMore = writable(true);
-export const currentSearchArray = writable([]);
-export const scrollPosition = writable(0);
-export const searchInputString = writable('');
-export const regionSearchArray = writable([]);
-export const countryCanRender = writable(false);
+export const currentPage: Writable<number> = writable(0);
+export const hasMore: Writable<boolean> = writable(true);
+export const currentSearchArray: Writable<countryType[]> = writable([]);
+export const scrollPosition: Writable<number> = writable(0);
+export const searchInputString: Writable<string> = writable('');
+export const regionSearchArray: Writable<countryType[]> = writable([]);
+export const countryCanRender: Writable<boolean> = writable(false);

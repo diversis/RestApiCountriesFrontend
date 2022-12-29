@@ -1,6 +1,7 @@
 <script lang="ts">
+	import type { countryType } from '$lib/scripts/countryType';
 	import { fade } from 'svelte/transition';
-	export let country;
+	export let country: countryType;
 	export let cardId: number;
 	export let totalCards: number;
 </script>

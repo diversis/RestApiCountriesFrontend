@@ -103,7 +103,7 @@ export async function searchCountires(
 	region: string | undefined,
 	init = true,
 	countryCode = ''
-) {
+): Promise<countryType | []> {
 	if (countryCode) {
 		return [];
 	}
@@ -130,7 +130,7 @@ export async function searchCountires(
 			);
 			return await fetch(`https://restcountries.com/v3.1/region/${region}${fields}`)
 				.then((response: Response) => response.json())
-				.then((data) => {
+				.then((data: countryType[]) => {
 					for (let country of data) {
 						country.createdAt = Date.now();
 					}

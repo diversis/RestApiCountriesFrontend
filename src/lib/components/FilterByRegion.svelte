@@ -2,12 +2,12 @@
 	import { fly } from 'svelte/transition';
 	import { quintInOut } from 'svelte/easing';
 	import { clickOutside } from '../scripts/clickOutside';
-	import { createEventDispatcher } from 'svelte';
+	// import { createEventDispatcher } from 'svelte';
 	import { currentRegion } from '../../routes/store';
 
 	$: region = $currentRegion;
 	const menuItems = ['Europe', 'Asia', 'Americas', 'Africa', 'Oceania', 'Antarctic'];
-	const dispatch = createEventDispatcher();
+	// const dispatch = createEventDispatcher();
 
 	let menuOpen = false;
 

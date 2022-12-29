@@ -6,11 +6,11 @@
 
 	function toggle() {
 		theme.set(themeS === 'dark' ? '' : 'dark');
-		window.document.documentElement.className = ('', $theme);
+		window.document.documentElement.className = '' + $theme;
 	}
 	beforeUpdate(async () => {
 		if (themeS === 'dark') {
-			window.document.documentElement.className = ('', $theme);
+			window.document.documentElement.className = '' + $theme;
 		}
 	});
 </script>
