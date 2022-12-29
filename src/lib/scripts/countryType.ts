@@ -4,8 +4,9 @@ export type countryType = {
 	capital: string[] | [];
 	cca2: string;
 	cca3: string;
-	currencies: object;
+	currencies: { [code: string]: { name: string; symbol: string } };
 	flags: { png: string; svg: string };
+	languages: { [code: string]: string };
 	name: { common: string | undefined; official: string | undefined; nativeName: object };
 	population: number | undefined;
 	region: string;
@@ -13,3 +14,9 @@ export type countryType = {
 	tld: string[] | [];
 	createdAt: number | undefined;
 };
+
+type withDate = {
+	createdAt: string;
+};
+
+export type countryTypeLocal = countryType & withDate;

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { countryType } from '$lib/scripts/countryType';
+	import { populationFormatter } from '$lib/scripts/formatter';
 	import { fade } from 'svelte/transition';
 	export let country: countryType;
 	export let cardId: number;
@@ -43,7 +44,7 @@
 		<ul class="grid grid-col-1 px-4">
 			<li>
 				<span>Population: </span>
-				{'' + country?.population || 'None'}
+				{populationFormatter.format(country?.population) || 'None'}
 			</li>
 			<li>
 				<span>Region: </span>

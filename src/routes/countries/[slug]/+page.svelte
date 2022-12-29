@@ -11,6 +11,7 @@
 	import LoaderCog from '$lib/components/Loader-cog.svelte';
 
 	import { fade } from 'svelte/transition';
+	import { populationFormatter } from '$lib/scripts/formatter';
 
 	$: countryCode = $page.params.slug;
 </script>
@@ -67,7 +68,7 @@
 						</li>
 						<li>
 							<span>Population: </span>
-							{'' + country?.population || 'None'}
+							{populationFormatter.format(country?.population) || 'None'}
 						</li>
 						<li>
 							<span>Region: </span>

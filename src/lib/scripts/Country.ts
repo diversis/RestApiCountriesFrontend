@@ -7,7 +7,7 @@ import {
 	storedAllAt
 } from '../../routes/store';
 import { get } from 'svelte/store';
-import type { countryType } from './countryType';
+import type { countryType, countryTypeLocal } from './countryType';
 
 const fields =
 	'?fields=name,capital,currencies,population,region,subregion,tld,languages,borders,flags,cca2,cca3';
@@ -68,7 +68,7 @@ function getCountryFromLocalStorage(countryCode: string) {
 	);
 
 	if (countryIndex > -1) {
-		const country: countryType = localStorage[countryIndex];
+		const country: countryTypeLocal = localStorage[countryIndex];
 		if (country.createdAt && notExpired(+country.createdAt)) {
 			return country;
 		}
@@ -103,7 +103,7 @@ export async function searchCountires(
 	region: string | undefined,
 	init = true,
 	countryCode = ''
-): Promise<countryType | []> {
+): Promise<countryTypeLocal | []> {
 	if (countryCode) {
 		return [];
 	}
@@ -129,7 +129,7 @@ export async function searchCountires(
 				`\n--------------------\n fetching... https://restcountries.com/v3.1/region/${region}${fields} \n--------------------\n`
 			);
 			return await fetch(`https://restcountries.com/v3.1/region/${region}${fields}`)
-				.then((response: Response) => response.json())
+				.then((response: Response): Promise<unknown> => response.json())
 				.then((data: countryType[]) => {
 					for (let country of data) {
 						country.createdAt = Date.now();
