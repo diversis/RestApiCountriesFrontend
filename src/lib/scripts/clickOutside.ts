@@ -1,4 +1,4 @@
-export function clickOutside(node) {
+export function clickOutside(node: Node) {
 	// the node has been mounted in the DOM
 
 	window.addEventListener('click', handleClick);

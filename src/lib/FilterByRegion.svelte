@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { fly } from 'svelte/transition';
 	import { quintInOut } from 'svelte/easing';
-	import { clickOutside } from './clickOutside';
+	import { clickOutside } from './scripts/clickOutside';
 	import { createEventDispatcher } from 'svelte';
 	import { currentRegion } from '../routes/store';
 
@@ -12,6 +12,8 @@
 	let menuOpen = false;
 
 	$: console.log(region);
+
+	let selected: string;
 
 	function handleRegionAdd(item: string) {
 		console.log(item);
@@ -91,7 +93,8 @@
 						<button
 							id="menu-{item}"
 							type="button"
-							on:click|self|preventDefault={handleRegionAdd(item)}
+							value="item"
+							on:click|self|preventDefault={handleRegionAdd(this.value)}
 							class="w-full text-left rounded-md
 							hover:bg-dark-mode-dark-blue hover:text-any-white
 							 dark:hover:bg-any-white dark:hover:text-dark-mode-very-dark-blue

@@ -5,8 +5,9 @@ import {
 	hasMore,
 	regionSearchArray,
 	storedAllAt
-} from '../routes/store';
+} from '../../routes/store';
 import { get } from 'svelte/store';
+import type { countryType } from './countryType';
 
 const fields =
 	'?fields=name,capital,currencies,population,region,subregion,tld,languages,borders,flags,cca2,cca3';
@@ -60,14 +61,14 @@ function getCountryFromLocalStorage(countryCode: string) {
 		return [];
 	}
 
-	// check if country data is already stored in local storage and return it if it was created <{refreshLimit} ago
+	// check if country data is already stored in local storage and return it if it was created <{refreshLimit} s ago
 
-	let countryIndex = localStorage.findIndex(
+	const countryIndex = localStorage.findIndex(
 		(country) => countryCode === country.cca3 || countryCode === country.cca2
 	);
 
 	if (countryIndex > -1) {
-		const country = localStorage[countryIndex];
+		const country: countryType = localStorage[countryIndex];
 		if (country.createdAt && notExpired(+country.createdAt)) {
 			return country;
 		}

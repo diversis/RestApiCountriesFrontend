@@ -8,7 +8,7 @@
 	onMount(() => {
 		window.scrollTo(0, get(scrollPosition));
 	});
-	onDestroy(async () => {
+	onDestroy(() => {
 		scrollPosition.set(scrollPositionY);
 	});
 </script>
