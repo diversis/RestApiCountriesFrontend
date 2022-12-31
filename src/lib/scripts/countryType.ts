@@ -12,11 +12,9 @@ export type countryType = {
 	region: string;
 	subregion: string | undefined;
 	tld: string[] | [];
-	createdAt: number | undefined;
+	createdAt?: number | undefined;
 };
-
-type withDate = {
-	createdAt: string;
+export type borderType = {
+	cca3: string;
+	name: string;
 };
-
-export type countryTypeLocal = countryType & withDate;

@@ -7,7 +7,7 @@ import {
 	storedAllAt
 } from '../../routes/store';
 import { get } from 'svelte/store';
-import type { countryType, countryTypeLocal } from './countryType';
+import type { countryType } from './countryType';
 
 const fields =
 	'?fields=name,capital,currencies,population,region,subregion,tld,languages,borders,flags,cca2,cca3';
@@ -68,7 +68,7 @@ function getCountryFromLocalStorage(countryCode: string) {
 	);
 
 	if (countryIndex > -1) {
-		const country: countryTypeLocal = localStorage[countryIndex];
+		const country: countryType = localStorage[countryIndex];
 		if (country.createdAt && notExpired(+country.createdAt)) {
 			return country;
 		}
@@ -91,7 +91,7 @@ export async function getBorders(bordersCodes: []) {
 		bordersCodes.map(async (border) => {
 			const borderData = await getCountry(border);
 			if (borderData) {
-				borders.push({ cca3: border, name: borderData.name.common });
+				borders.push({ cca3: border, name: borderData?.name?.common as string | '' });
 			}
 		})
 	);
@@ -103,7 +103,7 @@ export async function searchCountires(
 	region: string | undefined,
 	init = true,
 	countryCode = ''
-): Promise<countryTypeLocal | []> {
+): Promise<countryType | []> {
 	if (countryCode) {
 		return [];
 	}
@@ -131,6 +131,7 @@ export async function searchCountires(
 			return await fetch(`https://restcountries.com/v3.1/region/${region}${fields}`)
 				.then((response: Response): Promise<unknown> => response.json())
 				.then((data: countryType[]) => {
+					console.log('data' + typeof data);
 					for (let country of data) {
 						country.createdAt = Date.now();
 					}
@@ -167,6 +168,7 @@ export async function searchCountires(
 	return await fetch(`https://restcountries.com/v3.1/all${fields}`)
 		.then((response: Response) => response.json())
 		.then((data) => {
+			console.log('data' + (typeof data[0] === 'object'));
 			for (let country of data) {
 				country.createdAt = Date.now();
 			}

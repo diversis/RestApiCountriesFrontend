@@ -11,12 +11,12 @@
 
 	let menuOpen = false;
 
-	$: console.log(region);
+	$: console.log('region filter init: ', region);
 
 	let selected: string;
 
 	function handleRegionAdd(item: string) {
-		console.log(item);
+		console.log('region filter: ', item);
 		$currentRegion = item;
 	}
 

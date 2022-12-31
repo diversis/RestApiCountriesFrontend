@@ -1,11 +1,8 @@
-import type { countryTypeLocal } from './countryType';
+import type { countryType } from './countryType';
 
-export function filterCountryByName(
-	countries: countryTypeLocal[],
-	searchString: string
-): countryTypeLocal[] {
-	const searchResult: countryTypeLocal[] = countries.filter(
-		(country: countryTypeLocal) =>
+export function filterCountryByName(countries: countryType[], searchString: string): countryType[] {
+	const searchResult: countryType[] = countries.filter(
+		(country: countryType) =>
 			country?.name?.common?.toLowerCase().includes(searchString.toLowerCase()) ||
 			country?.name?.official?.toLowerCase().includes(searchString.toLowerCase())
 	);
@@ -13,12 +10,12 @@ export function filterCountryByName(
 }
 
 export function filterCountryByPopulation(
-	countries: countryTypeLocal[],
+	countries: countryType[],
 	population = 0,
 	direction = true
-): countryTypeLocal[] {
-	const searchResult: countryTypeLocal[] = countries.filter((country: countryTypeLocal) =>
-		direction ? country?.population > population : country?.population < population
+): countryType[] {
+	const searchResult: countryType[] = countries.filter((country: countryType) =>
+		direction ? (country?.population | 0) > population : (country?.population | 0) < population
 	);
 	return searchResult;
 }
