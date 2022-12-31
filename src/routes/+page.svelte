@@ -24,7 +24,7 @@
 
 	let searchString = '';
 
-	let countriesDisplay: countryType | [] = [];
+	let countriesDisplay: countryType[] | [] = [];
 	// 	searchString,
 	// 	$currentRegion,
 	// 	+$currentPage === 0 && searchString.length === 0
