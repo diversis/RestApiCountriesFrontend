@@ -2,7 +2,7 @@
 	import '../index.css';
 
 	import { page } from '$app/stores';
-	import { currentPage, hasNext, currentRegion, currentSearchData } from './store';
+	import { currentPage, hasNext, currentRegion } from './store';
 
 	import { beforeUpdate, onMount } from 'svelte';
 
@@ -24,7 +24,7 @@
 
 	let searchString = '';
 
-	// let countriesDisplay = searchCountires(
+	let countriesDisplay: countryType | [] = [];
 	// 	searchString,
 	// 	$currentRegion,
 	// 	+$currentPage === 0 && searchString.length === 0
@@ -33,13 +33,22 @@
 	// beforeUpdate(() => {
 	// 	region = $page.url.searchParams.get('region') || '';
 	// });
-
+	onMount(async () => {
+		currentPage.set(0);
+		hasNext.set(true);
+		const newData = await getCountriesPage();
+		countriesDisplay = [...newData];
+	});
 	let scrollPositionY: number = 0;
-
-	function handleScrollDown(e) {
-		if ($hasNext) {
+	let shouldScrollDown: boolean = true;
+	async function handleScrollDown(e): Promise<void> {
+		if ($hasNext && shouldScrollDown) {
+			console.log(`shouldScrollDown: ${shouldScrollDown} \n`);
+			shouldScrollDown = false;
 			$currentPage += 1;
-			// countriesDisplay = searchCountires(searchString);
+			const newData = await getCountriesPage();
+			countriesDisplay = [...countriesDisplay, ...newData];
+			shouldScrollDown = true;
 		}
 	}
 
@@ -52,16 +61,13 @@
 	}
 
 	async function getCountriesPage() {
-		$currentSearchData = await searchCountires(searchString);
-
-		return $currentSearchData;
+		console.log(`current page: ${$currentPage} \n`);
+		return await searchCountires(searchString);
 	}
 
 	async function addRegionFilter() {
 		console.log('region:', $currentRegion);
 		currentPage.set(0);
-
-		$currentSearchData = await searchCountires(searchString);
 	}
 </script>
 
@@ -84,21 +90,19 @@
 			/>
 		</div>
 	</div>
-	{#await getCountriesPage()}
-		<div id="LoaderCog" class=" grid items-center m-auto w-min"><LoaderCog /></div>
-	{:then ___}
+
+	{#if countriesDisplay && Array.isArray(countriesDisplay)}
 		<article
 			in:fade={{ delay: 0, duration: 150 }}
 			class="container mx-auto grid-cols-1 grid xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 items-center mt-[2em] px-4 lg:px-10 gap-10 lg:gap-x-16 text-left relative mb-6"
 		>
-			{#each $currentSearchData as country, cardId}
-				<CardSmall {country} {cardId} totalCards={$currentSearchData.length} />
+			{#each countriesDisplay as country, cardId}
+				<CardSmall {country} {cardId} totalCards={countriesDisplay.length} />
 			{/each}
 		</article>
 		<InfiniteScroll on:scrollDown={handleScrollDown} />
-	{:catch error}
-		<p>{error}</p>
-	{/await}
+	{:else}<div id="LoaderCog" class=" grid items-center m-auto w-min"><LoaderCog /></div>
+	{/if}
 	{#if scrollPositionY > 50}
 		<ToTopButton />
 	{/if}

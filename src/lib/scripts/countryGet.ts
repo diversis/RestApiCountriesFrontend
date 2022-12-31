@@ -15,7 +15,7 @@ export async function searchCountires(
 	}
 	const storedDate: number = +get(storedAllAt);
 
-	if (storedDate || expired(storedDate)) {
+	if (!storedDate || expired(storedDate)) {
 		const fetchArray: countryType[] | [] = await fetchAll();
 
 		countriesData.set([...fetchArray]);

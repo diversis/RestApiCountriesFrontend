@@ -42,6 +42,10 @@ export async function fetchRegion(region: string): Promise<countryType[] | []> {
 }
 
 export async function fetchAll(): Promise<countryType[] | []> {
+	console.log(
+		`\n--------------------\n fetching... https://restcountries.com/v3.1/all${fields} \n--------------------\n`
+	);
+
 	return fetch(`https://restcountries.com/v3.1/all${fields}`)
 		.then((response: Response): Promise<unknown> => response.json())
 		.then((data: unknown): countryType[] | [] => {
