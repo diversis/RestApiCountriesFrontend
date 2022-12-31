@@ -58,10 +58,13 @@ export async function getCountry(countryCode: string): Promise<countryType | nul
 	if (countryData) {
 		countryData.createdAt = Date.now();
 	}
+
 	countriesData.update((data: countryType[]): countryType[] => {
 		data.push(countryData as countryType);
 		return data;
 	});
+
+	console.log(`\n--------------------\n  countryData  ${countryData} \n--------------------\n`);
 
 	return countryData;
 }

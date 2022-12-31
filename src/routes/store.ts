@@ -11,6 +11,7 @@ export const theme: Writable<string> = localWritable('theme', 'dark');
 export const previousPage: Writable<string[]> = localWritable('previousPage', ['/']);
 export const nextPage: Writable<string[]> = localWritable('nextPage', ['/']);
 export const currentRegion: Writable<string> = localWritable('currentRegion', '');
+export const currentSearchData: Writable<countryType[]> = localWritable('storedCountries', []);
 
 /**
  * svelte stores

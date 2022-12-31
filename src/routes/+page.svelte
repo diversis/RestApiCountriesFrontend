@@ -2,7 +2,7 @@
 	import '../index.css';
 
 	import { page } from '$app/stores';
-	import { currentPage, hasMore, currentRegion } from './store';
+	import { currentPage, hasNext, currentRegion, currentSearchData } from './store';
 
 	import { beforeUpdate } from 'svelte';
 
@@ -33,12 +33,13 @@
 
 	let scrollPositionY: number = 0;
 	async function handleScrollDown(e) {
-		if ($hasMore) {
+		if ($hasNext) {
 			$currentPage += 1;
 			await countriesDisplay;
 		}
 	}
 
+	async function getCountriesPage() {}
 	function addRegionFilter() {
 		console.log('region:', region);
 		$currentPage = 0;

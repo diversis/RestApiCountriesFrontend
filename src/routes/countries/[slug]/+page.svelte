@@ -2,7 +2,7 @@
 	import '../../../index.css';
 	import { page } from '$app/stores';
 
-	import { getBorders, getCountry } from '$lib/scripts/Country';
+	import { getBorders, getCountry } from '$lib/scripts/countryGet';
 	import { fetchImg } from '$lib/scripts/fetchImg';
 
 	import Header from '$lib/components/Header.svelte';
