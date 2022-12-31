@@ -4,7 +4,8 @@ export function filterCountryByName(countries: countryType[], searchString: stri
 	const searchResult: countryType[] = countries.filter(
 		(country: countryType) =>
 			country?.name?.common?.toLowerCase().includes(searchString.toLowerCase()) ||
-			country?.name?.official?.toLowerCase().includes(searchString.toLowerCase())
+			country?.name?.official?.toLowerCase().includes(searchString.toLowerCase()) ||
+			false
 	);
 	return searchResult;
 }

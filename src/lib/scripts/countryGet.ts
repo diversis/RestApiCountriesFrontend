@@ -1,5 +1,5 @@
 import type { borderType, countryType } from './countryType';
-import { countriesData, storedAllAt } from '../../routes/store';
+import { countriesData, hasNext, storedAllAt } from '../../routes/store';
 import { get } from 'svelte/store';
 import { notExpired } from './expiration';
 import { getNextPage } from './pagination';
@@ -11,6 +11,9 @@ export async function searchCountires(
 	searchString: string | undefined,
 	region: string | undefined
 ): Promise<countryType | []> {
+	if (!get(hasNext)) {
+		return [];
+	}
 	let searchArray: countryType[] = [];
 	let fetchArray: countryType[] | [] = [];
 	if (region) {
@@ -26,6 +29,8 @@ export async function searchCountires(
 		searchArray = get(countriesData);
 	} else {
 		fetchArray = await fetchAll();
+		countriesData.set(fetchArray);
+		storedAllAt.set(Date.now());
 	}
 	if (searchString) {
 		if (searchArray) {
@@ -35,21 +40,31 @@ export async function searchCountires(
 			fetchArray = filterCountryByName(fetchArray, searchString);
 		}
 	}
-	if (searchArray) {
-		return getNextPage(searchArray);
-	} else if (fetchArray) {
-		return getNextPage(fetchArray);
+	if (get(hasNext)) {
+		if (searchArray) {
+			return getNextPage(searchArray);
+		} else if (fetchArray) {
+			return getNextPage(fetchArray);
+		}
 	}
 	return [];
 }
 
 export async function getCountry(countryCode: string): Promise<countryType | null> {
-	const dataFromLocalStorage = getCountryFromLocalStorage(countryCode);
+	const dataFromLocalStorage: countryType | null = getCountryFromLocalStorage(countryCode);
 	if (dataFromLocalStorage) {
 		return dataFromLocalStorage;
 	}
 
-	const countryData = await fetchCountry(countryCode);
+	const countryData: countryType | null = await fetchCountry(countryCode);
+	if (countryData) {
+		countryData.createdAt = Date.now();
+	}
+	countriesData.update((data: countryType[]): countryType[] => {
+		data.push(countryData as countryType);
+		return data;
+	});
+
 	return countryData;
 }
 

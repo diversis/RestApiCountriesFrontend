@@ -2,7 +2,7 @@ import {
 	countriesData,
 	currentPage,
 	currentSearchArray,
-	hasMore,
+	hasNext,
 	regionSearchArray,
 	storedAllAt
 } from '../../routes/store';
@@ -195,12 +195,12 @@ function arrayPick(array: object[]) {
 	// console.log(`\n--------------------\n page ${page} \n--------------------\n `);
 
 	if (page === 0) {
-		hasMore.set(true);
+		hasNext.set(true);
 	}
 
 	for (let i = 0; i < (page + 1) * 12; i++) {
 		if (i >= array.length) {
-			hasMore.set(false);
+			hasNext.set(false);
 			return newArray;
 		}
 		newArray.push(array[i]);

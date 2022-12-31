@@ -1,4 +1,3 @@
-import { countriesData, storedAllAt } from 'src/routes/store';
 import { compareCountriesByName } from './countrySort';
 import type { countryType } from './countryType';
 import { fields } from './fields';
@@ -51,8 +50,6 @@ export async function fetchAll(): Promise<countryType[] | []> {
 					country.createdAt = Date.now();
 				}
 				data.sort(compareCountriesByName);
-				countriesData.set(data);
-				storedAllAt.set(Date.now());
 
 				return data as countryType[];
 			}
