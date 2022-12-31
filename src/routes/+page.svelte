@@ -58,6 +58,10 @@
 
 	async function handleSearchInput(searchInput) {
 		searchString = searchInput.detail.text;
+		currentPage.set(0);
+		hasNext.set(true);
+		const newData = await getCountriesPage();
+		countriesDisplay = [...newData];
 	}
 
 	async function getCountriesPage() {
