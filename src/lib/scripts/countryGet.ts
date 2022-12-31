@@ -1,5 +1,5 @@
 import type { borderType, countryType } from './countryType';
-import { countriesData, hasNext, storedAllAt } from '../../routes/store';
+import { countriesData, currentRegion, hasNext, storedAllAt } from '../../routes/store';
 import { get } from 'svelte/store';
 import { notExpired } from './expiration';
 import { getNextPage } from './pagination';
@@ -7,15 +7,13 @@ import { fetchAll, fetchCountry, fetchRegion } from './countryFetch';
 import { filterCountryByName } from './countryFilter';
 import { getCountryFromLocalStorage } from './countryLocalStorage';
 
-export async function searchCountires(
-	searchString: string | undefined,
-	region: string | undefined
-): Promise<countryType | []> {
+export async function searchCountires(searchString: string | undefined): Promise<countryType | []> {
 	if (!get(hasNext)) {
 		return [];
 	}
 	let searchArray: countryType[] = [];
 	let fetchArray: countryType[] | [] = [];
+	const region: string = get(currentRegion);
 	if (region) {
 		if (notExpired(+get(storedAllAt))) {
 			const regionArray: countryType[] = get(countriesData).filter(
