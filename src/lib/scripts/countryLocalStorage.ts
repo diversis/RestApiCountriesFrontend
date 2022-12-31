@@ -1,7 +1,7 @@
 import { get } from 'svelte/store';
 import { countriesData } from '../../routes/store';
 import type { countryType } from './countryType';
-import { notExpired } from './expiration';
+import { expired } from './expiration';
 
 export function getCountryFromLocalStorage(countryCode: string): countryType | null {
 	const localStorageData: countryType[] = get(countriesData);
@@ -26,7 +26,7 @@ export function getCountryFromLocalStorage(countryCode: string): countryType | n
 	if (countryIndex > -1) {
 		const country: countryType | undefined = localStorageData[countryIndex];
 
-		if (country && country?.createdAt && notExpired(+country.createdAt)) {
+		if (country && country?.createdAt && !expired(+country.createdAt)) {
 			return country;
 		}
 		countriesData.update((data) => {

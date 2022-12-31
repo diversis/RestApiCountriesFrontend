@@ -4,9 +4,9 @@
 	import { page } from '$app/stores';
 	import { currentPage, hasNext, currentRegion, currentSearchData } from './store';
 
-	import { beforeUpdate } from 'svelte';
+	import { beforeUpdate, onMount } from 'svelte';
 
-	import { searchCountires } from '$lib/scripts/Country';
+	import { searchCountires } from '$lib/scripts/countryGet';
 
 	import CardSmall from '$lib/components/CardSmall.svelte';
 	import FilterByRegion from '$lib/components/FilterByRegion.svelte';
@@ -18,51 +18,56 @@
 	import ScrollPosition from '$lib/components/ScrollPosition.svelte';
 
 	import { fade } from 'svelte/transition';
+	import type { countryType } from '$lib/scripts/countryType';
 
 	const baseTitle = 'Rest Countries';
 
 	let searchString = '';
 
-	$: region = $currentRegion;
+	// let countriesDisplay = searchCountires(
+	// 	searchString,
+	// 	$currentRegion,
+	// 	+$currentPage === 0 && searchString.length === 0
+	// );
 
-	let countriesDisplay = searchCountires(
-		searchString,
-		region,
-		+$currentPage === 0 && searchString.length === 0
-	);
+	// beforeUpdate(() => {
+	// 	region = $page.url.searchParams.get('region') || '';
+	// });
 
 	let scrollPositionY: number = 0;
-	async function handleScrollDown(e) {
+
+	function handleScrollDown(e) {
 		if ($hasNext) {
 			$currentPage += 1;
-			await countriesDisplay;
+			// countriesDisplay = searchCountires(searchString);
 		}
 	}
 
-	async function getCountriesPage() {}
-	function addRegionFilter() {
-		console.log('region:', region);
-		$currentPage = 0;
-
-		countriesDisplay = searchCountires(searchString, region, true);
-	}
-
 	function removeRegionFilter() {
-		region = '';
-		$currentPage = 0;
-		countriesDisplay = searchCountires(searchString, region, true);
+		// countriesDisplay = searchCountires(searchString);
 	}
-
-	beforeUpdate(() => {
-		region = $page.url.searchParams.get('region') || '';
-	});
 
 	async function handleSearchInput(searchInput) {
 		searchString = searchInput.detail.text;
 	}
+
+	async function getCountriesPage() {
+		$currentSearchData = await searchCountires(searchString);
+
+		return $currentSearchData;
+	}
+
+	async function addRegionFilter() {
+		console.log('region:', $currentRegion);
+		currentPage.set(0);
+
+		$currentSearchData = await searchCountires(searchString);
+	}
 </script>
 
-<svelte:head><title>Rest Countries{region ? ` | ${region}` : ''}</title></svelte:head>
+<svelte:head
+	><title>Rest Countries{$currentRegion ? ` | ${$currentRegion}` : ''}</title></svelte:head
+>
 <Header />
 <svelte:window bind:scrollY={scrollPositionY} />
 <ScrollPosition {scrollPositionY} />
@@ -79,15 +84,15 @@
 			/>
 		</div>
 	</div>
-	{#await countriesDisplay}
+	{#await getCountriesPage()}
 		<div id="LoaderCog" class=" grid items-center m-auto w-min"><LoaderCog /></div>
-	{:then countries}
+	{:then ___}
 		<article
 			in:fade={{ delay: 0, duration: 150 }}
 			class="container mx-auto grid-cols-1 grid xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 items-center mt-[2em] px-4 lg:px-10 gap-10 lg:gap-x-16 text-left relative mb-6"
 		>
-			{#each countries as country, cardId}
-				<CardSmall {country} {cardId} totalCards={countries.length} />
+			{#each $currentSearchData as country, cardId}
+				<CardSmall {country} {cardId} totalCards={$currentSearchData.length} />
 			{/each}
 		</article>
 		<InfiniteScroll on:scrollDown={handleScrollDown} />

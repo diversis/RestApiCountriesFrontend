@@ -17,7 +17,9 @@
 
 	function handleRegionAdd(item: string) {
 		console.log('region filter: ', item);
-		$currentRegion = item;
+		if (item) {
+			$currentRegion = item;
+		}
 	}
 
 	function handleRegionRemove() {

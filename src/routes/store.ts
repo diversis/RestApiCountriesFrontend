@@ -8,10 +8,8 @@ import { writable, type Writable } from 'svelte/store';
 export const countriesData: Writable<countryType[]> = localWritable('storedCountries', []);
 export const storedAllAt: Writable<number> = localWritable('storedAllAt', 0);
 export const theme: Writable<string> = localWritable('theme', 'dark');
-export const previousPage: Writable<string[]> = localWritable('previousPage', ['/']);
-export const nextPage: Writable<string[]> = localWritable('nextPage', ['/']);
 export const currentRegion: Writable<string> = localWritable('currentRegion', '');
-export const currentSearchData: Writable<countryType[]> = localWritable('storedCountries', []);
+export const currentSearchData: Writable<countryType[]> = localWritable('currentSearchData', []);
 
 /**
  * svelte stores
