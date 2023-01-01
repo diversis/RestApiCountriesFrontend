@@ -77,9 +77,11 @@
 			title="Select region filter"
 			on:click={() => (menuOpen = !menuOpen)}
 			class="py-4 px-6 inline-flex justify-between w-[20ch] bg-any-white dark:bg-dark-mode-dark-blue
-		 rounded{menuOpen ? '-t' : ''}-lg transition-all duration-700 ease-theme"
+		 rounded{menuOpen ? '-t' : ''}-lg transition-all duration-700 ease-theme group"
 			>Filter by Region <svg
-				class="fill-light-mode-very-dark-blue dark:fill-any-white rotate-180 w-[1.5em] h-[1.5em]"
+				class="fill-light-mode-very-dark-blue dark:fill-any-white {menuOpen
+					? 'rotate-0 '
+					: 'rotate-180 '} w-[1.5em] h-[1.5em] group-hover:scale-150 group-focus:scale-150 transition-all duration-700 "
 				xmlns="http://www.w3.org/2000/svg"
 				viewBox="0 0 48 48"
 				><path d="M14.15 30.75 12 28.6l12-12 12 11.95-2.15 2.15L24 20.85Z" /></svg
