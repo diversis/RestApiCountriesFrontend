@@ -1,10 +1,9 @@
 <script lang="ts">
 	import '../index.css';
 
-	import { page } from '$app/stores';
 	import { currentPage, hasNext, currentRegion } from './store';
 
-	import { beforeUpdate, onMount } from 'svelte';
+	import { onMount } from 'svelte';
 
 	import { searchCountires } from '$lib/scripts/countryGet';
 
@@ -25,14 +24,7 @@
 	let searchString = '';
 
 	let countriesDisplay: countryType[] | [] = [];
-	// 	searchString,
-	// 	$currentRegion,
-	// 	+$currentPage === 0 && searchString.length === 0
-	// );
 
-	// beforeUpdate(() => {
-	// 	region = $page.url.searchParams.get('region') || '';
-	// });
 	onMount(async () => {
 		currentPage.set(0);
 		hasNext.set(true);
@@ -52,8 +44,12 @@
 		}
 	}
 
-	function removeRegionFilter() {
-		// countriesDisplay = searchCountires(searchString);
+	async function removeRegionFilter() {
+		console.log('region:', $currentRegion);
+		currentPage.set(0);
+		hasNext.set(true);
+		const newData = await getCountriesPage();
+		countriesDisplay = [...newData];
 	}
 
 	async function handleSearchInput(searchInput) {
@@ -72,6 +68,9 @@
 	async function addRegionFilter() {
 		console.log('region:', $currentRegion);
 		currentPage.set(0);
+		hasNext.set(true);
+		const newData = await getCountriesPage();
+		countriesDisplay = [...newData];
 	}
 </script>
 

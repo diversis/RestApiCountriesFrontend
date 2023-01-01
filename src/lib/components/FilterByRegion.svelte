@@ -2,29 +2,31 @@
 	import { fly } from 'svelte/transition';
 	import { quintInOut } from 'svelte/easing';
 	import { clickOutside } from '../scripts/clickOutside';
-	// import { createEventDispatcher } from 'svelte';
+	import { createEventDispatcher } from 'svelte';
 	import { currentRegion } from '../../routes/store';
+	import { tick } from 'svelte';
 
 	$: region = $currentRegion;
 	const menuItems = ['Europe', 'Asia', 'Americas', 'Africa', 'Oceania', 'Antarctic'];
-	// const dispatch = createEventDispatcher();
+	const placeholderText = 'Filter by Region';
+	const dispatch = createEventDispatcher();
 
 	let menuOpen = false;
 
 	$: console.log('region filter init: ', region);
 
-	let selected: string;
+	// async function handleRegionAdd() {
+	// 	currentRegion.set(item);
+	// 	await tick();
 
-	function handleRegionAdd(item: string) {
-		console.log('region filter: ', item);
-		if (item) {
-			$currentRegion = item;
-		}
-	}
+	// 	dispatch('addRegionFilter');
+	// }
 
-	function handleRegionRemove() {
-		$currentRegion = '';
-	}
+	// async function handleRegionRemove() {
+	// 	currentRegion.set('');
+	// 	await tick();
+	// 	dispatch('removeRegionFilter');
+	// }
 </script>
 
 <div
@@ -44,7 +46,11 @@
 			<button
 				type="button"
 				title="Remove filter"
-				on:click={handleRegionRemove}
+				on:click={async () => {
+					currentRegion.set('');
+					await tick();
+					dispatch('removeRegionFilter');
+				}}
 				class="group relative w-[1.5em] h-[1.5em] "
 			>
 				<svg
@@ -95,8 +101,13 @@
 						<button
 							id="menu-{item}"
 							type="button"
-							value="item"
-							on:click|self|preventDefault={handleRegionAdd(this.value)}
+							value={item}
+							on:click|self|preventDefault={async () => {
+								currentRegion.set(item);
+								await tick();
+
+								dispatch('addRegionFilter');
+							}}
 							class="w-full text-left rounded-md
 							hover:bg-dark-mode-dark-blue hover:text-any-white
 							 dark:hover:bg-any-white dark:hover:text-dark-mode-very-dark-blue

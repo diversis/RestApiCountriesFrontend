@@ -4,7 +4,7 @@
 	import { currentPage, searchInputString } from '../../routes/store';
 
 	$: searchString = $searchInputString;
-	let searchInput;
+	let searchInput: HTMLInputElement;
 	const searchPlaceHolder = 'Search a country';
 
 	let selectionStart = 0;
@@ -38,7 +38,6 @@
 	}
 
 	function handleSearchInput() {
-		$currentPage = 0;
 		dispatch('searchInput', { text: searchString });
 	}
 
