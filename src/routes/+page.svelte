@@ -33,7 +33,7 @@
 	});
 	let scrollPositionY: number = 0;
 	let shouldScrollDown: boolean = true;
-	async function handleScrollDown(e): Promise<void> {
+	async function handleScrollDown(): Promise<void> {
 		if ($hasNext && shouldScrollDown) {
 			console.log(`shouldScrollDown: ${shouldScrollDown} \n`);
 			shouldScrollDown = false;
@@ -44,15 +44,14 @@
 		}
 	}
 
-	async function removeRegionFilter() {
-		console.log('region:', $currentRegion);
+	async function changeRegionFilter() {
 		currentPage.set(0);
 		hasNext.set(true);
 		const newData = await getCountriesPage();
 		countriesDisplay = [...newData];
 	}
 
-	async function handleSearchInput(searchInput) {
+	async function handleSearchInput(searchInput: CustomEvent) {
 		searchString = searchInput.detail.text;
 		currentPage.set(0);
 		hasNext.set(true);
@@ -63,14 +62,6 @@
 	async function getCountriesPage() {
 		console.log(`current page: ${$currentPage} \n`);
 		return await searchCountires(searchString);
-	}
-
-	async function addRegionFilter() {
-		console.log('region:', $currentRegion);
-		currentPage.set(0);
-		hasNext.set(true);
-		const newData = await getCountriesPage();
-		countriesDisplay = [...newData];
 	}
 </script>
 
@@ -88,8 +79,7 @@
 			class="relative flex flex-col md:flex-row justify-between mx-auto pb-6 w-full item gap-y-12"
 		>
 			<Search on:searchInput={handleSearchInput} /><FilterByRegion
-				on:removeRegionFilter={removeRegionFilter}
-				on:addRegionFilter={addRegionFilter}
+				on:changeRegionFilter={changeRegionFilter}
 			/>
 		</div>
 	</div>
@@ -112,6 +102,9 @@
 </main>
 
 <style>
+	main {
+		min-height: calc(100vh - 5rem);
+	}
 	#LoaderCog {
 		height: calc(100vh - 14rem - 5em);
 	}

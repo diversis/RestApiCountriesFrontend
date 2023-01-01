@@ -29,17 +29,23 @@
 		>
 			<div class="lg:col-span-2 flex items-start self-start mb-[3em]"><BackButton /></div>
 			<div class="relative w-full" in:fade={{ delay: 0, duration: 300 }}>
-				{#await fetchImg(country?.flags?.svg)}
-					<div class="grid items-center mx-auto w-[20em]">
-						<LoaderCog />
-					</div>
-				{:then data}
-					<img
-						src={country?.flags?.svg}
-						alt={'' + country?.name?.common + ' flag'}
+				{#if country?.flags?.svg}
+					{#await fetchImg(country?.flags?.svg)}
+						<div class="grid items-center mx-auto w-[20em]">
+							<LoaderCog />
+						</div>
+					{:then data}
+						<img
+							src={country?.flags?.svg}
+							alt={'' + country?.name?.common + ' flag'}
+							class="mx-auto shadow-img-light dark:shadow-img-dark transition-colors duration-700 w-full h-full"
+						/>
+					{/await}
+				{:else}
+					<div
 						class="mx-auto shadow-img-light dark:shadow-img-dark transition-colors duration-700 w-full"
 					/>
-				{/await}
+				{/if}
 			</div>
 			<div
 				class="shadow-card-light dark:shadow-card-dark 

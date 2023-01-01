@@ -46,10 +46,10 @@
 			<button
 				type="button"
 				title="Remove filter"
-				on:click={async () => {
+				on:click={() => {
 					currentRegion.set('');
-					await tick();
-					dispatch('removeRegionFilter');
+					// await tick();
+					dispatch('changeRegionFilter');
 				}}
 				class="group relative w-[1.5em] h-[1.5em] "
 			>
@@ -88,12 +88,11 @@
 		{#if menuOpen}
 			<div
 				id="dropdownWrapper"
-				class="absolute md:mt-[3.75em] mt-[4em] w-[20ch] pb-3 overflow-hidden min-h-[{1 *
-					menuItems.length}em]"
+				class="absolute md:mt-[3.75em] mt-[4em] w-[20ch] pb-3 overflow-hidden h-[15em]"
 			>
 				<div
 					id="dropdown"
-					class="transition-colors duration-700 ease-theme rounded-b-lg pt-3 px-2 relative z-50
+					class="absolute transition-colors duration-700 ease-theme rounded-b-lg pt-3 px-2 z-50
 				 bg-any-white dark:bg-dark-mode-dark-blue w-[20ch] pb-3 bg-opacity-70 dark:bg-opacity-70  backdrop-blur-sm leading-[2em]"
 					transition:fly={{ delay: 0, duration: 1000, easing: quintInOut, y: -150 }}
 				>
@@ -102,11 +101,11 @@
 							id="menu-{item}"
 							type="button"
 							value={item}
-							on:click|self|preventDefault={async () => {
+							on:click|preventDefault={() => {
 								currentRegion.set(item);
-								await tick();
+								// await tick();
 
-								dispatch('addRegionFilter');
+								dispatch('changeRegionFilter');
 							}}
 							class="w-full text-left rounded-md
 							hover:bg-dark-mode-dark-blue hover:text-any-white
