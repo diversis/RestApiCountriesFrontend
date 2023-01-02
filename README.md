@@ -4,17 +4,19 @@ This is a solution to the [REST Countries API with color theme switcher challeng
 
 ## Table of contents
 
-- [Overview](#overview)
-  - [The challenge](#the-challenge)
-  - [Screenshot](#screenshot)
-  - [Links](#links)
-- [My process](#my-process)
-  - [Built with](#built-with)
-  - [What I learned](#what-i-learned)
-  - [Continued development](#continued-development)
-  - [Useful resources](#useful-resources)
-- [Author](#author)
-- [Acknowledgments](#acknowledgments)
+- [Frontend Mentor - REST Countries API with color theme switcher solution](#frontend-mentor---rest-countries-api-with-color-theme-switcher-solution)
+  - [Table of contents](#table-of-contents)
+  - [Overview](#overview)
+    - [The challenge](#the-challenge)
+    - [Screenshot](#screenshot)
+    - [Links](#links)
+  - [My process](#my-process)
+    - [Built with](#built-with)
+    - [What I learned](#what-i-learned)
+    - [Continued development](#continued-development)
+    - [Useful resources](#useful-resources)
+  - [Author](#author)
+  - [Acknowledgments](#acknowledgments)
 
 ## Overview
 
@@ -31,14 +33,47 @@ Users should be able to:
 
 ### Screenshot
 
-![dark theme desktop main page](./static/screenshots/1.png)
+<details><summary>1</summary> 
+
+![dark theme desktop main page](./static/screenshots/1.png) 
+</details>
+<details><summary>2</summary>
+
 ![dark theme desktop country page](./static/screenshots/2.png)
+</details>
+<details><summary>3</summary>
+
 ![dark theme mobile main page](./static/screenshots/3.png)
+</details>
+
+<details><summary>4</summary>
+
 ![dark theme mobile country page](./static/screenshots/4.png)
+</details>
+
+<details><summary>5</summary>
+
 ![light theme desktop main page](./static/screenshots/5.png)
+</details>
+
+<details><summary>6</summary>
+
 ![light theme desktop country page](./static/screenshots/6.png)
+</details>
+
+<details><summary>7</summary>
+
 ![light theme mobile main page](./static/screenshots/7.png)
+</details>
+
+<details><summary>8</summary>
+
 ![light theme mobile country page](./static/screenshots/8.png)
+</details>
+
+
+
+
 
 ### Links
 
