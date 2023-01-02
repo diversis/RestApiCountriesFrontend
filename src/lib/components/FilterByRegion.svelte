@@ -4,7 +4,6 @@
 	import { clickOutside } from '../scripts/clickOutside';
 	import { createEventDispatcher } from 'svelte';
 	import { currentRegion } from '../../routes/store';
-	import { tick } from 'svelte';
 
 	$: region = $currentRegion;
 	const menuItems = ['Europe', 'Asia', 'Americas', 'Africa', 'Oceania', 'Antarctic'];
@@ -14,19 +13,6 @@
 	let menuOpen = false;
 
 	$: console.log('region filter init: ', region);
-
-	// async function handleRegionAdd() {
-	// 	currentRegion.set(item);
-	// 	await tick();
-
-	// 	dispatch('addRegionFilter');
-	// }
-
-	// async function handleRegionRemove() {
-	// 	currentRegion.set('');
-	// 	await tick();
-	// 	dispatch('removeRegionFilter');
-	// }
 </script>
 
 <div
@@ -48,7 +34,6 @@
 				title="Remove filter"
 				on:click={() => {
 					currentRegion.set('');
-					// await tick();
 					dispatch('changeRegionFilter');
 				}}
 				class="group relative w-[1.5em] h-[1.5em] "
@@ -84,7 +69,9 @@
 					: 'rotate-180 '} w-[1.5em] h-[1.5em] group-hover:scale-150 group-focus:scale-150 transition-all duration-700 "
 				xmlns="http://www.w3.org/2000/svg"
 				viewBox="0 0 48 48"
-				><path d="M14.15 30.75 12 28.6l12-12 12 11.95-2.15 2.15L24 20.85Z" /></svg
+				><title>{menuOpen ? 'close' : 'open'} region list</title><path
+					d="M14.15 30.75 12 28.6l12-12 12 11.95-2.15 2.15L24 20.85Z"
+				/></svg
 			>
 		</button>
 		{#if menuOpen}
@@ -105,7 +92,6 @@
 							value={item}
 							on:click|preventDefault={() => {
 								currentRegion.set(item);
-								// await tick();
 
 								dispatch('changeRegionFilter');
 							}}

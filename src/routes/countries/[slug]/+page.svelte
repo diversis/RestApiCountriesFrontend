@@ -53,7 +53,7 @@
                 transition-colors duration-700 ease-theme
 				 bg-any-white dark:bg-dark-mode-dark-blue  bg-opacity-50 dark:bg-opacity-50 p-4 rounded-md backdrop-blur-[3px]"
 			>
-				<h1 id="country-name">
+				<h1 id="country-name" class="select-all">
 					{#if typeof country?.name?.common === 'string'}{country?.name?.common}{:else}None{/if}
 				</h1>
 				<!-- Info -->
@@ -61,69 +61,73 @@
 					<!-- Column 1 -->
 					<ul class="flex flex-col">
 						<li>
-							<span>Native Name: </span>
-							{#if country?.name?.nativeName && Object.keys(country.name.nativeName).length > 0}
-								{country?.name?.nativeName[
-									Object.keys(country.name.nativeName)[
-										Object.keys(country.name.nativeName).length - 1
-									]
-								].common}
-							{:else}
-								None
-							{/if}
+							<b>Native Name: </b>
+							<span class="select-all"
+								>{#if country?.name?.nativeName && Object.keys(country.name.nativeName).length > 0}
+									{country?.name?.nativeName[
+										Object.keys(country.name.nativeName)[
+											Object.keys(country.name.nativeName).length - 1
+										]
+									].common}
+								{:else}
+									None
+								{/if}
+							</span>
 						</li>
 						<li>
-							<span>Population: </span>
-							{populationFormatter.format(country?.population) || 'None'}
+							<b>Population: </b>
+							<span class="select-all">
+								{populationFormatter.format(country?.population) || 'None'}</span
+							>
 						</li>
 						<li>
-							<span>Region: </span>
-							{'' + country?.region || 'None'}
+							<b>Region: </b>
+							<span class="select-all"> {'' + country?.region || 'None'}</span>
 						</li>
 						<li>
-							<span>Sub Region: </span>
-							{'' + country?.subregion || 'None'}
+							<b>Sub Region: </b>
+							<span class="select-all"> {'' + country?.subregion || 'None'}</span>
 						</li>
 						<li>
-							<span>Capital: </span>
-							{'' + country?.capital || 'None'}
+							<b>Capital: </b>
+							<span class="select-all"> {'' + country?.capital || 'None'}</span>
 						</li>
 					</ul>
 					<!--  Column 2  -->
 					<ul class="flex flex-col">
 						<li>
-							<span>Top Level Domain: </span>
-							{country?.tld[0]}
+							<b>Top Level Domain: </b>
+							<span class="select-all"> {country?.tld[0]} </span>
 						</li>
 						<li>
-							<span>Currencies: </span>
-							{#if country?.currencies && Object.keys(country.currencies).length > 0}{country
-									?.currencies[Object.keys(country.currencies)[0]].name} ( {country?.currencies[
-									Object.keys(country.currencies)[0]
-								].symbol} )
-							{:else}
-								None
-							{/if}
+							<b>Currencies: </b>
+							<span class="select-all">
+								{#if country?.currencies && Object.keys(country.currencies).length > 0}{country
+										?.currencies[Object.keys(country.currencies)[0]].name} ( {country?.currencies[
+										Object.keys(country.currencies)[0]
+									].symbol} )
+								{:else}
+									None
+								{/if}</span
+							>
 						</li>
 						<li>
-							<span>Languages: </span>
-							<!-- {#if Object.values(country.languages).length > 1} -->
-							{#if country?.languages && Object.keys(country.languages).length > 0}
-								{#each Object.values(country.languages) as lang, i}
-									{lang}{#if i < Object.values(country.languages).length - 1}{', '}{/if}
-								{/each}
-							{:else}
-								None
-							{/if}
-							<!-- {:else if Object.values(country.languages)}
-									{Object.values(country.languages)}
-								{/if} -->
+							<b>Languages: </b>
+							<span class="select-all">
+								{#if country?.languages && Object.keys(country.languages).length > 0}
+									{#each Object.values(country.languages) as lang, i}
+										{lang}{#if i < Object.values(country.languages).length - 1}{', '}{/if}
+									{/each}
+								{:else}
+									None
+								{/if}</span
+							>
 						</li>
 					</ul>
 				</div>
 				<div class="flex">
 					<div class="inline-flex flex-wrap gap-y-2 ">
-						<span>Border countries:</span>
+						<b>Border countries:</b>
 
 						{#if country?.borders?.length > 0}
 							{#await getBorders(country?.borders)}
@@ -158,7 +162,7 @@
 {/await}
 
 <style>
-	article span {
+	article b {
 		font-weight: 800;
 	}
 	article h1 {

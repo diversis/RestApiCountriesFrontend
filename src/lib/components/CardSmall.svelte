@@ -14,6 +14,7 @@
 	class="relative w-full h-[22.75rem]"
 >
 	<a
+		title="{country.name.common} description"
 		class="absolute bg-any-white dark:bg-dark-mode-dark-blue transition-all duration-300 
 	bg-opacity-50 dark:bg-opacity-30 active:scale-[97%] backdrop-blur-[3px] 
 	
@@ -25,7 +26,7 @@
 	 w-full h-[26em] overflow-hidden text-sm justify-between"
 		href="/countries/{country.cca3}"
 	>
-		<div class="relative w-full h-min">
+		<div class="relative w-full h-min ">
 			<img
 				src={country?.flags?.png}
 				alt={'' + country?.name?.common + ' flag'}
@@ -36,30 +37,30 @@
 		</div>
 		<!-- Info -->
 		<h1
-			class=" px-4 text-left text-lg max-h-[2.5em] align-bottom md:leading-[1.125] xl:leading-normal"
+			class=" px-4 text-left text-lg max-h-[2.5em] align-bottom md:leading-[1.125] xl:leading-normal inline-block select-all"
 		>
 			{country?.name?.common || 'None'}
 		</h1>
 		<!-- Column 1 -->
 		<ul class="grid grid-col-1 px-4">
 			<li>
-				<span>Population: </span>
-				{populationFormatter.format(country?.population) || 'None'}
+				<b>Population: </b>
+				<span class="select-all">{populationFormatter.format(country?.population) || 'None'}</span>
 			</li>
 			<li>
-				<span>Region: </span>
-				{'' + country?.region || 'None'}
+				<b>Region: </b>
+				<span class="select-all">{'' + country?.region || 'None'}</span>
 			</li>
 			<li>
-				<span>Capital: </span>
-				{'' + country?.capital || 'None'}
+				<b>Capital: </b>
+				<span class="select-all">{'' + country?.capital || 'None'}</span>
 			</li>
 		</ul>
 	</a>
 </div>
 
 <style>
-	span {
+	b {
 		font-weight: 800;
 	}
 	h1 {
