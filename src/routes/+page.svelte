@@ -35,7 +35,6 @@
 	let shouldScrollDown: boolean = true;
 	async function handleScrollDown(): Promise<void> {
 		if ($hasNext && shouldScrollDown) {
-			console.log(`shouldScrollDown: ${shouldScrollDown} \n`);
 			shouldScrollDown = false;
 			$currentPage += 1;
 			const newData = await getCountriesPage();
@@ -60,7 +59,7 @@
 	}
 
 	async function getCountriesPage() {
-		console.log(`current page: ${$currentPage} \n`);
+		// console.log(`current page: ${$currentPage} \n`);
 		return await searchCountires(searchString);
 	}
 </script>
@@ -86,8 +85,9 @@
 
 	{#if countriesDisplay && Array.isArray(countriesDisplay)}
 		<article
+			id="countries-list"
 			in:fade={{ delay: 0, duration: 150 }}
-			class="container mx-auto grid-cols-1 grid xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 items-center mt-[2em] px-4 lg:px-10 gap-10 lg:gap-x-16 text-left relative mb-6"
+			class=" container mx-auto grid-cols-1 grid xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 items-center mt-[2em] px-4 lg:px-10 gap-10 lg:gap-x-16 text-left relative mb-6"
 		>
 			{#each countriesDisplay as country, cardId}
 				<CardSmall {country} {cardId} totalCards={countriesDisplay.length} />
@@ -107,5 +107,8 @@
 	}
 	#LoaderCog {
 		height: calc(100vh - 14rem - 5em);
+	}
+	#countries-list {
+		transform: translateZ(0);
 	}
 </style>

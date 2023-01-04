@@ -11,8 +11,6 @@
 	const dispatch = createEventDispatcher();
 
 	let menuOpen = false;
-
-	$: console.log('region filter init: ', region);
 </script>
 
 <div
