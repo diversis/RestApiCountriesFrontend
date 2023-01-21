@@ -8,8 +8,8 @@
 </script>
 
 <div
-	in:fade={{ delay: (700 / 12) * (cardId - totalCards + 12), duration: 150 }}
-	out:fade={{ delay: (100 / 12) * (cardId - totalCards + 12), duration: 100 }}
+	in:fade|local={{ delay: (700 / 12) * (cardId - totalCards + 12), duration: 150 }}
+	out:fade|local={{ delay: (100 / 12) * (cardId - totalCards + 12), duration: 100 }}
 	id={`card-${cardId}`}
 	class="relative w-full h-[22.75rem]"
 >

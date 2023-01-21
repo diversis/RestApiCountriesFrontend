@@ -21,7 +21,7 @@
 >
 	{#if region}
 		<div
-			transition:fly={{ delay: 0, duration: 1000, easing: quintInOut, x: 150 }}
+			transition:fly|local={{ delay: 0, duration: 1000, easing: quintInOut, x: 150 }}
 			class="py-2 px-3 inline-flex justify-between w-[13ch] bg-any-white dark:bg-dark-mode-dark-blue
 		 rounded-lg transition-all duration-700 ease-theme "
 			style="grid-area: filter;"
@@ -81,7 +81,7 @@
 					id="dropdown"
 					class="absolute transition-colors duration-700 ease-theme rounded-b-lg pt-3 px-2 z-50
 				 bg-any-white dark:bg-dark-mode-dark-blue w-[20ch] pb-3 bg-opacity-70 dark:bg-opacity-70  backdrop-blur-sm leading-[2em]"
-					transition:fly={{ delay: 0, duration: 1000, easing: quintInOut, y: -150 }}
+					transition:fly|local={{ delay: 0, duration: 1000, easing: quintInOut, y: -150 }}
 				>
 					{#each menuItems as item}
 						<button

@@ -1,11 +1,9 @@
 <script lang="ts">
-	import '../../../index.css';
 	import { page } from '$app/stores';
 
 	import { getBorders, getCountry } from '$lib/scripts/countryGet';
 	import { fetchImg } from '$lib/scripts/fetchImg';
 
-	import Header from '$lib/components/Header.svelte';
 	import LoaderInline from '$lib/components/Loader-inline.svelte';
 	import BackButton from '$lib/components/BackButton.svelte';
 	import LoaderCog from '$lib/components/Loader-cog.svelte';
@@ -17,7 +15,6 @@
 </script>
 
 <svelte:head><title>Rest Countries | {countryCode}</title></svelte:head>
-<Header />
 {#await getCountry(countryCode)}
 	<div id="LoaderCog" class="lg:col-span-2 grid items-center mx-auto lg:row-span-2">
 		<LoaderCog />
@@ -28,7 +25,7 @@
 			class="container flex flex-col lg:grid lg:grid-cols-2 items-center mt-[4em] gap-y-[1em] px-4 lg:px-10 lg:gap-x-16 text-left  pb-6"
 		>
 			<div class="lg:col-span-2 flex items-start self-start mb-[3em]"><BackButton /></div>
-			<div class="relative w-full" in:fade={{ delay: 0, duration: 300 }}>
+			<div class="relative w-full" in:fade|local={{ delay: 0, duration: 300 }}>
 				{#if country?.flags?.svg}
 					{#await fetchImg(country?.flags?.svg)}
 						<div class="grid items-center mx-auto w-[20em]">

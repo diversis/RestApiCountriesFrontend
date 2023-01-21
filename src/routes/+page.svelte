@@ -1,6 +1,4 @@
 <script lang="ts">
-	import '../index.css';
-
 	import { currentPage, hasNext, currentRegion } from './store';
 
 	import { onMount } from 'svelte';
@@ -9,7 +7,6 @@
 
 	import CardSmall from '$lib/components/CardSmall.svelte';
 	import FilterByRegion from '$lib/components/FilterByRegion.svelte';
-	import Header from '$lib/components/Header.svelte';
 	import InfiniteScroll from '$lib/components/InfiniteScroll.svelte';
 	import LoaderCog from '$lib/components/Loader-cog.svelte';
 	import Search from '$lib/components/Search.svelte';
@@ -67,7 +64,6 @@
 <svelte:head
 	><title>Rest Countries{$currentRegion ? ` | ${$currentRegion}` : ''}</title></svelte:head
 >
-<Header />
 <svelte:window bind:scrollY={scrollPositionY} />
 <ScrollPosition {scrollPositionY} />
 <main class="relative overflow-x-hidden">
@@ -86,7 +82,7 @@
 	{#if countriesDisplay && Array.isArray(countriesDisplay)}
 		<article
 			id="countries-list"
-			in:fade={{ delay: 0, duration: 150 }}
+			in:fade|local={{ delay: 0, duration: 150 }}
 			class=" container mx-auto grid-cols-1 grid xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 items-center mt-[2em] px-4 lg:px-10 gap-10 lg:gap-x-16 text-left relative mb-6"
 		>
 			{#each countriesDisplay as country, cardId}
