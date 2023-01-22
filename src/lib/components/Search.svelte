@@ -17,7 +17,6 @@
 	const dispatch = createEventDispatcher();
 
 	const sendSearch = () => {
-		console.log('debounced: ', searchString);
 		dispatch('searchInput', { text: searchString });
 	};
 
@@ -44,7 +43,6 @@
 	function handleSearchInput() {
 		clearTimeout(timeout);
 		timeout = setTimeout(() => sendSearch(), 250);
-		console.log('timeout: ', timeout);
 	}
 
 	function handleBackspace() {

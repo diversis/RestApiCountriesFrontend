@@ -56,7 +56,6 @@
 	}
 
 	async function getCountriesPage() {
-		// console.log(`current page: ${$currentPage} \n`);
 		return await searchCountires(searchString);
 	}
 </script>
