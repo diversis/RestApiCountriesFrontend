@@ -5,14 +5,21 @@
 
 	$: searchString = $searchInputString;
 	let searchInput: HTMLInputElement;
-	const searchPlaceHolder = 'Search a country';
+	const searchPlaceHolder: string = 'Search a country';
 
-	let selectionStart = 0;
-	let selectionEnd = 0;
+	let selectionStart: number = 0;
+	let selectionEnd: number = 0;
 
-	let focusSearch = false;
-	$: console.log(`focusSearch::  ${focusSearch}`);
+	let focusSearch: boolean = false;
+
+	let timeout: NodeJS.Timeout;
+
 	const dispatch = createEventDispatcher();
+
+	const sendSearch = () => {
+		console.log('debounced: ', searchString);
+		dispatch('searchInput', { text: searchString });
+	};
 
 	beforeUpdate(() => {
 		if (searchInput) {
@@ -20,12 +27,9 @@
 		}
 	});
 
-	// afterUpdate(() => {
-	// 	inputFocus();
-	// });
 	onMount(() => {
 		if (searchString) {
-			handleSearchInput();
+			sendSearch();
 		}
 		inputFocus();
 	});
@@ -38,7 +42,9 @@
 	}
 
 	function handleSearchInput() {
-		dispatch('searchInput', { text: searchString });
+		clearTimeout(timeout);
+		timeout = setTimeout(() => sendSearch(), 250);
+		console.log('timeout: ', timeout);
 	}
 
 	function handleBackspace() {
@@ -58,7 +64,9 @@
 		<svg
 			aria-label="Magnifying glass"
 			class=" cursor-pointer active:scale-[120%] fill-light-mode-very-dark-blue dark:fill-any-white
-			 w-[1.5em] h-[1.5em] group-hover:scale-150 transition-transform duration:200"
+			 w-[1.5em] h-[1.5em] {focusSearch
+				? 'scale-150'
+				: 'group-hover:scale-150'} transition-transform duration:200"
 			xmlns="http://www.w3.org/2000/svg"
 			viewBox="0 0 48 48"
 		>
@@ -90,7 +98,6 @@
 		bind:value={searchString}
 		on:input={handleSearchInput}
 		on:focus={() => {
-			console.log('pocus');
 			focusSearch = true;
 		}}
 		on:blur={() => (focusSearch = false)}
