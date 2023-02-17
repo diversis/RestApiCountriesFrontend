@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { countryType } from '$lib/scripts/countryType';
 	import { populationFormatter } from '$lib/scripts/formatter';
-	import { createEventDispatcher } from 'svelte';
+	import { createEventDispatcher, onDestroy } from 'svelte';
 	import { fade } from 'svelte/transition';
 
 	export let country: countryType;
@@ -34,6 +34,12 @@
 			dispatch('select', { cardId });
 		}
 	}
+
+	onDestroy(() => {
+		if (hovered || focused) {
+			dispatch('deselect', { cardId });
+		}
+	});
 </script>
 
 <div
