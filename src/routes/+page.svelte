@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { currentPage, hasNext, currentRegion } from './store';
+	import { currentPage, hasNext, currentRegion, windowWidth } from './store';
 
 	import { onMount } from 'svelte';
 
@@ -15,6 +15,7 @@
 
 	import { fade } from 'svelte/transition';
 	import type { countryType } from '$lib/scripts/countryType';
+	import { identity } from 'svelte/internal';
 
 	const baseTitle = 'Rest Countries';
 
@@ -58,12 +59,42 @@
 	async function getCountriesPage() {
 		return await searchCountires(searchString);
 	}
+	let blurredCards: number[] = [];
+	function handleCardHover(e) {
+		const gridCols =
+			$windowWidth >= 1280 ? 4 : $windowWidth >= 768 ? 3 : $windowWidth >= 640 ? 2 : 1;
+		switch (gridCols) {
+			case 1:
+				blurredCards = [e.detail.cardId - 1, e.detail.cardId + 1];
+			case 2:
+				blurredCards = [e.detail.cardId % 2 == 0 ? e.detail.cardId + 1 : e.detail.cardId - 1];
+			case 3:
+				blurredCards =
+					e.detail.cardId % 3 == 2
+						? [e.detail.cardId - 2, e.detail.cardId - 1]
+						: e.detail.cardId % 3 == 1
+						? [e.detail.cardId - 1, e.detail.cardId + 1]
+						: [e.detail.cardId + 1, e.detail.cardId + 2];
+			case 4:
+				blurredCards =
+					e.detail.cardId % 4 == 3
+						? [e.detail.cardId - 3, e.detail.cardId - 2, e.detail.cardId - 1]
+						: e.detail.cardId % 4 == 2
+						? [e.detail.cardId - 2, e.detail.cardId - 1, e.detail.cardId + 1]
+						: e.detail.cardId % 4 == 1
+						? [e.detail.cardId - 1, e.detail.cardId + 1, e.detail.cardId + 2]
+						: [e.detail.cardId + 1, e.detail.cardId + 2, e.detail.cardId + 3];
+		}
+	}
+	function handleCardMouseLeave(e) {
+		blurredCards = [];
+	}
 </script>
 
 <svelte:head
 	><title>Rest Countries{$currentRegion ? ` | ${$currentRegion}` : ''}</title></svelte:head
 >
-<svelte:window bind:scrollY={scrollPositionY} />
+<svelte:window bind:scrollY={scrollPositionY} bind:innerWidth={$windowWidth} />
 <ScrollPosition {scrollPositionY} />
 <main class="relative overflow-x-hidden">
 	<div
@@ -82,14 +113,21 @@
 		<article
 			id="countries-list"
 			in:fade|local={{ delay: 0, duration: 150 }}
-			class=" container mx-auto grid-cols-1 grid xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 items-center mt-[2em] px-4 lg:px-10 gap-10 lg:gap-x-16 text-left relative mb-6"
+			class="group countries-list container mx-auto grid-cols-1 grid xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 items-center mt-[2em] px-4 lg:px-10 gap-10 lg:gap-x-16 text-left relative mb-6"
 		>
 			{#each countriesDisplay as country, cardId}
-				<CardSmall {country} {cardId} totalCards={countriesDisplay.length} />
+				<CardSmall
+					{country}
+					{cardId}
+					blurred={blurredCards.includes(cardId)}
+					totalCards={countriesDisplay.length}
+					on:select={handleCardHover}
+					on:deselect={handleCardMouseLeave}
+				/>
 			{/each}
 		</article>
 		<InfiniteScroll on:scrollDown={handleScrollDown} />
-	{:else}<div id="LoaderCog" class=" grid items-center m-auto w-min"><LoaderCog /></div>
+	{:else}<div id="LoaderCog" class="loader-cog grid items-center m-auto w-min"><LoaderCog /></div>
 	{/if}
 	{#if scrollPositionY > 50}
 		<ToTopButton />
@@ -100,10 +138,10 @@
 	main {
 		min-height: calc(100vh - 5rem);
 	}
-	#LoaderCog {
+	.loader-cog {
 		height: calc(100vh - 14rem - 5em);
 	}
-	#countries-list {
+	.countries-list {
 		transform: translateZ(0);
 	}
 </style>

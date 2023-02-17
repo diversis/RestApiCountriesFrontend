@@ -34,7 +34,7 @@
 					currentRegion.set('');
 					dispatch('changeRegionFilter');
 				}}
-				class="group relative w-[1.5em] h-[1.5em] "
+				class="group/active-filter relative w-[1.5em] h-[1.5em] "
 			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -60,11 +60,11 @@
 			title="Select region filter"
 			on:click={() => (menuOpen = !menuOpen)}
 			class="py-4 px-6 inline-flex justify-between w-[20ch] bg-any-white dark:bg-dark-mode-dark-blue
-		 rounded{menuOpen ? '-t' : ''}-lg transition-all duration-700 ease-theme group"
+		 rounded{menuOpen ? '-t' : ''}-lg transition-all duration-700 ease-theme group/select-region"
 			>Filter by Region <svg
 				class="fill-light-mode-very-dark-blue dark:fill-any-white {menuOpen
 					? 'rotate-0 '
-					: 'rotate-180 '} w-[1.5em] h-[1.5em] group-hover:scale-150 group-focus:scale-150 transition-all duration-700 "
+					: 'rotate-180 '} w-[1.5em] h-[1.5em] group-hover/select-region:scale-150 group-focus/select-region:scale-150 transition-all duration-700 "
 				xmlns="http://www.w3.org/2000/svg"
 				viewBox="0 0 48 48"
 				><title>{menuOpen ? 'close' : 'open'} region list</title><path

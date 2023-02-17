@@ -7,13 +7,13 @@
         focus:bg-dark-mode-dark-blue focus:text-any-white dark:focus:bg-any-white dark:focus:text-dark-mode-very-dark-blue
         shadow-around shadow-light-mode-dark-gray dark:shadow-any-white 
         text-light-mode-very-dark-blue  dark:text-any-white transition-colors ease-theme duration-200 
-        rounded-[50%] bg-light-mode-very-light-gray dark:bg-dark-mode-dark-blue group"
+        rounded-[50%] bg-light-mode-very-light-gray dark:bg-dark-mode-dark-blue group/to-top"
 >
 	<p class="sr-only">Scroll to top</p>
 	<svg
 		class="fill-light-mode-very-dark-blue dark:fill-any-white 
-            dark:group-hover:fill-light-mode-very-dark-blue group-hover:fill-any-white 
-            dark:group-focus:fill-light-mode-very-dark-blue group-focus:fill-any-white 
+            dark:group-hover/to-top:fill-light-mode-very-dark-blue group-hover/to-top:fill-any-white 
+            dark:group-focus/to-top:fill-light-mode-very-dark-blue group-focus/to-top:fill-any-white 
             w-[1.5em] h-[1.5em] m-auto"
 		xmlns="http://www.w3.org/2000/svg"
 		viewBox="0 0 48 48"

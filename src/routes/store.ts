@@ -14,6 +14,7 @@ export const currentSearchData: Writable<countryType[]> = localWritable('current
 /**
  * svelte stores
  **/
+export const windowWidth: Writable<number> = writable(0);
 export const currentPage: Writable<number> = writable(0);
 export const hasNext: Writable<boolean> = writable(true);
 export const scrollPosition: Writable<number> = writable(0);

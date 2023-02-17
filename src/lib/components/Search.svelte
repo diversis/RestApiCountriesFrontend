@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { afterUpdate, beforeUpdate, createEventDispatcher, onDestroy, onMount } from 'svelte';
+	import { beforeUpdate, createEventDispatcher, onDestroy, onMount } from 'svelte';
 	import { fade, draw } from 'svelte/transition';
 	import { searchInputString } from '../../routes/store';
 
@@ -56,7 +56,7 @@
 </script>
 
 <div
-	class="group gap-x-6 px-5 py-4 rounded-lg bg-any-white dark:bg-dark-mode-dark-blue rounded-t-lg transition-colors duration-700 ease-theme w-full md:w-[50%] flex flex-row items-center"
+	class="group/search gap-x-6 px-5 py-4 rounded-lg bg-any-white dark:bg-dark-mode-dark-blue rounded-t-lg transition-colors duration-700 ease-theme w-full md:w-[50%] flex flex-row items-center"
 >
 	<button type="button">
 		<svg
@@ -64,7 +64,7 @@
 			class=" cursor-pointer active:scale-[120%] fill-light-mode-very-dark-blue dark:fill-any-white
 			 w-[1.5em] h-[1.5em] {focusSearch
 				? 'scale-150'
-				: 'group-hover:scale-150'} transition-transform duration:200"
+				: 'group-hover/search:scale-150'} transition-transform duration:200"
 			xmlns="http://www.w3.org/2000/svg"
 			viewBox="0 0 48 48"
 		>
@@ -107,13 +107,13 @@
 			title="Reset"
 			type="button"
 			on:click={handleBackspace}
-			class="inline-block group r-0 p-0"
+			class="inline-block group/backspace r-0 p-0"
 		>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				class="fill-light-mode-very-dark-blue dark:fill-any-white
-				dark:group-hover:fill-dark-mode-dark-blue group-hover:fill-any-white
-			dark:group-focus:fill-dark-mode-dark-blue group-focus:fill-any-white
+				dark:group-hover/backspace:fill-dark-mode-dark-blue group-hover/backspace:fill-any-white
+			dark:group-focus/backspace:fill-dark-mode-dark-blue group-focus/backspace:fill-any-white
 			   w-[1.6em] h-[1.5em]"
 				viewBox="0 0 500 500"
 			>

@@ -9,7 +9,7 @@
 	focus:bg-dark-mode-dark-blue focus:text-any-white dark:focus:bg-any-white dark:focus:text-dark-mode-very-dark-blue
 	inline-flex items-center shadow-around shadow-light-mode-dark-gray dark:shadow-any-white 
 	text-light-mode-very-dark-blue  dark:text-any-white transition-colors ease-theme duration-200 
-	rounded-md bg-light-mode-very-light-gray dark:bg-dark-mode-dark-blue px-6 py-1 h-min group"
+	rounded-md bg-light-mode-very-light-gray dark:bg-dark-mode-dark-blue px-6 py-1 h-min group/btn-back"
 	title="Go back"
 	on:click={goBack}
 	type="button"
@@ -18,8 +18,8 @@
 		<svg
 			id="back"
 			viewBox="0 0 48 48"
-			class="dark:group-hover:fill-dark-mode-dark-blue group-hover:fill-any-white
-			dark:group-focus:fill-dark-mode-dark-blue group-focus:fill-any-white
+			class="dark:group-hover/btn-back:fill-dark-mode-dark-blue group-hover/btn-back:fill-any-white
+			dark:group-focus/btn-back:fill-dark-mode-dark-blue group-focus/btn-back:fill-any-white
 			 fill-light-mode-very-dark-blue dark:fill-any-white rotate-180 transition-colors ease-theme duration-400"
 			><path
 				id="back"

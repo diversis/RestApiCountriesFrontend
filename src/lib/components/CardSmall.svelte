@@ -1,29 +1,62 @@
 <script lang="ts">
 	import type { countryType } from '$lib/scripts/countryType';
 	import { populationFormatter } from '$lib/scripts/formatter';
+	import { createEventDispatcher } from 'svelte';
 	import { fade } from 'svelte/transition';
+
 	export let country: countryType;
 	export let cardId: number;
 	export let totalCards: number;
+	export let blurred = false;
+
+	const dispatch = createEventDispatcher();
+	let hovered = false;
+	let focused = false;
+	// mouse select
+	function handleMouseEnter() {
+		hovered = true;
+		dispatch('select', { cardId });
+	}
+
+	function handleMouseLeave() {
+		hovered = false;
+		dispatch('deselect', { cardId });
+	}
+	// keyboard select
+	function handleFocus() {
+		focused = true;
+		dispatch('select', { cardId });
+	}
+
+	function handleBlur() {
+		if (!hovered) {
+			focused = false;
+			dispatch('select', { cardId });
+		}
+	}
 </script>
 
 <div
 	in:fade|local={{ delay: (700 / 12) * (cardId - totalCards + 12), duration: 150 }}
 	out:fade|local={{ delay: (100 / 12) * (cardId - totalCards + 12), duration: 100 }}
 	id={`card-${cardId}`}
-	class="relative w-full h-[22.75rem]"
+	class="relative w-full h-[22.75rem] group/country-card"
+	on:mouseenter|self={handleMouseEnter}
+	on:mouseleave|self={handleMouseLeave}
 >
 	<a
+		on:focus|self={handleFocus}
+		on:blur|self={handleBlur}
 		title="{country.name.common} description"
 		class="absolute bg-any-white dark:bg-dark-mode-dark-blue transition-all duration-300 
 	bg-opacity-50 dark:bg-opacity-30 active:scale-[97%] backdrop-blur-[3px] 
-	
-	sm:hover:mt-[-1em] sm:hover:h-[26.5em] sm:focus:h-[26.5em] sm:focus:mt-[-1em]
-	hover:mt-[-0.5em] hover:h-[27em] focus:h-[27em] focus:mt-[-0.5em]
+	sm:group-hover/country-card:mt-[-1em] sm:group-hover/country-card:h-[26.5em] sm:group-focus/country-card:h-[26.5em] sm:group-focus/country-card:mt-[-1em]
+	group-hover/country-card:mt-[-0.5em] group-hover/country-card:h-[27em] group-focus/country-card:h-[27em] group-focus/country-card:mt-[-0.5em]
 	 
 	 text-left pb-[1em] grid grid-cols-1 gap-y-3
 	 shadow-card-light dark:shadow-card-dark rounded-lg
 	 w-full h-[26em] overflow-hidden text-sm justify-between"
+		class:blur-sm={blurred && !hovered && !focused}
 		href="/countries/{country.cca3}"
 	>
 		<div class="relative w-full h-min ">
