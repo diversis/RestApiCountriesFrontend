@@ -63,11 +63,14 @@
 	function handleCardHover(e) {
 		const gridCols =
 			$windowWidth >= 1280 ? 4 : $windowWidth >= 768 ? 3 : $windowWidth >= 640 ? 2 : 1;
+		console.log(gridCols);
 		switch (gridCols) {
 			case 1:
 				blurredCards = [e.detail.cardId - 1, e.detail.cardId + 1];
+				break;
 			case 2:
 				blurredCards = [e.detail.cardId % 2 == 0 ? e.detail.cardId + 1 : e.detail.cardId - 1];
+				break;
 			case 3:
 				blurredCards =
 					e.detail.cardId % 3 == 2
@@ -75,6 +78,7 @@
 						: e.detail.cardId % 3 == 1
 						? [e.detail.cardId - 1, e.detail.cardId + 1]
 						: [e.detail.cardId + 1, e.detail.cardId + 2];
+				break;
 			case 4:
 				blurredCards =
 					e.detail.cardId % 4 == 3
@@ -84,6 +88,7 @@
 						: e.detail.cardId % 4 == 1
 						? [e.detail.cardId - 1, e.detail.cardId + 1, e.detail.cardId + 2]
 						: [e.detail.cardId + 1, e.detail.cardId + 2, e.detail.cardId + 3];
+				break;
 		}
 	}
 	function handleCardMouseLeave(e) {
