@@ -5,10 +5,10 @@ import { expired } from './expiration';
 
 export function getCountryFromLocalStorage(countryCode: string): countryType | null {
 	const localStorageData: countryType[] = get(countriesData);
-	const regexp = /\W/gi;
+	const regexp = /^([a-z]){2,3}$/gi;
 	// Codes are 2 or 3 letters
 
-	if (countryCode.length < 2 || countryCode.length > 3 || regexp.test(countryCode)) {
+	if (!regexp.test(countryCode)) {
 		console.log('wrong code: ', countryCode.length);
 		return null;
 	}
