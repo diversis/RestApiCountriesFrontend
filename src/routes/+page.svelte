@@ -63,7 +63,7 @@
 	function handleCardHover(e) {
 		const gridCols =
 			$windowWidth >= 1280 ? 4 : $windowWidth >= 768 ? 3 : $windowWidth >= 640 ? 2 : 1;
-		console.log(gridCols);
+
 		switch (gridCols) {
 			case 1:
 				blurredCards = [e.detail.cardId - 1, e.detail.cardId + 1];
