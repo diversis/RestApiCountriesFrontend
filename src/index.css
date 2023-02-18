@@ -60,4 +60,28 @@
 			scroll-behavior: auto !important;
 		}
 	}
+
+	/* custom scrollbar */
+	::-webkit-scrollbar {
+		width: 0.5rem;
+	}
+	::-webkit-scrollbar-track {
+		@apply bg-light-mode-dark-gray;
+		border-radius: 100px;
+	}
+
+	::-webkit-scrollbar-thumb {
+		@apply bg-dark-mode-dark-blue;
+		border-radius: 100px;
+	}
+
+	.dark ::-webkit-scrollbar-track {
+		@apply bg-light-mode-very-dark-blue;
+		border-radius: 100px;
+	}
+
+	.dark ::-webkit-scrollbar-thumb {
+		@apply bg-light-mode-very-light-gray;
+		border-radius: 100px;
+	}
 }
