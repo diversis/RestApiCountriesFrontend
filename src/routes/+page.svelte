@@ -15,7 +15,6 @@
 
 	import { fade } from 'svelte/transition';
 	import type { countryType } from '$lib/scripts/countryType';
-	import { identity } from 'svelte/internal';
 
 	const baseTitle = 'Rest Countries';
 

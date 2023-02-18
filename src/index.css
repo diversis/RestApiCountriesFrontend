@@ -21,16 +21,16 @@
 		background-attachment: fixed;
 		background-repeat: repeat-x;
 		background-position: bottom;
-		background-size: 100vw;
+		background-size: max(80rem, 100vw);
 		transition: background-position 20s ease-in;
 		animation: world 200s linear 0s infinite;
 	}
 	@keyframes world {
 		0% {
-			background-position-x: 100vw;
+			background-position-x: max(80rem, 100vw);
 		}
 		100% {
-			background-position-x: -100vw;
+			background-position-x: -max(80rem, 100vw);
 		}
 	}
 

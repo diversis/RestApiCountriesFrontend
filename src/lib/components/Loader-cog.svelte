@@ -1,8 +1,4 @@
 <script lang="ts">
-	import { theme } from '../../routes/store';
-
-	$: lightness = $theme === 'dark' ? 60 : 20;
-
 	const pieces: number[] = [];
 	const duration: number = 2;
 	const width: number = 10;
