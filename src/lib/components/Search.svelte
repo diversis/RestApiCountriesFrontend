@@ -56,7 +56,7 @@
 </script>
 
 <div
-	class="group/search gap-x-6 px-5 py-4 rounded-lg bg-any-white dark:bg-dark-mode-dark-blue rounded-t-lg transition-colors duration-700 ease-theme w-full md:w-[50%] flex flex-row items-center"
+	class="group/search gap-x-6 px-5 py-2 rounded-lg bg-any-white dark:bg-dark-mode-dark-blue rounded-t-lg transition-colors duration-700 ease-theme w-full md:w-[50%] flex flex-row items-center"
 >
 	<button type="button" on:click|preventDefault={inputFocus}>
 		<svg
