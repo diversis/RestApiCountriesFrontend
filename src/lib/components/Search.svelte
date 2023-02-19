@@ -58,7 +58,7 @@
 <div
 	class="group/search gap-x-6 px-5 py-4 rounded-lg bg-any-white dark:bg-dark-mode-dark-blue rounded-t-lg transition-colors duration-700 ease-theme w-full md:w-[50%] flex flex-row items-center"
 >
-	<button type="button">
+	<button type="button" on:click|preventDefault={inputFocus}>
 		<svg
 			aria-label="Magnifying glass"
 			class=" cursor-pointer active:scale-[120%] fill-light-mode-very-dark-blue dark:fill-any-white
@@ -90,18 +90,26 @@
 				/>{/if}
 		</svg><span class="sr-only">Search button</span>
 	</button>
-	<input
-		title="Search a country"
-		bind:this={searchInput}
-		bind:value={searchString}
-		on:input={handleSearchInput}
-		on:focus={() => {
-			focusSearch = true;
-		}}
-		on:blur={() => (focusSearch = false)}
-		placeholder={searchPlaceHolder}
-		class="px-2 w-full bg-any-white dark:bg-dark-mode-dark-blue rounded-lg transition-colors duration-700 ease-theme "
-	/>
+	<div class="relative w-full h-[2em]">
+		<input
+			aria-label="Search a country"
+			name="search-country"
+			title="Search a country"
+			bind:this={searchInput}
+			bind:value={searchString}
+			on:input={handleSearchInput}
+			on:focus={() => {
+				focusSearch = true;
+			}}
+			on:blur={() => (focusSearch = false)}
+			required
+			class="z-10 peer h-[2em] absolute inset-0 px-2 pt-1 w-full bg-transparent rounded-lg transition-colors duration-700 ease-theme "
+		/><label
+			for="search-country"
+			class="px-1 rounded absolute peer-valid:-translate-y-3 peer-focus:-translate-y-3 peer-valid:text-xs peer-focus:text-xs z-50 top-[0.25em] left-2 pointer-events-none peer-focus:bg-any-white dark:peer-focus:bg-dark-mode-dark-blue peer-valid:bg-any-white dark:peer-valid:bg-dark-mode-dark-blue"
+			>{searchPlaceHolder}</label
+		>
+	</div>
 	{#if searchString}
 		<button
 			title="Reset"
@@ -137,3 +145,10 @@
 		</button>
 	{/if}
 </div>
+
+<style>
+	input + label {
+		transition: color 300ms ease-in-out, background-color 300ms ease-in-out,
+			transform 300ms ease-in-out, font-size 300ms ease-in-out 100ms;
+	}
+</style>
