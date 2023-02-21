@@ -51,6 +51,7 @@ export async function fetchAll(): Promise<countryType[] | []> {
 		.then((data: unknown): countryType[] | [] => {
 			if (isCounriesArray(data)) {
 				for (const country of data) {
+					console.log(country.name);
 					country.createdAt = Date.now();
 				}
 				data.sort(compareCountriesByName);

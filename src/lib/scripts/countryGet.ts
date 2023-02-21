@@ -6,6 +6,11 @@ import { getNextPage } from './pagination';
 import { fetchAll, fetchCountry } from './countryFetch';
 import { filterCountryByName } from './countryFilter';
 import { getCountryFromLocalStorage } from './countryLocalStorage';
+import throttle from 'lodash.throttle';
+
+const throttledFetchAll = throttle(() => {
+	return fetchAll();
+}, 100000);
 
 export async function searchCountires(
 	searchString: string | undefined
@@ -16,11 +21,16 @@ export async function searchCountires(
 	const storedDate: number = +get(storedAllAt);
 
 	if (!storedDate || expired(storedDate)) {
-		const fetchArray: countryType[] | [] = await fetchAll();
+		const fetchArray: countryType[] | [] | undefined = await throttledFetchAll();
+		throttledFetchAll.cancel();
+		if (Array.isArray(fetchArray) && fetchArray.length > 1 && fetchArray[0]?.cca3) {
+			console.log('not in else ', fetchArray);
+			countriesData.set([...fetchArray]);
 
-		countriesData.set([...fetchArray]);
-
-		storedAllAt.set(Date.now());
+			storedAllAt.set(Date.now());
+		} else {
+			console.log(fetchArray);
+		}
 	}
 	let searchArray: countryType[] = [];
 	const region: string = get(currentRegion);

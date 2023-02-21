@@ -16,8 +16,6 @@
 	import { fade } from 'svelte/transition';
 	import type { countryType } from '$lib/scripts/countryType';
 
-	const baseTitle = 'Rest Countries';
-
 	let searchString = '';
 
 	let countriesDisplay: countryType[] | [] = [];
