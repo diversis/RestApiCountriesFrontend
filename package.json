@@ -18,7 +18,7 @@
 		"@sveltejs/adapter-auto": "^1.0.0-next.91",
 		"@sveltejs/adapter-static": "^1.0.0",
 		"@sveltejs/kit": "1.7.1",
-		"@types/lodash.throttle": "^4.1.7",
+		"@types/lodash.debounce": "^4.0.7",
 		"@typescript-eslint/eslint-plugin": "^5.45.0",
 		"@typescript-eslint/parser": "^5.45.0",
 		"autoprefixer": "^10.4.13",
@@ -39,7 +39,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"lodash.throttle": "^4.1.1",
+		"lodash.debounce": "^4.0.8",
 		"svelte-local-storage-store": "^0.3.2"
 	}
 }

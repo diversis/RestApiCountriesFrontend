@@ -43,15 +43,14 @@ export async function fetchRegion(region: string): Promise<countryType[] | []> {
 
 export async function fetchAll(): Promise<countryType[] | []> {
 	console.log(
-		`\n--------------------\n fetching... https://restcountries.com/v3.1/all${fields} \n--------------------\n`
+		`\n--------------------\n fetching... https://restcountries.com/v3.1/all \n--------------------\n`
 	);
-
-	return fetch(`https://restcountries.com/v3.1/all${fields}`)
+	// return fetch(`https://restcountries.com/v3.1/all${fields}`)
+	return fetch(`https://restcountries.com/v3.1/all`)
 		.then((response: Response): Promise<unknown> => response.json())
 		.then((data: unknown): countryType[] | [] => {
 			if (isCounriesArray(data)) {
 				for (const country of data) {
-					console.log(country.name);
 					country.createdAt = Date.now();
 				}
 				data.sort(compareCountriesByName);
