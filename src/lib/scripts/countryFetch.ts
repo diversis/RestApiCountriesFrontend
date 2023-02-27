@@ -4,9 +4,10 @@ import { fields } from './fields';
 
 export async function fetchCountry(countryCode: string): Promise<countryType | null> {
 	console.log(
-		`\n--------------------\n fetching... https://restcountries.com/v3.1/alpha/${countryCode}${fields} \n--------------------\n`
+		`\n--------------------\n [${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}] fetching... https://restcountries.com/v3.1/alpha/${countryCode}${fields} \n--------------------\n`
 	);
-	return await fetch(`https://restcountries.com/v3.1/alpha/${countryCode}${fields}`)
+	// const debounced = debounce(async () => {
+	return fetch(`https://restcountries.com/v3.1/alpha/${countryCode}${fields}`)
 		.then((response: Response): Promise<unknown> => response.json())
 		.then((data: unknown): countryType => {
 			if (Array.isArray(data) && isCountry(data[0])) {
@@ -43,7 +44,7 @@ export async function fetchRegion(region: string): Promise<countryType[] | []> {
 
 export async function fetchAll(): Promise<countryType[] | []> {
 	console.log(
-		`\n--------------------\n fetching... https://restcountries.com/v3.1/all${fields} \n--------------------\n`
+		`\n--------------------\n [${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}] fetching... https://restcountries.com/v3.1/all${fields} \n--------------------\n`
 	);
 	// return fetch(`https://restcountries.com/v3.1/all`)
 	return fetch(`https://restcountries.com/v3.1/all${fields}`)
