@@ -43,10 +43,10 @@ export async function fetchRegion(region: string): Promise<countryType[] | []> {
 
 export async function fetchAll(): Promise<countryType[] | []> {
 	console.log(
-		`\n--------------------\n fetching... https://restcountries.com/v3.1/all \n--------------------\n`
+		`\n--------------------\n fetching... https://restcountries.com/v3.1/all${fields} \n--------------------\n`
 	);
-	// return fetch(`https://restcountries.com/v3.1/all${fields}`)
-	return fetch(`https://restcountries.com/v3.1/all`)
+	// return fetch(`https://restcountries.com/v3.1/all`)
+	return fetch(`https://restcountries.com/v3.1/all${fields}`)
 		.then((response: Response): Promise<unknown> => response.json())
 		.then((data: unknown): countryType[] | [] => {
 			if (isCounriesArray(data)) {
@@ -57,12 +57,32 @@ export async function fetchAll(): Promise<countryType[] | []> {
 
 				return data as countryType[];
 			}
+			console.log('no data fetched somehow');
 			return [];
 		})
 		.catch((error) => {
 			console.log(error);
 			return [];
 		});
+
+	// return fetch('/countries.json')
+	// 	.then((response: Response): Promise<unknown> => response.json())
+	// 	.then((data: unknown): countryType[] | [] => {
+	// 		if (isCounriesArray(data)) {
+	// 			for (const country of data) {
+	// 				country.createdAt = Date.now();
+	// 			}
+	// 			data.sort(compareCountriesByName);
+
+	// 			return data as countryType[];
+	// 		}
+
+	// 		return [];
+	// 	})
+	// 	.catch((error) => {
+	// 		console.log(error);
+	// 	});
+	return [];
 }
 
 function isCountry(object: unknown): object is countryType {

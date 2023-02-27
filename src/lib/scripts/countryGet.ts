@@ -8,9 +8,7 @@ import { filterCountryByName } from './countryFilter';
 import { getCountryFromLocalStorage } from './countryLocalStorage';
 import debounce from 'lodash.debounce';
 
-const debouncedFetchAll = debounce(() => {
-	return fetchAll();
-}, 1000);
+const debouncedFetchAll = debounce(() => fetchAll(), 1000);
 
 export async function searchCountires(
 	searchString: string | undefined
@@ -21,11 +19,9 @@ export async function searchCountires(
 	const storedDate: number = +get(storedAllAt);
 
 	if (!storedDate || expired(storedDate)) {
-		const fetchArray: countryType[] | [] | undefined = await debouncedFetchAll();
-		// debouncedFetchAll.cancel();
-		// console.log('outside ', fetchArray);
+		let fetchArray: countryType[] | [] | undefined = await debouncedFetchAll();
+		console.log('outside ', fetchArray);
 		if (Array.isArray(fetchArray) && fetchArray.length > 1) {
-			// console.log('not in else ', fetchArray);
 			countriesData.set([...fetchArray]);
 
 			storedAllAt.set(Date.now());

@@ -5,7 +5,7 @@ export type countryType = {
 	cca2: string;
 	cca3: string;
 	currencies: { [code: string]: { name: string; symbol: string } };
-	flags: { png: string; svg: string };
+	flags: { png: string; svg: string; alt: string };
 	languages: { [code: string]: string };
 	name: { common: string | undefined; official: string | undefined; nativeName: object };
 	population: number | undefined;

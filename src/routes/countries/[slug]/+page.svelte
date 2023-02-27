@@ -34,7 +34,7 @@
 					{:then data}
 						<img
 							src={country?.flags?.svg}
-							alt={'' + country?.name?.common + ' flag'}
+							alt={'' + country?.flags?.alt}
 							class="mx-auto shadow-img-light dark:shadow-img-dark transition-colors duration-700 w-full h-full"
 						/>
 					{/await}
