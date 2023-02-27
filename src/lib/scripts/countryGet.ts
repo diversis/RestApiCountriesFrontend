@@ -6,9 +6,15 @@ import { getNextPage } from './pagination';
 import { fetchAll, fetchCountry } from './countryFetch';
 import { filterCountryByName } from './countryFilter';
 import { getCountryFromLocalStorage } from './countryLocalStorage';
-import debounce from 'lodash.debounce';
+// import debounce from 'lodash.debounce';
 
-const debouncedFetchAll = debounce(() => fetchAll(), 1000);
+// let timeout: NodeJS.Timeout;
+
+// const debouncedFetchAll = debounce(async function () {
+// 	const res = await fetchAll();
+// 	console.log(res);
+// 	return res;
+// }, 1000);
 
 export async function searchCountires(
 	searchString: string | undefined
@@ -19,8 +25,14 @@ export async function searchCountires(
 	const storedDate: number = +get(storedAllAt);
 
 	if (!storedDate || expired(storedDate)) {
-		let fetchArray: countryType[] | [] | undefined = await debouncedFetchAll();
-		// console.log('outside ', fetchArray);
+		// clearTimeout(timeout);
+
+		const fetchArray: countryType[] | [] = await fetchAll();
+		// = await debouncedFetchAll();
+		// timeout = setTimeout(async () => {
+		// 	fetchArray = await fetchAll();
+		// }, 1000);
+
 		if (Array.isArray(fetchArray) && fetchArray.length > 1) {
 			countriesData.set([...fetchArray]);
 
