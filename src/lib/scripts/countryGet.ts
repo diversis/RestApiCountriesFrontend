@@ -20,7 +20,7 @@ export async function searchCountires(
 
 	if (!storedDate || expired(storedDate)) {
 		let fetchArray: countryType[] | [] | undefined = await debouncedFetchAll();
-		console.log('outside ', fetchArray);
+		// console.log('outside ', fetchArray);
 		if (Array.isArray(fetchArray) && fetchArray.length > 1) {
 			countriesData.set([...fetchArray]);
 
