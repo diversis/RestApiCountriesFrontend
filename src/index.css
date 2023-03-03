@@ -62,6 +62,10 @@
 	}
 
 	/* custom scrollbar */
+
+	body {
+		scrollbar-gutter: stable both-edges;
+	}
 	::-webkit-scrollbar {
 		min-width: 100%;
 	}
