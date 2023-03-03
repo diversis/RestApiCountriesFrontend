@@ -63,7 +63,7 @@
 
 	/* custom scrollbar */
 	::-webkit-scrollbar {
-		width: 0.5rem;
+		min-width: 100%;
 	}
 	::-webkit-scrollbar-track {
 		@apply bg-light-mode-dark-gray;

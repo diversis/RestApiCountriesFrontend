@@ -83,7 +83,7 @@ export async function fetchAll(): Promise<countryType[] | []> {
 	// 	.catch((error) => {
 	// 		console.log(error);
 	// 	});
-	return [];
+	// return [];
 }
 
 function isCountry(object: unknown): object is countryType {
