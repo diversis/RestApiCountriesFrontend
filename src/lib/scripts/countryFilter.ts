@@ -16,7 +16,7 @@ export function filterCountryByPopulation(
 	direction = true
 ): countryType[] {
 	const searchResult: countryType[] = countries.filter((country: countryType) =>
-		direction ? (country?.population | 0) > population : (country?.population | 0) < population
+		direction ? (country?.population ?? 0) > population : (country?.population ?? 0) < population
 	);
 	return searchResult;
 }
