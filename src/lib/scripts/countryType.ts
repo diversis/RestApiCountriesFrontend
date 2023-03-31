@@ -7,7 +7,11 @@ export type countryType = {
 	currencies: { [code: string]: { name: string; symbol: string } };
 	flags: { png: string; svg: string; alt: string };
 	languages: { [code: string]: string };
-	name: { common: string | undefined; official: string | undefined; nativeName: object };
+	name: {
+		common: string | undefined;
+		official: string | undefined;
+		nativeName: { [code: string]: { official: string } };
+	};
 	population: number | undefined;
 	region: string;
 	subregion: string | undefined;
